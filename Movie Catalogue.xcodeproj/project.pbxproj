@@ -16,6 +16,10 @@
 		C4BF8C342B120337005D7A22 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C332B120337005D7A22 /* Double+Extension.swift */; };
 		C4BF8C372B121A77005D7A22 /* UITokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C362B121A77005D7A22 /* UITokens.swift */; };
 		C4BF8C3A2B121AF9005D7A22 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C392B121AF9005D7A22 /* ErrorView.swift */; };
+		C4BF8C402B1236CB005D7A22 /* CarouselLoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C3F2B1236CB005D7A22 /* CarouselLoadingState.swift */; };
+		C4BF8C422B12372E005D7A22 /* Shimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C412B12372E005D7A22 /* Shimmer.swift */; };
+		C4BF8C442B123765005D7A22 /* ShimmerMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C432B123765005D7A22 /* ShimmerMask.swift */; };
+		C4BF8C462B12394D005D7A22 /* SkeletonAnimationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C452B12394D005D7A22 /* SkeletonAnimationItem.swift */; };
 		C4C8F41E2B116A5900DA04FF /* TopRatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8F41D2B116A5900DA04FF /* TopRatedRequest.swift */; };
 		C4C8F4202B11C8E100DA04FF /* TrendingMoviesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8F41F2B11C8E100DA04FF /* TrendingMoviesRow.swift */; };
 		C4C8F4232B11CE2000DA04FF /* TopRatedMoviesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8F4222B11CE2000DA04FF /* TopRatedMoviesRow.swift */; };
@@ -83,6 +87,10 @@
 		C4BF8C332B120337005D7A22 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		C4BF8C362B121A77005D7A22 /* UITokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITokens.swift; sourceTree = "<group>"; };
 		C4BF8C392B121AF9005D7A22 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		C4BF8C3F2B1236CB005D7A22 /* CarouselLoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselLoadingState.swift; sourceTree = "<group>"; };
+		C4BF8C412B12372E005D7A22 /* Shimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shimmer.swift; sourceTree = "<group>"; };
+		C4BF8C432B123765005D7A22 /* ShimmerMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerMask.swift; sourceTree = "<group>"; };
+		C4BF8C452B12394D005D7A22 /* SkeletonAnimationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonAnimationItem.swift; sourceTree = "<group>"; };
 		C4C8F41D2B116A5900DA04FF /* TopRatedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRatedRequest.swift; sourceTree = "<group>"; };
 		C4C8F41F2B11C8E100DA04FF /* TrendingMoviesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingMoviesRow.swift; sourceTree = "<group>"; };
 		C4C8F4222B11CE2000DA04FF /* TopRatedMoviesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRatedMoviesRow.swift; sourceTree = "<group>"; };
@@ -183,8 +191,29 @@
 			children = (
 				C4BF8C362B121A77005D7A22 /* UITokens.swift */,
 				C4BF8C392B121AF9005D7A22 /* ErrorView.swift */,
+				C4BF8C482B123C52005D7A22 /* Modifiers */,
+				C4BF8C472B123C36005D7A22 /* Components */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		C4BF8C472B123C36005D7A22 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				C4BF8C312B11EFEF005D7A22 /* AsyncImageCache.swift */,
+				C4BF8C3F2B1236CB005D7A22 /* CarouselLoadingState.swift */,
+				C4BF8C452B12394D005D7A22 /* SkeletonAnimationItem.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		C4BF8C482B123C52005D7A22 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				C4BF8C412B12372E005D7A22 /* Shimmer.swift */,
+				C4BF8C432B123765005D7A22 /* ShimmerMask.swift */,
+			);
+			path = Modifiers;
 			sourceTree = "<group>";
 		};
 		C4C8F4212B11CE0700DA04FF /* Trending */ = {
@@ -280,7 +309,6 @@
 				C4D1E1882B112970007AF0BA /* API */,
 				C4D1E1792B111C1E007AF0BA /* Networking */,
 				C4D1E1612B111B05007AF0BA /* Routing */,
-				C4BF8C312B11EFEF005D7A22 /* AsyncImageCache.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -540,6 +568,7 @@
 				C47C442E2B114F3D00763142 /* ResultResponse.swift in Sources */,
 				C4D1E1932B113A98007AF0BA /* APIException.swift in Sources */,
 				C4D1E1322B1116D9007AF0BA /* MoviesLandingView.swift in Sources */,
+				C4BF8C422B12372E005D7A22 /* Shimmer.swift in Sources */,
 				C4D1E1772B111C18007AF0BA /* AppEnvironment.swift in Sources */,
 				C4D1E17E2B1123A4007AF0BA /* MovieDatasource.swift in Sources */,
 				C47C44342B1160B600763142 /* TopRatedMoviesView.swift in Sources */,
@@ -561,6 +590,7 @@
 				C4C8F41E2B116A5900DA04FF /* TopRatedRequest.swift in Sources */,
 				C4D1E1872B11287D007AF0BA /* GenreResponse.swift in Sources */,
 				C4D1E1A02B1145D7007AF0BA /* MovieViewModel.swift in Sources */,
+				C4BF8C462B12394D005D7A22 /* SkeletonAnimationItem.swift in Sources */,
 				C4D1E16E2B111C18007AF0BA /* String+AppStorageKey.swift in Sources */,
 				C4BF8C3A2B121AF9005D7A22 /* ErrorView.swift in Sources */,
 				C4D1E1902B1139B0007AF0BA /* APIRequest.swift in Sources */,
@@ -570,11 +600,13 @@
 				C4BF8C342B120337005D7A22 /* Double+Extension.swift in Sources */,
 				C4D1E15E2B111973007AF0BA /* Router.swift in Sources */,
 				C4D1E1762B111C18007AF0BA /* NetworkError.swift in Sources */,
+				C4BF8C402B1236CB005D7A22 /* CarouselLoadingState.swift in Sources */,
 				C4D1E1852B1127F1007AF0BA /* CollectionResponse.swift in Sources */,
 				C4D1E16F2B111C18007AF0BA /* MockedResponses.swift in Sources */,
 				C47C44302B11549300763142 /* BaseURL.swift in Sources */,
 				C4D1E1602B111973007AF0BA /* PathInfo.swift in Sources */,
 				C47C44322B1159F500763142 /* TrendingMoviesView.swift in Sources */,
+				C4BF8C442B123765005D7A22 /* ShimmerMask.swift in Sources */,
 				C4D1E1702B111C18007AF0BA /* URLRequest+curl.swift in Sources */,
 				C4D1E1302B1116D9007AF0BA /* MovieCatalogueApp.swift in Sources */,
 				C4D1E1742B111C18007AF0BA /* NetworkClientImpl.swift in Sources */,

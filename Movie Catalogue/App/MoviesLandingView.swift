@@ -16,10 +16,11 @@ struct MoviesLandingView: View {
                 Color(UIColor.systemGroupedBackground)
                     .edgesIgnoringSafeArea(.all)
 
-                VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .center, spacing: 0) {
                     TopRatedMoviesRow(
                         category: "Top Rated",
-                        movies: viewModel.topRated,
+                        movies: viewModel.topRated, 
+                        isLoading: viewModel.isLoading,
                         onTap: { movie in
                             viewModel.currentSelectedMovie = movie
                             viewModel.presentDialog.toggle()
@@ -29,7 +30,8 @@ struct MoviesLandingView: View {
 
                     TrendingMoviesRow(
                         category: "Trending",
-                        movies: viewModel.trending,
+                        movies: viewModel.trending, 
+                        isLoading: viewModel.isLoading,
                         onTap: { movie in
                             viewModel.currentSelectedMovie = movie
                             viewModel.presentDialog.toggle()

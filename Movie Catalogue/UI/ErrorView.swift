@@ -5,13 +5,13 @@ struct ErrorView: View {
     var body: some View {
         VStack {
             Image(systemName: "exclamationmark.triangle.fill")
-                .foregroundColor(ColorTokens.onContainer.color)
+                .foregroundColor(.onContainer)
             Text("Ooops!! Something went wrong")
-                .foregroundColor(ColorTokens.onContainer.color)
+                .foregroundColor(.onContainer)
             Text(error.localizedDescription)
-                .foregroundColor(ColorTokens.onContainer.color)
+                .foregroundColor(.onContainer)
         }
-        .background(ColorTokens.container.color)
+        .background(.container)
     }
 }
 

@@ -3,43 +3,55 @@ import SwiftUI
 struct TrendingMoviesRow: View {
     let category: String
     let movies: [Movie]
+    var isLoading: Bool
     var onTap: (Movie) -> Void
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 Text(category)
                     .font(.headline)
-                    .padding(.top, SpacingToken.extraSmall)
+                    .padding(.top, SizeTokens.extraSmall)
                 Spacer()
-                Button(action: {
-                    
-                }, label: {
+                Button(action: {}, label: {
                     Text("View All")
-                        .foregroundStyle(ColorTokens.onContainerAlternate.color)
-                        .padding(.horizontal, SpacingToken.small)
+                        .foregroundStyle(.onContainerAlternate)
+                        .padding(.horizontal, SizeTokens.small)
                         .background(
-                            RoundedRectangle(cornerRadius: SpacingToken.small)
-                                .fill(ColorTokens.containerAlternate.color)
+                            RoundedRectangle(cornerRadius: SizeTokens.small)
+                                .fill(.containerAlternate)
                         )
                 })
             }
-            .padding(.init(top: SpacingToken.small, leading: .zero, bottom: .zero, trailing: SpacingToken.small))
-            
+            .padding(.init(top: SizeTokens.small, leading: .zero, bottom: .zero, trailing: SizeTokens.small))
+
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: SpacingToken.small) {
-                    ForEach(movies) { movie in
-                        TrendingMoviesView(movie: movie)
-                            .onTapGesture {
-                                onTap(movie)
-                            }
-                    }.frame(width: UIScreen.main.bounds.width - SpacingToken.large)
+                HStack(alignment: .top, spacing: SizeTokens.small) {
+                    if isLoading {
+                        ForEach(0 ..< 4, id: \.self) { _ in
+                            CarouselLoadingState(height: 130).frame(width: width)
+                        }
+                    } else {
+                        ForEach(movies) { movie in
+                            TrendingMoviesView(movie: movie)
+                                .onTapGesture {
+                                    onTap(movie)
+                                }
+                        }.frame(width: width)
+                    }
                 }
             }
+            .scrollTargetBehavior(.paging)
         }
     }
+    private let width = UIScreen.main.bounds.width - SizeTokens.large
 }
 
 #Preview {
-    TrendingMoviesRow(category: "Trending", movies: [defaultMovie], onTap: { _ in })
-        .background(Color(UIColor.systemGroupedBackground))
+    TrendingMoviesRow(
+        category: "Trending",
+        movies: [defaultMovie],
+        isLoading: true,
+        onTap: { _ in }
+    )
+    .background(Color(UIColor.systemGroupedBackground))
 }

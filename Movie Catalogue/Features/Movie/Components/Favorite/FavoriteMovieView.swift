@@ -4,20 +4,19 @@ struct FavoriteMovieView: View {
     let movie: Movie
     var body: some View {
         VStack(alignment: .center) {
-            // Background Image
             AsyncImageCache(
-                url: URL(string: movie.backdropURLString ?? "")!
+                url: URL(string: movie.backdropURLString ?? "")!,
+                progressSize: 150
             )
-            .cornerRadius(SpacingToken.small)
+            .cornerRadius(SizeTokens.small)
             
             HStack {
                 Text(movie.title ?? "")
                     .font(.headline)
                     .lineLimit(1)
                     .truncationMode(.tail)
-                    .foregroundColor(ColorTokens.onContainer.color)
+                    .foregroundColor(.onContainer)
                 
-                // Favorite Icon
                 Image(systemName: "heart.fill")
                     .foregroundColor(.accentColor)
 

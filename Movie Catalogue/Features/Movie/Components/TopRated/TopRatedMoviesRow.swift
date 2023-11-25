@@ -3,6 +3,7 @@ import SwiftUI
 struct TopRatedMoviesRow: View {
     let category: String
     let movies: [Movie]
+    var isLoading: Bool
     var onTap: (Movie) -> Void
     var body: some View {
         VStack(alignment: .leading) {
@@ -11,38 +12,54 @@ struct TopRatedMoviesRow: View {
                     .font(.headline)
                     .padding(.top, 5)
                 Spacer()
-                Button(action: {
-                    
-                }, label: {
+                Button(action: {}, label: {
                     Text("View All")
-                        .foregroundStyle(ColorTokens.onContainerAlternate.color)
-                        .padding(.horizontal, SpacingToken.small)
+                        .foregroundStyle(.onContainerAlternate)
+                        .padding(.horizontal, SizeTokens.small)
                         .background(
-                            RoundedRectangle(cornerRadius: SpacingToken.small)
-                                .fill(ColorTokens.containerAlternate.color)
+                            RoundedRectangle(cornerRadius: SizeTokens.small)
+                                .fill(.containerAlternate)
                         )
                 })
             }
-            .padding(.trailing, SpacingToken.small)
-
+            .padding(.trailing, SizeTokens.small)
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: SpacingToken.small) {
-                    ForEach(movies) { movie in
-                        TopRatedMoviesView(movie: movie)
-                            .onTapGesture {
-                                onTap(movie)
-                            }
-                    }.frame(width: UIScreen.main.bounds.width - SpacingToken.large)
+                HStack(alignment: .top, spacing: SizeTokens.small) {
+                    if isLoading {
+                        ForEach(0 ..< 4, id: \.self) { _ in
+                            CarouselLoadingState().frame(width: width)
+                        }
+                    } else {
+                        ForEach(movies) { movie in
+                            TopRatedMoviesView(movie: movie)
+                                .onTapGesture {
+                                    onTap(movie)
+                                }
+                        }.frame(width: width)
+                    }
                 }
             }
+            .scrollTargetBehavior(.paging)
         }
     }
+
+    private let width = UIScreen.main.bounds.width - SizeTokens.large
 }
 
 #Preview {
-    TopRatedMoviesRow(
-        category: "Top Rated",
-        movies: [defaultMovie, defaultMovie],
-        onTap: { _ in }
-    )
+    VStack(content: {
+        TopRatedMoviesRow(
+            category: "Top Rated",
+            movies: [defaultMovie, defaultMovie],
+            isLoading: false,
+            onTap: { _ in }
+        ).aspectRatio(3 / 2, contentMode: .fit)
+
+        TopRatedMoviesRow(
+            category: "Top Rated",
+            movies: [defaultMovie, defaultMovie],
+            isLoading: true,
+            onTap: { _ in }
+        ).aspectRatio(3 / 2, contentMode: .fit)
+    })
 }

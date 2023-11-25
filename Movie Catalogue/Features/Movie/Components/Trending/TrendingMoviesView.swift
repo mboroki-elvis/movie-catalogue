@@ -8,15 +8,17 @@ struct TrendingMoviesView: View {
             // Leading Image
             if let url = URL(string: movie.backdropURLString ?? "") {
                 AsyncImageCache(
-                    url: url
+                    url: url,
+                    imageFit: .fill,
+                    progressSize: 100
                 )
                 .frame(width: 100, height: 115)
-                .cornerRadius(SpacingToken.small)
+                .cornerRadius(SizeTokens.small)
                 .padding()
             } else {
                Image(systemName: "bolt.trianglebadge.exclamationmark.fill")
                     .frame(width: 100, height: 115)
-                    .cornerRadius(SpacingToken.small)
+                    .cornerRadius(SizeTokens.small)
                     .padding()
             }
 
@@ -36,23 +38,28 @@ struct TrendingMoviesView: View {
                 HStack {
                     Text("Rating \(movie.voteAverage ?? .zero)")
                         .font(.caption)
-                        .padding(SpacingToken.extraSmall)
-                        .background(ColorTokens.containerAlternate.color)
-                        .foregroundColor(ColorTokens.onContainerAlternate.color)
-                        .cornerRadius(SpacingToken.extraSmall)
+                        .padding(SizeTokens.extraSmall)
+                        .background(.containerAlternate)
+                        .foregroundColor(.onContainerAlternate)
+                        .cornerRadius(SizeTokens.extraSmall)
 
                     Text("Votes \(movie.voteCount ?? .zero)")
                         .font(.caption)
-                        .padding(SpacingToken.extraSmall)
-                        .background(ColorTokens.container.color)
-                        .foregroundColor(ColorTokens.onContainer.color)
-                        .cornerRadius(SpacingToken.extraSmall)
+                        .padding(SizeTokens.extraSmall)
+                        .background(.container)
+                        .foregroundColor(.onContainer)
+                        .cornerRadius(SizeTokens.extraSmall)
                 }
             }
-            .padding(.init(top: .zero, leading: .zero, bottom: .zero, trailing: SpacingToken.regular))
+            .padding(.init(
+                top: SizeTokens.regular,
+                leading: .zero,
+                bottom: SizeTokens.regular,
+                trailing: SizeTokens.regular
+            ))
         }
-        .background(ColorTokens.container.color)
-        .cornerRadius(SpacingToken.small)
+        .background(.container)
+        .cornerRadius(SizeTokens.small)
     }
 }
 

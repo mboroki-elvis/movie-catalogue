@@ -6,33 +6,34 @@ struct TopRatedMoviesView: View {
     var body: some View {
         ZStack(alignment: .bottomLeading) {
             AsyncImageCache(
-                url: URL(string: movie.backdropURLString ?? "")!
-            ) 
-            VStack(alignment: .trailing, spacing: SpacingToken.small) {
+                url: URL(string: movie.backdropURLString ?? "")!,
+                imageFit: .fill
+            )
+            VStack(alignment: .trailing, spacing: SizeTokens.small) {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(movie.title ?? "")
                             .font(.headline)
-                            .foregroundColor(ColorTokens.onContainerAlternate.color)
+                            .foregroundColor(.onContainerAlternate)
                             + Text("\n") +
                         Text("Popularity \(movie.popularity?.roundedInt ?? .zero)")
                             .font(.caption)
-                            .foregroundColor(ColorTokens.onContainerAlternate.color)
+                            .foregroundColor(.onContainerAlternate)
                     }
-                    .padding(SpacingToken.small)
-                    .background(ColorTokens.containerAlternate.color.opacity(0.8))
+                    .padding(SizeTokens.small)
+                    .background(.containerAlternate.opacity(0.8))
                     .clipShape(
                         .rect(
                             topLeadingRadius: .zero,
                             bottomLeadingRadius: .zero,
-                            bottomTrailingRadius: SpacingToken.small,
-                            topTrailingRadius: SpacingToken.small
+                            bottomTrailingRadius: SizeTokens.small,
+                            topTrailingRadius: SizeTokens.small
                         )
                     )
 
                     Image(systemName: "chart.bar.fill")
                         .foregroundColor(.accentColor)
-                        .padding(SpacingToken.small)
+                        .padding(SizeTokens.small)
                 }
             }
             .overlay(
@@ -40,7 +41,7 @@ struct TopRatedMoviesView: View {
                 alignment: .leading
             )
             .padding()
-        }.cornerRadius(SpacingToken.small)
+        }.cornerRadius(SizeTokens.small)
     }
 }
 

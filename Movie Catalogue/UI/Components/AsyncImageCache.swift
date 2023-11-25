@@ -4,15 +4,20 @@ struct AsyncImageCache: View {
     private let url: URL
     private let scale: CGFloat
     private let transaction: Transaction
-
+    private let imageFit: ContentMode
+    private let progressSize: CGFloat
     init(
         url: URL,
         scale: CGFloat = 1.0,
-        transaction: Transaction = Transaction()
+        transaction: Transaction = Transaction(),
+        imageFit: ContentMode = .fit,
+        progressSize: CGFloat = 200
     ) {
         self.url = url
         self.scale = scale
         self.transaction = transaction
+        self.imageFit = imageFit
+        self.progressSize = progressSize
     }
 
     var body: some View {
@@ -40,11 +45,13 @@ struct AsyncImageCache: View {
     @ViewBuilder func content(phase: AsyncImagePhase) -> some View {
        switch phase {
        case .empty:
-           ProgressView().foregroundStyle(.accent)
+           ProgressView()
+               .foregroundStyle(Color.accentColor)
+               .frame(width: progressSize, height: progressSize)
        case .success(let image):
            image
                .resizable()
-               .aspectRatio(contentMode: .fill)
+               .aspectRatio(contentMode: imageFit)
        case .failure(let error):
            ErrorView(error: error)
        @unknown default:

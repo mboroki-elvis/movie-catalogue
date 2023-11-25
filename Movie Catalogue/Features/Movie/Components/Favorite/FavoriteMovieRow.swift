@@ -8,10 +8,10 @@ struct FavoriteMovieRow: View {
         VStack(alignment: .leading) {
             Text(category)
                 .font(.headline)
-                .padding(.top, SpacingToken.extraSmall)
+                .padding(.top, SizeTokens.extraSmall)
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: SpacingToken.small) {
+                LazyHStack(alignment: .top, spacing: SizeTokens.small) {
                     ForEach(movies) { movie in
                         FavoriteMovieView(movie: movie)
                             .onTapGesture {
