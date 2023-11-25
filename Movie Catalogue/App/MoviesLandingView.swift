@@ -19,7 +19,7 @@ struct MoviesLandingView: View {
                 VStack(alignment: .center, spacing: 0) {
                     TopRatedMoviesRow(
                         category: "Top Rated",
-                        movies: viewModel.topRated, 
+                        movies: viewModel.topRated,
                         isLoading: viewModel.isLoading,
                         onTap: { movie in
                             viewModel.currentSelectedMovie = movie
@@ -30,7 +30,7 @@ struct MoviesLandingView: View {
 
                     TrendingMoviesRow(
                         category: "Trending",
-                        movies: viewModel.trending, 
+                        movies: viewModel.trending,
                         isLoading: viewModel.isLoading,
                         onTap: { movie in
                             viewModel.currentSelectedMovie = movie
@@ -40,7 +40,7 @@ struct MoviesLandingView: View {
                     .padding(.leading, 16)
 
                     FavoriteMovieRow(
-                        movies: favorites, 
+                        movies: favorites,
                         onTap: { movie in
                             viewModel.currentSelectedMovie = movie
                             viewModel.presentDialog.toggle()
@@ -48,6 +48,7 @@ struct MoviesLandingView: View {
                     )
                     .padding(.leading, 16)
                 }
+                Spacer()
             }
             .onAppear(perform: {
                 viewModel.onAppear()
@@ -65,7 +66,7 @@ struct MoviesLandingView: View {
                     Text(isFavorited ? "Remove favorite" : "Add favorite")
                 }
             })
-            
+
             Button(action: {
                 if let selected = viewModel.currentSelectedMovie {
                     print("go to \(selected.title ?? "")")

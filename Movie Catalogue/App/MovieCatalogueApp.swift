@@ -3,7 +3,8 @@ import SwiftUI
 
 @main
 struct MovieCatalogueApp: App {
-    var sharedModelContainer: ModelContainer = {
+    @State private var router = AppRouter(.landing)
+    private var sharedModelContainer: ModelContainer = {
         let schema = Schema([Movie.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -16,8 +17,8 @@ struct MovieCatalogueApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MoviesLandingView()
-                .background(Color(UIColor.systemGroupedBackground))
+            AppCoordinator()
+                .environment(router)
         }
         .modelContainer(sharedModelContainer)
     }
