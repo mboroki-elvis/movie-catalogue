@@ -11,7 +11,7 @@ struct FavoriteMovieView: View {
             } placeholder: {
                 ProgressView()
             }
-            .cornerRadius(8.0)
+            .cornerRadius(SpacingToken.small)
             
             HStack {
                 Text(movie.title ?? "")
@@ -22,7 +22,7 @@ struct FavoriteMovieView: View {
                 
                 // Favorite Icon
                 Image(systemName: "heart.fill")
-                    .foregroundColor(.red)
+                    .foregroundColor(.accentColor)
 
             }
         }

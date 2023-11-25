@@ -14,7 +14,7 @@ struct TrendingMoviesView: View {
             }
             .frame(width: 100, height: 115)
             .foregroundColor(.blue)
-            .cornerRadius(8)
+            .cornerRadius(SpacingToken.small)
             .padding()
 
             VStack(alignment: .leading) {
@@ -31,25 +31,25 @@ struct TrendingMoviesView: View {
 
                 // Category Labels
                 HStack {
-                    Text("Votes \(movie.voteCount ?? .zero)")
+                    Text("Rating \(movie.voteAverage ?? .zero)")
                         .font(.caption)
-                        .padding(5)
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(5)
+                        .padding(SpacingToken.extraSmall)
+                        .background(ColorTokens.containerAlternate.color)
+                        .foregroundColor(ColorTokens.onContainerAlternate.color)
+                        .cornerRadius(SpacingToken.extraSmall)
 
-                    Text("Rating \((movie.voteAverage ?? .zero))")
+                    Text("Votes \((movie.voteCount ?? .zero))")
                         .font(.caption)
-                        .padding(5)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(5)
+                        .padding(SpacingToken.extraSmall)
+                        .background(ColorTokens.container.color)
+                        .foregroundColor(ColorTokens.onContainer.color)
+                        .cornerRadius(SpacingToken.extraSmall)
                 }
             }
-            .padding(.init(top: .zero, leading: .zero, bottom: .zero, trailing: 16))
+            .padding(.init(top: .zero, leading: .zero, bottom: .zero, trailing: SpacingToken.regular))
         }
-        .background(.white)
-        .cornerRadius(8)
+        .background(ColorTokens.container.color)
+        .cornerRadius(SpacingToken.small)
     }
 }
 

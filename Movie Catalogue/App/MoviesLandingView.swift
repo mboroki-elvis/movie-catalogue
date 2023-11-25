@@ -63,6 +63,16 @@ struct MoviesLandingView: View {
                     Text(isFavorited ? "Remove favorite" : "Add favorite")
                 }
             })
+            
+            Button(action: {
+                if let selected = viewModel.currentSelectedMovie {
+                    print("go to \(selected.title ?? "")")
+                }
+            }, label: {
+                HStack {
+                    Text("View Movie Details")
+                }
+            })
         }
     }
 
