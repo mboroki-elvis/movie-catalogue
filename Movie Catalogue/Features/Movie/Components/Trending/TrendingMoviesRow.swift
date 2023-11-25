@@ -43,15 +43,26 @@ struct TrendingMoviesRow: View {
             .scrollTargetBehavior(.paging)
         }
     }
+
     private let width = UIScreen.main.bounds.width - SizeTokens.large
 }
 
 #Preview {
-    TrendingMoviesRow(
-        category: "Trending",
-        movies: [defaultMovie],
-        isLoading: true,
-        onTap: { _ in }
-    )
+    VStack {
+        TrendingMoviesRow(
+            category: "Trending",
+            movies: [defaultMovie],
+            isLoading: false,
+            onTap: { _ in }
+        ).aspectRatio(3 / 2, contentMode: .fit)
+        
+        TrendingMoviesRow(
+            category: "Trending",
+            movies: [defaultMovie],
+            isLoading: true,
+            onTap: { _ in }
+        ).aspectRatio(3 / 2, contentMode: .fit)
+        
+    }
     .background(Color(UIColor.systemGroupedBackground))
 }
