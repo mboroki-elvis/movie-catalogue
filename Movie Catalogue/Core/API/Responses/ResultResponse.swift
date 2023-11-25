@@ -11,3 +11,14 @@ struct ResultResponse: Codable, Equatable {
         case totalResults = "total_results"
     }
 }
+
+//"genres": [
+//  {
+//    "id": 28,
+//    "name": "Action"
+//  },
+//  {
+//    "id": 18,
+//    "name": "Drama"
+//  }
+//],

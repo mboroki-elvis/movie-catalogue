@@ -6,6 +6,8 @@ import SwiftData
     var trending = [Movie]()
     var topRated = [Movie]()
     var isLoading = false
+    var presentDialog = false
+    var currentSelectedMovie: Movie?
     private let datasource: MovieDatasource
     init(datasource: MovieDatasource = MovieDatasourceImpl()) {
         self.datasource = datasource
@@ -26,7 +28,21 @@ import SwiftData
         }
     }
     
-    func addMovieToContext(movie: Movie, context: ModelContext) {
-        context.insert(movie)
+
+    func addSelectedMovieToContext(context: ModelContext) {
+        guard let currentSelectedMovie else { return }
+        context.insert(currentSelectedMovie)
+        self.currentSelectedMovie = nil
+    }
+
+    func deleteSelectedMovieFromContext(context: ModelContext) {
+        guard let currentSelectedMovie else { return }
+        context.delete(currentSelectedMovie)
+        self.currentSelectedMovie = nil
+    }
+
+    func isSelectedMovieFavourited(movies: [Movie]) -> Bool {
+        guard let currentSelectedMovie else { return false }
+        return movies.contains(currentSelectedMovie)
     }
 }

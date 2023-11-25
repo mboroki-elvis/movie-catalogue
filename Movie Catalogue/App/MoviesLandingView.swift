@@ -5,8 +5,8 @@ struct MoviesLandingView: View {
     // MARK: Properties
 
     @Environment(\.modelContext) private var modelContext
-    @Query private var movies: [Movie]
-    private var viewModel = MovieViewModel()
+    @Query private var favorites: [Movie]
+    @Bindable private var viewModel = MovieViewModel()
 
     // MARK: UI
 
@@ -15,25 +15,34 @@ struct MoviesLandingView: View {
             ZStack {
                 Color(UIColor.systemGroupedBackground)
                     .edgesIgnoringSafeArea(.all)
-                
+
                 VStack(alignment: .leading, spacing: 0) {
                     TopRatedMoviesRow(
                         category: "Top Rated",
-                        movies: viewModel.topRated
+                        movies: viewModel.topRated,
+                        onTap: { movie in
+                            viewModel.currentSelectedMovie = movie
+                            viewModel.presentDialog.toggle()
+                        }
                     )
                     .padding(.leading, 16)
-                    
+
                     TrendingMoviesRow(
                         category: "Trending",
                         movies: viewModel.trending,
                         onTap: { movie in
-                            addItem(movie: movie)
+                            viewModel.currentSelectedMovie = movie
+                            viewModel.presentDialog.toggle()
                         }
                     )
                     .padding(.leading, 16)
-                    
+
                     FavoriteMovieRow(
-                        movies: movies
+                        movies: favorites, 
+                        onTap: { movie in
+                            viewModel.currentSelectedMovie = movie
+                            viewModel.presentDialog.toggle()
+                        }
                     )
                     .padding(.leading, 16)
                 }
@@ -41,20 +50,31 @@ struct MoviesLandingView: View {
             .onAppear(perform: {
                 viewModel.onAppear()
             })
+        }.confirmationDialog("", isPresented: $viewModel.presentDialog) {
+            let isFavorited = viewModel.isSelectedMovieFavourited(movies: favorites)
+            Button(action: {
+                if isFavorited {
+                    viewModel.deleteSelectedMovieFromContext(context: modelContext)
+                } else {
+                    viewModel.addSelectedMovieToContext(context: modelContext)
+                }
+            }, label: {
+                HStack {
+                    Text(isFavorited ? "Remove favorite" : "Add favorite")
+                }
+            })
         }
     }
 
     private func addItem(movie: Movie) {
         withAnimation {
-            viewModel.addMovieToContext(movie: movie, context: modelContext)
+            viewModel.addSelectedMovieToContext(context: modelContext)
         }
     }
 
-    private func deleteItems(offsets: IndexSet) {
+    private func deleteItems(movie: Movie) {
         withAnimation {
-//            for index in offsets {
-//                modelContext.delete(items[index])
-//            }
+            viewModel.deleteSelectedMovieFromContext(context: modelContext)
         }
     }
 }

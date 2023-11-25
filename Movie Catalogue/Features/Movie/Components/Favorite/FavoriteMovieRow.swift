@@ -2,6 +2,7 @@ import SwiftUI
 
 struct FavoriteMovieRow: View {
     let movies: [Movie]
+    var onTap: (Movie) -> Void
     let category: String = "Favorites"
     var body: some View {
         VStack(alignment: .leading) {
@@ -13,6 +14,9 @@ struct FavoriteMovieRow: View {
                 HStack(alignment: .top, spacing: 8) {
                     ForEach(movies) { movie in
                         FavoriteMovieView(movie: movie)
+                            .onTapGesture {
+                                onTap(movie)
+                            }
                     }
                     .frame(width: 150)
                 }
@@ -22,5 +26,5 @@ struct FavoriteMovieRow: View {
 }
 
 #Preview {
-    FavoriteMovieRow(movies: [defaultMovie])
+    FavoriteMovieRow(movies: [defaultMovie], onTap: { _ in })
 }
