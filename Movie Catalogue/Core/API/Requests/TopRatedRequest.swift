@@ -1,7 +1,7 @@
 import Foundation
 
-struct TrendingMoviesRequest: APIRequest {
-    var endpoint: String { MovieAPI.trending.api }
+struct TopRatedRequest: APIRequest {
+    var endpoint: String { MovieAPI.topRated.api }
     
     var method: HTTPMethod { .get }
     

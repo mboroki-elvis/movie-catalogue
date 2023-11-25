@@ -2,38 +2,51 @@ import SwiftData
 import SwiftUI
 
 struct MoviesLandingView: View {
+    // MARK: Properties
+
     @Environment(\.modelContext) private var modelContext
     @Query private var movies: [Movie]
-    @Bindable var viewModel = MovieViewModel()
-    var body: some View {
-        NavigationSplitView {
-            VStack {
-                if !movies.isEmpty {
-                    HStack {
-                        ForEach(movies) { item in
-                            Text(item.originalTitle ?? "failed")
-                        }
-                        .onDelete(perform: deleteItems)
-                    }
-                }
+    private var viewModel = MovieViewModel()
 
-                List {
-                    ForEach($viewModel.movies) { item in
-                        Text(item.originalTitle.wrappedValue ?? "failed")
-                    }
+    // MARK: UI
+
+    var body: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            ZStack {
+                Color(UIColor.systemGroupedBackground)
+                    .edgesIgnoringSafeArea(.all)
+                
+                VStack(alignment: .leading, spacing: 0) {
+                    TopRatedMoviesRow(
+                        category: "Top Rated",
+                        movies: viewModel.topRated
+                    )
+                    .padding(.leading, 16)
+                    
+                    TrendingMoviesRow(
+                        category: "Trending",
+                        movies: viewModel.trending,
+                        onTap: { movie in
+                            addItem(movie: movie)
+                        }
+                    )
+                    .padding(.leading, 16)
+                    
+                    FavoriteMovieRow(
+                        movies: movies
+                    )
+                    .padding(.leading, 16)
                 }
             }
-        } detail: {
-            Text("Select an item")
-        }.onAppear(perform: {
-            viewModel.onAppear()
-        })
+            .onAppear(perform: {
+                viewModel.onAppear()
+            })
+        }
     }
 
-    private func addItem() {
+    private func addItem(movie: Movie) {
         withAnimation {
-//            let newItem = Item(timestamp: Date())
-//            modelContext.insert(newItem)
+            viewModel.addMovieToContext(movie: movie, context: modelContext)
         }
     }
 
@@ -48,5 +61,6 @@ struct MoviesLandingView: View {
 
 #Preview {
     MoviesLandingView()
+        .background(Color(UIColor.systemGroupedBackground))
         .modelContainer(for: Movie.self, inMemory: true)
 }

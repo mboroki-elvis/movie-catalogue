@@ -2,6 +2,7 @@ import Foundation
 
 enum MovieAPI {
     case trending
+    case topRated
     case details(Int)
     var api: String {
         switch self {
@@ -9,6 +10,8 @@ enum MovieAPI {
             return "discover/movie"
         case .details(let id):
             return "movie/\(id)"
+        case .topRated:
+            return "movie/top_rated"
         }
     }
 }

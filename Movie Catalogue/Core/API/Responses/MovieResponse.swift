@@ -66,7 +66,7 @@ import Foundation
     ///
      var video: Bool?
     /// The average user rating.
-     var voteAverage: Double?
+     var voteAverage: Int?
     /// The total number of user ratings.
      var voteCount: Int?
 
@@ -173,7 +173,7 @@ import Foundation
         tagline = try? container.decode(String.self, forKey: .tagline)
         title = try? container.decode(String.self, forKey: .title)
         video = try? container.decode(Bool.self, forKey: .video)
-        voteAverage = try? container.decode(Double.self, forKey: .voteAverage)
+        voteAverage = try? container.decode(Int.self, forKey: .voteAverage)
         voteCount = try? container.decode(Int.self, forKey: .voteCount)
     }
 }

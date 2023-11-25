@@ -2,7 +2,7 @@ import SwiftData
 import SwiftUI
 
 @main
-struct Movie_CatalogueApp: App {
+struct MovieCatalogueApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([Movie.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
@@ -17,6 +17,7 @@ struct Movie_CatalogueApp: App {
     var body: some Scene {
         WindowGroup {
             MoviesLandingView()
+                .background(Color(UIColor.systemGroupedBackground))
         }
         .modelContainer(sharedModelContainer)
     }

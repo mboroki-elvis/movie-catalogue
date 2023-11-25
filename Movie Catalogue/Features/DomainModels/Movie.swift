@@ -67,7 +67,7 @@ final class Movie: Identifiable {
     ///
     var video: Bool?
     /// The average user rating.
-    var voteAverage: Double?
+    var voteAverage: Int?
     /// The total number of user ratings.
     var voteCount: Int?
 
@@ -91,7 +91,7 @@ final class Movie: Identifiable {
         tagline: String? = nil,
         title: String? = nil,
         video: Bool? = nil,
-        voteAverage: Double? = nil,
+        voteAverage: Int? = nil,
         voteCount: Int? = nil
     ) {
         self.id = id
@@ -115,6 +115,11 @@ final class Movie: Identifiable {
         self.video = video
         self.voteAverage = voteAverage
         self.voteCount = voteCount
+    }
+
+    var backdropURLString: String? {
+        guard let backdropPath else { return nil }
+        return "\(BaseURL.images.prefix)\(backdropPath)"
     }
 }
 

@@ -28,7 +28,7 @@ extension AppEnvironment {
 struct EnvironmentLive: AppEnvironment {
     var userDefaults: UserDefaults = .standard
 
-    var apiBaseURL: URL { URL(string: "https://api.themoviedb.org/3/")! }
+    var apiBaseURL: URL { URL(string: BaseURL.api.prefix)! }
 
     var baseURL: String { "\(apiBaseURL)" }
 

@@ -1,6 +1,7 @@
 import Foundation
 
 protocol MovieDatasource {
+    func topRated() async throws -> [Movie]
     func getTrending() async throws -> [Movie]
     func getDetails(movie id: Int) async throws -> Movie?
 }
@@ -9,6 +10,20 @@ class MovieDatasourceImpl: MovieDatasource {
     let client: NetworkClient
     init(client: NetworkClient = NetworkClientImpl(environment: EnvironmentLive())) {
         self.client = client
+    }
+
+    func topRated() async throws -> [Movie] {
+        do {
+            let request = TopRatedRequest()
+            if let response = try await request.doRequest(client) {
+                return response.results.map { Movie(movie: $0) }
+            }
+            throw MovieAPIError.badRequest
+        } catch APIException.unknownError {
+            throw MovieAPIError.unknownError
+        } catch {
+            throw MovieAPIError.movieError(error)
+        }
     }
 
     func getTrending() async throws -> [Movie] {

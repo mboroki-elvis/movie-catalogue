@@ -1,6 +1,6 @@
 import Foundation
 
-struct TrendingResponse: Codable, Equatable {
+struct ResultResponse: Codable, Equatable {
     let page: Int
     let results: [MovieResponse]
     let totalPages, totalResults: Int
