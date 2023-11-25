@@ -6,16 +6,19 @@ struct TrendingMoviesView: View {
     var body: some View {
         HStack(spacing: 0) {
             // Leading Image
-            AsyncImage(url: URL(string: movie.backdropURLString ?? "")) { image in
-                image.resizable()
-                    .aspectRatio(contentMode: .fill)
-            } placeholder: {
-                ProgressView()
+            if let url = URL(string: movie.backdropURLString ?? "") {
+                AsyncImageCache(
+                    url: url
+                )
+                .frame(width: 100, height: 115)
+                .cornerRadius(SpacingToken.small)
+                .padding()
+            } else {
+               Image(systemName: "bolt.trianglebadge.exclamationmark.fill")
+                    .frame(width: 100, height: 115)
+                    .cornerRadius(SpacingToken.small)
+                    .padding()
             }
-            .frame(width: 100, height: 115)
-            .foregroundColor(.blue)
-            .cornerRadius(SpacingToken.small)
-            .padding()
 
             VStack(alignment: .leading) {
                 // Title
@@ -38,7 +41,7 @@ struct TrendingMoviesView: View {
                         .foregroundColor(ColorTokens.onContainerAlternate.color)
                         .cornerRadius(SpacingToken.extraSmall)
 
-                    Text("Votes \((movie.voteCount ?? .zero))")
+                    Text("Votes \(movie.voteCount ?? .zero)")
                         .font(.caption)
                         .padding(SpacingToken.extraSmall)
                         .background(ColorTokens.container.color)
@@ -57,5 +60,3 @@ struct TrendingMoviesView: View {
     TrendingMoviesView(movie: defaultMovie)
         .background(Color(UIColor.systemGroupedBackground))
 }
-
-

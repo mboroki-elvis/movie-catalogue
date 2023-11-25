@@ -5,12 +5,9 @@ struct FavoriteMovieView: View {
     var body: some View {
         VStack(alignment: .center) {
             // Background Image
-            AsyncImage(url: URL(string: movie.backdropURLString ?? "")) { image in
-                image.resizable()
-                    .aspectRatio(contentMode: .fit)
-            } placeholder: {
-                ProgressView()
-            }
+            AsyncImageCache(
+                url: URL(string: movie.backdropURLString ?? "")!
+            )
             .cornerRadius(SpacingToken.small)
             
             HStack {
@@ -18,7 +15,7 @@ struct FavoriteMovieView: View {
                     .font(.headline)
                     .lineLimit(1)
                     .truncationMode(.tail)
-                    .foregroundColor(.black)
+                    .foregroundColor(ColorTokens.onContainer.color)
                 
                 // Favorite Icon
                 Image(systemName: "heart.fill")

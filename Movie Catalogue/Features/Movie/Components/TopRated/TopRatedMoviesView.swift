@@ -7,21 +7,7 @@ struct TopRatedMoviesView: View {
         ZStack(alignment: .bottomLeading) {
             AsyncImageCache(
                 url: URL(string: movie.backdropURLString ?? "")!
-            ) { phase in
-                switch phase {
-                case .empty:
-                    ProgressView()
-                case .success(let image):
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                case .failure(let error):
-                    Text("Something went wrong")
-                @unknown default:
-                    fatalError()
-                }
-            }
-
+            ) 
             VStack(alignment: .trailing, spacing: SpacingToken.small) {
                 HStack {
                     VStack(alignment: .leading) {

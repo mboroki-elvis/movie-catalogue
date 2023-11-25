@@ -1,26 +1,23 @@
 import SwiftUI
 
-struct AsyncImageCache<Content>: View where Content: View {
+struct AsyncImageCache: View {
     private let url: URL
     private let scale: CGFloat
     private let transaction: Transaction
-    private let content: (AsyncImagePhase) -> Content
 
     init(
         url: URL,
         scale: CGFloat = 1.0,
-        transaction: Transaction = Transaction(),
-        @ViewBuilder content: @escaping (AsyncImagePhase) -> Content
+        transaction: Transaction = Transaction()
     ) {
         self.url = url
         self.scale = scale
         self.transaction = transaction
-        self.content = content
     }
 
     var body: some View {
         if let cached = ImageCache[url] {
-            content(.success(cached))
+            content(phase: .success(cached))
         } else {
             AsyncImage(
                 url: url,
@@ -37,7 +34,22 @@ struct AsyncImageCache<Content>: View where Content: View {
             ImageCache[url] = image
         }
 
-        return content(phase)
+        return content(phase: phase)
+    }
+    
+    @ViewBuilder func content(phase: AsyncImagePhase) -> some View {
+       switch phase {
+       case .empty:
+           ProgressView().foregroundStyle(.accent)
+       case .success(let image):
+           image
+               .resizable()
+               .aspectRatio(contentMode: .fill)
+       case .failure(let error):
+           ErrorView(error: error)
+       @unknown default:
+           fatalError()
+       }
     }
 }
 
@@ -57,18 +69,7 @@ fileprivate class ImageCache {
 #Preview {
     AsyncImageCache(
         url: URL(string: defaultMovie.backdropURLString!)!
-    ) { phase in
-        switch phase {
-        case .empty:
-            ProgressView()
-        case .success(let image):
-            image
-        case .failure:
-           Text("Something went wrong")
-        @unknown default:
-            fatalError()
-        }
-    }
+    ) 
 }
 
 
