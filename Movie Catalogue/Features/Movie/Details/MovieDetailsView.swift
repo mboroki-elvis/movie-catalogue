@@ -1,90 +1,77 @@
 import SwiftUI
 
 struct MovieDetailsView: View {
-    let movie: Movie
+    @Environment(AppRouter.self) private var router: AppRouter
     @Bindable var viewModel: MovieDetailsViewModel
     var body: some View {
-        VStack {
-            // Background Banner Image
-            AsyncImageCache(
-                url: URL(string: movie.backdropURLString ?? "")!,
-                imageFit: .fill,
-                progressSize: 150
-            )
-            .cornerRadius(SizeTokens.small)
-            
-            // Content Overlay
-            VStack(alignment: .leading, spacing: 20) {
-                // Movie Title
-                Text(movie.title ?? "")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundColor(.onContainer)
-                
-                // Movie Description
-                Text(movie.overview ?? "")
-                    .foregroundColor(.onContainer)
-                    .frame(width: UIScreen.main.bounds.width - SizeTokens.large)
-                
-                // Genres View
-                if let genres = movie.genres?.compactMap(\.name) {
-                    GenresView(genres: genres)
-                }
-
-                
-                // Star Rating View
-                StarRatingView(rating: 4.5)
-                
-                // Language and Producers View
-                LanguageAndProducersView(
-                    languages: ["English", "Spanish"],
-                    producers: ["Producer 1", "Producer 2"]
-                )
-                
-                // Add more details as needed
-                
-                Spacer()
+        VStack(alignment: .leading) {
+            HStack {
+                Button(action: {
+                    router.pop()
+                }, label: {
+                    Image(systemName: "arrow.backward")
+                        .font(.headline)
+                })
+                Text("Video Details")
+                    .font(.headline)
+                    .foregroundStyle(Color.onContainer)
             }
-            .padding(20)
+            .padding(SizeTokens.small)
+            ScrollView {
+                // Background Banner Image
+                AsyncImageCache(
+                    url: URL(string: viewModel.movie?.backdropURLString ?? "https://placehold.co/600x400")!,
+                    imageFit: .fill,
+                    progressSize: 150
+                )
+                .cornerRadius(SizeTokens.small)
+                .shimmer(active: viewModel.isLoading)
+
+                // Content Overlay
+                VStack(alignment: .leading, spacing: SizeTokens.regular) {
+                    // Movie Title
+                    Text(viewModel.movie?.title ?? "")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.onContainer)
+                        .shimmer(active: viewModel.isLoading)
+
+                    // Movie Description
+                    Text(viewModel.movie?.overview ?? "")
+                        .foregroundColor(.onContainer)
+                        .frame(width: UIScreen.main.bounds.width - SizeTokens.large)
+                        .shimmer(active: viewModel.isLoading)
+
+                    // Genres View
+                    if let genres = viewModel.movie?.genres?.compactMap(\.name) {
+                        GenresView(genres: genres)
+                    }
+
+                    // Star Rating View
+                    StarRatingView(rating: 4.5)
+                        .shimmer(active: viewModel.isLoading)
+
+                    // Language and Producers View
+                    let languages = viewModel.movie?.languages
+                    let producers = viewModel.movie?.productionCompanies
+                    LanguageAndProducersView(
+                        languages: languages?.map(\.englishName) ?? [],
+                        producers: producers?.map(\.name) ?? []
+                    )
+                    .shimmer(active: viewModel.isLoading)
+
+                    // Add more details as needed
+
+                    Spacer()
+                }
+                .padding(SizeTokens.regular)
+            }
         }
         .onAppear {
             viewModel.onAppear()
         }
-    }
-}
-
-struct GenresView: View {
-    var genres: [String]
-
-    var body: some View {
-        HStack {
-            Text("Genres:")
-                .foregroundColor(.onContainer)
-                .font(.headline)
-            ForEach(genres, id: \.self) { genre in
-                Text(genre)
-                    .foregroundColor(.white)
-                    .padding(5)
-                    .background(Color.blue)
-                    .cornerRadius(8)
-            }
-        }
-    }
-}
-
-struct StarRatingView: View {
-    var rating: Double
-
-    var body: some View {
-        HStack {
-            Text("Rating:")
-                .foregroundColor(.onContainer)
-                .font(.headline)
-            Image(systemName: "star.fill")
-                .foregroundColor(.yellow)
-            Text(String(format: "%.1f", rating))
-                .foregroundColor(.onContainer)
-        }
+        .navigationBarBackButtonHidden()
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
@@ -99,6 +86,7 @@ struct LanguageAndProducersView: View {
                 .font(.headline)
             ForEach(languages, id: \.self) { language in
                 Text(language)
+                    .font(.caption)
                     .foregroundColor(.onContainer)
             }
 
@@ -107,6 +95,7 @@ struct LanguageAndProducersView: View {
                 .font(.headline)
             ForEach(producers, id: \.self) { producer in
                 Text(producer)
+                    .font(.caption)
                     .foregroundColor(.onContainer)
             }
         }
@@ -116,7 +105,6 @@ struct LanguageAndProducersView: View {
 #Preview(body: {
     ScrollView {
         MovieDetailsView(
-            movie: defaultMovie,
             viewModel: MovieDetailsViewModel(movie: 0)
         )
     }

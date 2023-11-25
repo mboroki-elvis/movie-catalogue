@@ -23,6 +23,10 @@
 		C4BF8C4A2B1262CE005D7A22 /* MovieDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C492B1262CE005D7A22 /* MovieDetailsView.swift */; };
 		C4BF8C4C2B1272D9005D7A22 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C4B2B1272D9005D7A22 /* AppCoordinator.swift */; };
 		C4BF8C502B127630005D7A22 /* MovieDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C4F2B127630005D7A22 /* MovieDetailsViewModel.swift */; };
+		C4BF8C522B1288AF005D7A22 /* GenresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C512B1288AF005D7A22 /* GenresView.swift */; };
+		C4BF8C542B1288E3005D7A22 /* StarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C532B1288E3005D7A22 /* StarRatingView.swift */; };
+		C4BF8C562B128A98005D7A22 /* CompanyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C552B128A98005D7A22 /* CompanyResponse.swift */; };
+		C4BF8C582B128B41005D7A22 /* LanguageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C572B128B41005D7A22 /* LanguageResponse.swift */; };
 		C4C8F41E2B116A5900DA04FF /* TopRatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8F41D2B116A5900DA04FF /* TopRatedRequest.swift */; };
 		C4C8F4202B11C8E100DA04FF /* TrendingMoviesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8F41F2B11C8E100DA04FF /* TrendingMoviesRow.swift */; };
 		C4C8F4232B11CE2000DA04FF /* TopRatedMoviesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8F4222B11CE2000DA04FF /* TopRatedMoviesRow.swift */; };
@@ -97,6 +101,10 @@
 		C4BF8C492B1262CE005D7A22 /* MovieDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsView.swift; sourceTree = "<group>"; };
 		C4BF8C4B2B1272D9005D7A22 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		C4BF8C4F2B127630005D7A22 /* MovieDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewModel.swift; sourceTree = "<group>"; };
+		C4BF8C512B1288AF005D7A22 /* GenresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresView.swift; sourceTree = "<group>"; };
+		C4BF8C532B1288E3005D7A22 /* StarRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarRatingView.swift; sourceTree = "<group>"; };
+		C4BF8C552B128A98005D7A22 /* CompanyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyResponse.swift; sourceTree = "<group>"; };
+		C4BF8C572B128B41005D7A22 /* LanguageResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageResponse.swift; sourceTree = "<group>"; };
 		C4C8F41D2B116A5900DA04FF /* TopRatedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRatedRequest.swift; sourceTree = "<group>"; };
 		C4C8F41F2B11C8E100DA04FF /* TrendingMoviesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingMoviesRow.swift; sourceTree = "<group>"; };
 		C4C8F4222B11CE2000DA04FF /* TopRatedMoviesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRatedMoviesRow.swift; sourceTree = "<group>"; };
@@ -169,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				C4D1E19F2B1145D7007AF0BA /* MovieViewModel.swift */,
+				C4D1E1312B1116D9007AF0BA /* MoviesLandingView.swift */,
 				C4C8F4242B11CE2400DA04FF /* TopRated */,
 				C4C8F4212B11CE0700DA04FF /* Trending */,
 				C4BF8C302B11DEF8005D7A22 /* Favorite */,
@@ -208,6 +217,8 @@
 			isa = PBXGroup;
 			children = (
 				C4BF8C312B11EFEF005D7A22 /* AsyncImageCache.swift */,
+				C4BF8C512B1288AF005D7A22 /* GenresView.swift */,
+				C4BF8C532B1288E3005D7A22 /* StarRatingView.swift */,
 				C4BF8C3F2B1236CB005D7A22 /* CarouselLoadingState.swift */,
 				C4BF8C452B12394D005D7A22 /* SkeletonAnimationItem.swift */,
 			);
@@ -368,7 +379,6 @@
 			children = (
 				C4BF8C4B2B1272D9005D7A22 /* AppCoordinator.swift */,
 				C4D1E12F2B1116D9007AF0BA /* MovieCatalogueApp.swift */,
-				C4D1E1312B1116D9007AF0BA /* MoviesLandingView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -417,6 +427,8 @@
 			isa = PBXGroup;
 			children = (
 				C4D1E1802B112799007AF0BA /* MovieResponse.swift */,
+				C4BF8C552B128A98005D7A22 /* CompanyResponse.swift */,
+				C4BF8C572B128B41005D7A22 /* LanguageResponse.swift */,
 				C47C442D2B114F3D00763142 /* ResultResponse.swift */,
 				C4D1E1862B11287D007AF0BA /* GenreResponse.swift */,
 				C4D1E1842B1127F1007AF0BA /* CollectionResponse.swift */,
@@ -593,11 +605,14 @@
 				C4D1E1952B113E0B007AF0BA /* TrendingMoviesRequest.swift in Sources */,
 				C4C8F4232B11CE2000DA04FF /* TopRatedMoviesRow.swift in Sources */,
 				C4C8F4202B11C8E100DA04FF /* TrendingMoviesRow.swift in Sources */,
+				C4BF8C562B128A98005D7A22 /* CompanyResponse.swift in Sources */,
 				C4D1E18A2B112A02007AF0BA /* Movie.swift in Sources */,
 				C4C8F4282B11DBF400DA04FF /* FavoriteMovieView.swift in Sources */,
 				C4D1E1982B113E53007AF0BA /* MovieAPI.swift in Sources */,
+				C4BF8C522B1288AF005D7A22 /* GenresView.swift in Sources */,
 				C4D1E1712B111C18007AF0BA /* NetworkClientMock.swift in Sources */,
 				C4D1E1812B112799007AF0BA /* MovieResponse.swift in Sources */,
+				C4BF8C542B1288E3005D7A22 /* StarRatingView.swift in Sources */,
 				C4D1E1832B1127BA007AF0BA /* ExternalIDType.swift in Sources */,
 				C4D1E1752B111C18007AF0BA /* Data+prettyPrinted.swift in Sources */,
 				C4BF8C372B121A77005D7A22 /* UITokens.swift in Sources */,
@@ -616,6 +631,7 @@
 				C4D1E1782B111C18007AF0BA /* HTTPFields.swift in Sources */,
 				C4BF8C2F2B11DEF3005D7A22 /* FavoriteMovieRow.swift in Sources */,
 				C4BF8C4A2B1262CE005D7A22 /* MovieDetailsView.swift in Sources */,
+				C4BF8C582B128B41005D7A22 /* LanguageResponse.swift in Sources */,
 				C4D1E19D2B11416E007AF0BA /* MovieDetailsRequest.swift in Sources */,
 				C4BF8C342B120337005D7A22 /* Double+Extension.swift in Sources */,
 				C4D1E15E2B111973007AF0BA /* Router.swift in Sources */,

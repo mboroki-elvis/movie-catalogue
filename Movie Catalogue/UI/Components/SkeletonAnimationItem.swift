@@ -6,7 +6,7 @@ struct SkeletonLoadingItem: View {
 
     // MARK: - Init
 
-    public init(colors: [Color] = [.containerAlternate, .white], cornerRadius: CGFloat = 4) {
+     init(colors: [Color] = [.containerAlternate, .white], cornerRadius: CGFloat = 4) {
         self.colors = colors
         self.cornerRadius = cornerRadius
     }

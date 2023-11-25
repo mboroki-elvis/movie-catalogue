@@ -4,9 +4,7 @@ import SwiftData
 
 @Observable class MovieDetailsViewModel {
     var movie: Movie?
-    var topRated = [Movie]()
     var isLoading = false
-    var presentDialog = false
     private let id: Int
     private let datasource: MovieDatasource
     init(datasource: MovieDatasource = MovieDatasourceImpl(), movie id: Int) {

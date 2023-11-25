@@ -1,6 +1,6 @@
 import Foundation
 
-struct ResultResponse: Codable, Equatable {
+struct ResultResponse: Decodable, Equatable {
     let page: Int
     let results: [MovieResponse]
     let totalPages, totalResults: Int
@@ -11,14 +11,3 @@ struct ResultResponse: Codable, Equatable {
         case totalResults = "total_results"
     }
 }
-
-//"genres": [
-//  {
-//    "id": 28,
-//    "name": "Action"
-//  },
-//  {
-//    "id": 18,
-//    "name": "Drama"
-//  }
-//],

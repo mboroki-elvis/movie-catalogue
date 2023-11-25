@@ -5,6 +5,7 @@ struct MoviesLandingView: View {
     // MARK: Properties
 
     @Environment(\.modelContext) private var modelContext
+    @Environment(AppRouter.self) private var router: AppRouter
     @Query private var favorites: [Movie]
     @Bindable private var viewModel = MovieViewModel()
 
@@ -49,10 +50,9 @@ struct MoviesLandingView: View {
                     .padding(.leading, 16)
                 }
                 Spacer()
-            }
-            .onAppear(perform: {
+            }.task {
                 viewModel.onAppear()
-            })
+            }
         }.confirmationDialog("", isPresented: $viewModel.presentDialog) {
             let isFavorited = viewModel.isSelectedMovieFavourited(movies: favorites)
             Button(action: {
@@ -70,6 +70,7 @@ struct MoviesLandingView: View {
             Button(action: {
                 if let selected = viewModel.currentSelectedMovie {
                     print("go to \(selected.title ?? "")")
+                    router.push(.details(selected.id))
                 }
             }, label: {
                 HStack {

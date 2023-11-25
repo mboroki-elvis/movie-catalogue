@@ -19,6 +19,7 @@ struct MovieCatalogueApp: App {
         WindowGroup {
             AppCoordinator()
                 .environment(router)
+                .background(Color(UIColor.systemGroupedBackground))
         }
         .modelContainer(sharedModelContainer)
     }

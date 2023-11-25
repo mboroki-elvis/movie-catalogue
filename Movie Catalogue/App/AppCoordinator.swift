@@ -9,7 +9,7 @@ import SwiftUI
 
 enum Routes: Hashable {
     case landing
-    case details
+    case details(Int)
     case viewAll
 }
 
@@ -29,8 +29,12 @@ struct AppCoordinator: View {
             switch route {
             case .landing:
                 MoviesLandingView()
-            case .details:
-                MoviesLandingView()
+                    .environment(router)
+                    .background(Color(UIColor.systemGroupedBackground))
+            case .details(let id):
+                MovieDetailsView(viewModel: .init(movie: id))
+                    .environment(router)
+                    .background(Color(UIColor.systemGroupedBackground))
             case .viewAll:
                 Text("Hello world!")
             }
