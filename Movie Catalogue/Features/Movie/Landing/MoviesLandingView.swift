@@ -15,7 +15,7 @@ struct MoviesLandingView: View {
         ScrollView(.vertical, showsIndicators: false) {
             ZStack {
                 Color(UIColor.systemGroupedBackground)
-                    .edgesIgnoringSafeArea(.all)
+                    .ignoresSafeArea(.all)
 
                 VStack(alignment: .center, spacing: 0) {
                     TopRatedMoviesRow(
@@ -97,4 +97,5 @@ struct MoviesLandingView: View {
     MoviesLandingView()
         .background(Color(UIColor.systemGroupedBackground))
         .modelContainer(for: Movie.self, inMemory: true)
+        .environment(AppRouter(.landing))
 }

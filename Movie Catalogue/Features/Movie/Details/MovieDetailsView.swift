@@ -24,7 +24,6 @@ struct MovieDetailsView: View {
                     imageFit: .fill,
                     progressSize: 150
                 )
-                .cornerRadius(SizeTokens.small)
                 .shimmer(active: viewModel.isLoading)
 
                 // Content Overlay
@@ -107,5 +106,6 @@ struct LanguageAndProducersView: View {
         MovieDetailsView(
             viewModel: MovieDetailsViewModel(movie: 0)
         )
+        .environment(AppRouter(.landing))
     }
 })
