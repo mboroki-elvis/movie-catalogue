@@ -5,11 +5,11 @@ struct StarRatingView: View {
 
     var body: some View {
         HStack {
-            Text("Rating:")
+            Text("Average Rating:")
                 .foregroundColor(.onContainer)
                 .font(.headline)
-            Image(systemName: "star.fill")
-                .foregroundColor(.yellow)
+            Image(systemName: "hand.thumbsup.fill")
+                .foregroundColor(.accentColor)
             Text(String(format: "%.1f", rating))
                 .foregroundColor(.onContainer)
         }

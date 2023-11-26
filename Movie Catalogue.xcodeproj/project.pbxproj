@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C40900BF2B134D90009EA30A /* LanguageAndProducersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40900BE2B134D90009EA30A /* LanguageAndProducersView.swift */; };
+		C40900C12B134EA6009EA30A /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40900C02B134EA6009EA30A /* Date+Extension.swift */; };
 		C47C442E2B114F3D00763142 /* ResultResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47C442D2B114F3D00763142 /* ResultResponse.swift */; };
 		C47C44302B11549300763142 /* BaseURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47C442F2B11549300763142 /* BaseURL.swift */; };
 		C47C44322B1159F500763142 /* TrendingMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47C44312B1159F500763142 /* TrendingMoviesView.swift */; };
 		C47C44342B1160B600763142 /* TopRatedMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47C44332B1160B600763142 /* TopRatedMoviesView.swift */; };
+		C4BAAC482B132CF900D42614 /* ParallaxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BAAC472B132CF900D42614 /* ParallaxView.swift */; };
+		C4BAAC4A2B13309000D42614 /* OffsetObservingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BAAC492B13309000D42614 /* OffsetObservingScrollView.swift */; };
 		C4BF8C2F2B11DEF3005D7A22 /* FavoriteMovieRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C2E2B11DEF3005D7A22 /* FavoriteMovieRow.swift */; };
 		C4BF8C322B11EFEF005D7A22 /* AsyncImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C312B11EFEF005D7A22 /* AsyncImageCache.swift */; };
 		C4BF8C342B120337005D7A22 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C332B120337005D7A22 /* Double+Extension.swift */; };
@@ -85,10 +89,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C40900BE2B134D90009EA30A /* LanguageAndProducersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageAndProducersView.swift; sourceTree = "<group>"; };
+		C40900C02B134EA6009EA30A /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		C47C442D2B114F3D00763142 /* ResultResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultResponse.swift; sourceTree = "<group>"; };
 		C47C442F2B11549300763142 /* BaseURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseURL.swift; sourceTree = "<group>"; };
 		C47C44312B1159F500763142 /* TrendingMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingMoviesView.swift; sourceTree = "<group>"; };
 		C47C44332B1160B600763142 /* TopRatedMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRatedMoviesView.swift; sourceTree = "<group>"; };
+		C4BAAC472B132CF900D42614 /* ParallaxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxView.swift; sourceTree = "<group>"; };
+		C4BAAC492B13309000D42614 /* OffsetObservingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetObservingScrollView.swift; sourceTree = "<group>"; };
 		C4BF8C2E2B11DEF3005D7A22 /* FavoriteMovieRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMovieRow.swift; sourceTree = "<group>"; };
 		C4BF8C312B11EFEF005D7A22 /* AsyncImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImageCache.swift; sourceTree = "<group>"; };
 		C4BF8C332B120337005D7A22 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
@@ -198,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				C4BF8C332B120337005D7A22 /* Double+Extension.swift */,
+				C40900C02B134EA6009EA30A /* Date+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -221,6 +230,9 @@
 				C4BF8C532B1288E3005D7A22 /* StarRatingView.swift */,
 				C4BF8C3F2B1236CB005D7A22 /* CarouselLoadingState.swift */,
 				C4BF8C452B12394D005D7A22 /* SkeletonAnimationItem.swift */,
+				C4BAAC472B132CF900D42614 /* ParallaxView.swift */,
+				C40900BE2B134D90009EA30A /* LanguageAndProducersView.swift */,
+				C4BAAC492B13309000D42614 /* OffsetObservingScrollView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -610,6 +622,8 @@
 				C4C8F4282B11DBF400DA04FF /* FavoriteMovieView.swift in Sources */,
 				C4D1E1982B113E53007AF0BA /* MovieAPI.swift in Sources */,
 				C4BF8C522B1288AF005D7A22 /* GenresView.swift in Sources */,
+				C4BAAC4A2B13309000D42614 /* OffsetObservingScrollView.swift in Sources */,
+				C40900C12B134EA6009EA30A /* Date+Extension.swift in Sources */,
 				C4D1E1712B111C18007AF0BA /* NetworkClientMock.swift in Sources */,
 				C4D1E1812B112799007AF0BA /* MovieResponse.swift in Sources */,
 				C4BF8C542B1288E3005D7A22 /* StarRatingView.swift in Sources */,
@@ -617,6 +631,7 @@
 				C4D1E1752B111C18007AF0BA /* Data+prettyPrinted.swift in Sources */,
 				C4BF8C372B121A77005D7A22 /* UITokens.swift in Sources */,
 				C4BF8C4C2B1272D9005D7A22 /* AppCoordinator.swift in Sources */,
+				C40900BF2B134D90009EA30A /* LanguageAndProducersView.swift in Sources */,
 				C4D1E15F2B111973007AF0BA /* RouterStackView.swift in Sources */,
 				C4D1E1732B111C18007AF0BA /* NetworkError+Extensions.swift in Sources */,
 				C4BF8C322B11EFEF005D7A22 /* AsyncImageCache.swift in Sources */,
@@ -643,6 +658,7 @@
 				C4D1E1602B111973007AF0BA /* PathInfo.swift in Sources */,
 				C47C44322B1159F500763142 /* TrendingMoviesView.swift in Sources */,
 				C4BF8C442B123765005D7A22 /* ShimmerMask.swift in Sources */,
+				C4BAAC482B132CF900D42614 /* ParallaxView.swift in Sources */,
 				C4D1E1702B111C18007AF0BA /* URLRequest+curl.swift in Sources */,
 				C4D1E1302B1116D9007AF0BA /* MovieCatalogueApp.swift in Sources */,
 				C4D1E1742B111C18007AF0BA /* NetworkClientImpl.swift in Sources */,

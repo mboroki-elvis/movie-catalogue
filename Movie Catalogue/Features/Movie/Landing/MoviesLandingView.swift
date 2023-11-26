@@ -41,7 +41,8 @@ struct MoviesLandingView: View {
                     .padding(.leading, 16)
 
                     FavoriteMovieRow(
-                        movies: favorites,
+                        movies: favorites, 
+                        isLoading: viewModel.isLoading,
                         onTap: { movie in
                             viewModel.currentSelectedMovie = movie
                             viewModel.presentDialog.toggle()
