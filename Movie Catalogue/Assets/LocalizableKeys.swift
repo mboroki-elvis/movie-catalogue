@@ -17,6 +17,7 @@ enum LocalizableKeys: String {
     case viewAll = "View All"
     case viewMovieDetails = "View Movie Details"
     case votes = "Votes"
+    case error = "Something went wrong!"
 
     func toLocalizableKey() -> LocalizedStringKey {
         LocalizedStringKey(self.rawValue)

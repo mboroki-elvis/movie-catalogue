@@ -73,6 +73,7 @@
 		C4F9917B2B1382CD00F2F7B6 /* MoviesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F9917A2B1382CD00F2F7B6 /* MoviesListView.swift */; };
 		C4F9917E2B138A2C00F2F7B6 /* Codable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F9917D2B138A2C00F2F7B6 /* Codable+Extension.swift */; };
 		C4F991802B13958B00F2F7B6 /* MovieListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F9917F2B13958B00F2F7B6 /* MovieListViewModel.swift */; };
+		C4F991822B13BFE800F2F7B6 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F991812B13BFE700F2F7B6 /* ContainerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +165,7 @@
 		C4F9917A2B1382CD00F2F7B6 /* MoviesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListView.swift; sourceTree = "<group>"; };
 		C4F9917D2B138A2C00F2F7B6 /* Codable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+Extension.swift"; sourceTree = "<group>"; };
 		C4F9917F2B13958B00F2F7B6 /* MovieListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewModel.swift; sourceTree = "<group>"; };
+		C4F991812B13BFE700F2F7B6 /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,6 +255,7 @@
 				C4BAAC472B132CF900D42614 /* ParallaxView.swift */,
 				C40900BE2B134D90009EA30A /* LanguageAndProducersView.swift */,
 				C4BAAC492B13309000D42614 /* OffsetObservingScrollView.swift */,
+				C4F991812B13BFE700F2F7B6 /* ContainerView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -673,6 +676,7 @@
 				C4D1E1752B111C18007AF0BA /* Data+prettyPrinted.swift in Sources */,
 				C4BF8C372B121A77005D7A22 /* UITokens.swift in Sources */,
 				C4BF8C4C2B1272D9005D7A22 /* AppCoordinator.swift in Sources */,
+				C4F991822B13BFE800F2F7B6 /* ContainerView.swift in Sources */,
 				C40900BF2B134D90009EA30A /* LanguageAndProducersView.swift in Sources */,
 				C4D1E15F2B111973007AF0BA /* RouterStackView.swift in Sources */,
 				C4D1E1732B111C18007AF0BA /* NetworkError+Extensions.swift in Sources */,

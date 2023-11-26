@@ -28,6 +28,7 @@ class MovieLandingViewModel {
     var currentSelectedMovie: Movie?
     /// The data source for movie-related operations.
     private let datasource: MovieDatasource
+    private(set) var error: Error?
     /**
      Initializes a new MovieViewModel with the specified data source.
      Parameter datasource: The data source for movie-related operations.
@@ -45,6 +46,7 @@ class MovieLandingViewModel {
     @MainActor
     func onAppear() {
         Task {
+            self.error = nil
             self.isLoading = true
             defer { self.isLoading = false }
             do {
@@ -53,7 +55,7 @@ class MovieLandingViewModel {
                 let tendingResponse = try await datasource.getTrending(page: 1)
                 self.trending = tendingResponse.map { .init(movie: $0)}
             } catch {
-                print(error)
+                self.error = error
             }
         }
     }
@@ -63,7 +65,7 @@ class MovieLandingViewModel {
      Parameter context: The data context where the movie should be added.
      */
     func addSelectedMovieToContext(context: ModelContext) {
-        guard let currentSelectedMovie = currentSelectedMovie else { return }
+        guard let currentSelectedMovie else { return }
         context.insert(currentSelectedMovie)
         self.currentSelectedMovie = nil
     }
@@ -73,7 +75,7 @@ class MovieLandingViewModel {
      Parameter context: The data context from which the movie should be deleted.
      */
     func deleteSelectedMovieFromContext(context: ModelContext) {
-        guard let currentSelectedMovie = currentSelectedMovie else { return }
+        guard let currentSelectedMovie else { return }
         context.delete(currentSelectedMovie)
         self.currentSelectedMovie = nil
     }
@@ -84,7 +86,7 @@ class MovieLandingViewModel {
      Returns: A boolean indicating whether the selected movie is favorited.
      */
     func isSelectedMovieFavourited(movies: [Movie]) -> Bool {
-        guard let currentSelectedMovie = currentSelectedMovie else { return false }
+        guard let currentSelectedMovie else { return false }
         return movies.contains(currentSelectedMovie)
     }
 }

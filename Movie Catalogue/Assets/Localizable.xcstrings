@@ -134,6 +134,17 @@
         }
       }
     },
+    "Something went wrong!" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong!"
+          }
+        }
+      }
+    },
     "Top Rated" : {
       "extractionState" : "manual",
       "localizations" : {

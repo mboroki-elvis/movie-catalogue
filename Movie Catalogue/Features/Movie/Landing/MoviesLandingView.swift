@@ -12,49 +12,51 @@ struct MoviesLandingView: View {
     // MARK: UI
 
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            ZStack {
-                Color(UIColor.systemGroupedBackground)
-                    .ignoresSafeArea(.all)
+        ContainerView(error: viewModel.error) {
+            ScrollView(.vertical, showsIndicators: false) {
+                ZStack {
+                    Color(UIColor.systemGroupedBackground)
+                        .ignoresSafeArea(.all)
 
-                VStack(alignment: .center, spacing: .zero) {
-                    TopRatedMoviesRow(
-                        movies: viewModel.topRated,
-                        isLoading: viewModel.isLoading,
-                        onTap: { movie in
-                            viewModel.currentSelectedMovie = movie
-                            viewModel.presentDialog.toggle()
-                        }, 
-                        viewAll: {
-                            router.push(.viewTopRated)
-                        }
-                    )
-                    .padding(.horizontal, SizeTokens.regular)
+                    VStack(alignment: .center, spacing: .zero) {
+                        TopRatedMoviesRow(
+                            movies: viewModel.topRated,
+                            isLoading: viewModel.isLoading,
+                            onTap: { movie in
+                                viewModel.currentSelectedMovie = movie
+                                viewModel.presentDialog.toggle()
+                            },
+                            viewAll: {
+                                router.push(.viewTopRated)
+                            }
+                        )
+                        .padding(.horizontal, SizeTokens.regular)
 
-                    TrendingMoviesRow(
-                        movies: viewModel.trending,
-                        isLoading: viewModel.isLoading,
-                        onTap: { movie in
-                            viewModel.currentSelectedMovie = movie
-                            viewModel.presentDialog.toggle()
-                        },
-                        viewAll: {
-                            router.push(.viewTrending)
-                        }
-                    )
-                    .padding(.horizontal, SizeTokens.regular)
+                        TrendingMoviesRow(
+                            movies: viewModel.trending,
+                            isLoading: viewModel.isLoading,
+                            onTap: { movie in
+                                viewModel.currentSelectedMovie = movie
+                                viewModel.presentDialog.toggle()
+                            },
+                            viewAll: {
+                                router.push(.viewTrending)
+                            }
+                        )
+                        .padding(.horizontal, SizeTokens.regular)
 
-                    FavoriteMovieRow(
-                        movies: favorites, 
-                        isLoading: viewModel.isLoading,
-                        onTap: { movie in
-                            viewModel.currentSelectedMovie = movie
-                            viewModel.presentDialog.toggle()
-                        }
-                    )
-                    .padding(.horizontal, SizeTokens.regular)
+                        FavoriteMovieRow(
+                            movies: favorites,
+                            isLoading: viewModel.isLoading,
+                            onTap: { movie in
+                                viewModel.currentSelectedMovie = movie
+                                viewModel.presentDialog.toggle()
+                            }
+                        )
+                        .padding(.horizontal, SizeTokens.regular)
+                    }
+                    Spacer()
                 }
-                Spacer()
             }
         }
         .task {
