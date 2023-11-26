@@ -66,7 +66,7 @@ struct MoviesLandingView: View {
             viewModel.onAppear()
         }
         .confirmationDialog("", isPresented: $viewModel.presentDialog) {
-            let isFavorited = viewModel.isSelectedMovieFavourited(movies: favorites)
+            let isFavorited = viewModel.isSelectedMovieFavourited(context: modelContext)
             Button(action: {
                 if isFavorited {
                     viewModel.deleteSelectedMovieFromContext(context: modelContext)

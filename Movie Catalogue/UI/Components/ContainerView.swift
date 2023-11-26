@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContainerView<Content: View>: View {
-    var error: Error?
+    @State var error: Error?
     let content: () -> Content
     var body: some View {
         VStack {
@@ -17,13 +17,32 @@ struct ContainerView<Content: View>: View {
                     VStack(alignment: .leading) {
                         Text(with: .error)
                             .lineLimit(2)
-                            .font(.title)
+                            .font(.title3)
                         Text(error.localizedDescription)
                             .lineLimit(2)
                             .font(.caption)
-                    }                    
+                    }
+                    .padding()
+
+                    Spacer()
+
+                    Button {
+                        self.error = nil
+                    } label: {
+                        Image(systemName: "close")
+                            .font(.title)
+                            .foregroundStyle(Color.onContainer)
+                    }
                 }
                 .background(.accent.opacity(0.7))
+                .clipShape(
+                    .rect(
+                        topLeadingRadius: SizeTokens.small,
+                        bottomLeadingRadius: SizeTokens.small,
+                        bottomTrailingRadius: SizeTokens.small,
+                        topTrailingRadius: SizeTokens.small
+                    )
+                )
                 .padding()
             }
             content()

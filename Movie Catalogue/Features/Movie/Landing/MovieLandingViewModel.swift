@@ -5,14 +5,14 @@ import SwiftData
 /**
   A view model responsible for managing movie-related data and interactions.
 
-  The `MovieViewModel` class provides functionality to fetch trending and top-rated movies, handle loading states, and manage the state of selected movies within a context.
+  The `MovieLandingViewModel` class provides functionality to fetch trending and top-rated movies, handle loading states, and manage the state of selected movies within a context.
 
   - Requires: The `Observation` and `SwiftData` modules for observable functionality and data storage.
 
   ### Example Usage:
   ```swift
-  @Bindable var movieViewModel = MovieViewModel()
- ```
+  @Observable var movieLandingViewModel = MovieLandingViewModel()
+  ```
  */
 @Observable
 class MovieLandingViewModel {
@@ -25,16 +25,30 @@ class MovieLandingViewModel {
     /// A boolean indicating whether a dialog should be presented.
     var presentDialog = false
     /// The currently selected movie.
-    var currentSelectedMovie: Movie?
+    var currentSelectedMovie: Movie? {
+        didSet {
+            favoritesUseCase.movie = currentSelectedMovie
+        }
+    }
+
+    /// An error encountered during data fetching or use case operations.
+    private(set) var error: Error?
     /// The data source for movie-related operations.
     private let datasource: MovieDatasource
-    private(set) var error: Error?
+    /// The use case for managing favorite movies.
+    private let favoritesUseCase: FavoritesUseCase
     /**
-     Initializes a new MovieViewModel with the specified data source.
-     Parameter datasource: The data source for movie-related operations.
+     Initializes a new MovieLandingViewModel with the specified data source and favorites use case.
+     Parameters:
+     datasource: The data source for movie-related operations.
+     favoritesUseCase: The use case for managing favorite movies.
      */
-    init(datasource: MovieDatasource = MovieDatasourceImplementation()) {
+    init(
+        datasource: MovieDatasource = MovieDatasourceImplementation(),
+        favoritesUseCase: FavoritesUseCase = FavoritesUseCaseImplementation()
+    ) {
         self.datasource = datasource
+        self.favoritesUseCase = favoritesUseCase
     }
 
     /**
@@ -51,9 +65,9 @@ class MovieLandingViewModel {
             defer { self.isLoading = false }
             do {
                 let ratedResponse = try await datasource.topRated(page: 1)
-                self.topRated = ratedResponse.map { .init(movie: $0)}
-                let tendingResponse = try await datasource.getTrending(page: 1)
-                self.trending = tendingResponse.map { .init(movie: $0)}
+                self.topRated = ratedResponse.map { .init(movie: $0) }
+                let trendingResponse = try await datasource.getTrending(page: 1)
+                self.trending = trendingResponse.map { .init(movie: $0) }
             } catch {
                 self.error = error
             }
@@ -65,9 +79,12 @@ class MovieLandingViewModel {
      Parameter context: The data context where the movie should be added.
      */
     func addSelectedMovieToContext(context: ModelContext) {
-        guard let currentSelectedMovie else { return }
-        context.insert(currentSelectedMovie)
-        self.currentSelectedMovie = nil
+        defer { currentSelectedMovie = nil }
+        do {
+            try favoritesUseCase.addSelectedMovieToContext(context: context)
+        } catch {
+            self.error = error
+        }
     }
 
     /**
@@ -75,18 +92,25 @@ class MovieLandingViewModel {
      Parameter context: The data context from which the movie should be deleted.
      */
     func deleteSelectedMovieFromContext(context: ModelContext) {
-        guard let currentSelectedMovie else { return }
-        context.delete(currentSelectedMovie)
-        self.currentSelectedMovie = nil
+        defer { currentSelectedMovie = nil }
+        do {
+            try favoritesUseCase.deleteSelectedMovieFromContext(context: context)
+        } catch {
+            self.error = error
+        }
     }
 
     /**
-     Checks if the currently selected movie is favorited in the given list of movies.
-     Parameter movies: The list of movies to check for favoritism.
+     Checks if the currently selected movie is favorited in the given data context.
+     Parameter context: The data context to check for favoritism.
      Returns: A boolean indicating whether the selected movie is favorited.
      */
-    func isSelectedMovieFavourited(movies: [Movie]) -> Bool {
-        guard let currentSelectedMovie else { return false }
-        return movies.contains(currentSelectedMovie)
+    func isSelectedMovieFavourited(context: ModelContext) -> Bool {
+        do {
+            return try favoritesUseCase.contextHasMovie(context: context)
+        } catch {
+            self.error = error
+            return false
+        }
     }
 }
