@@ -49,7 +49,7 @@ extension APIRequest {
         for (key, value) in headers {
             requestHeaders[key] = value
         }
-        requestHeaders["Authorization"] = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNGMzMDQ2OWZlOTUwNWZhZDQxZGU4OTBlOTI0NDlkYyIsInN1YiI6IjY1NjBlZTY5MjQ0MTgyMDBhZDVkYTkwMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.TlP79QVvfgWKY57u9SZf5bIckQLw_tY3tMBlyDCgojc"
+        requestHeaders["Authorization"] = "Bearer "
         let jsonData = try JSONEncoder().encode(self)
         let result = await client.request(
             endpoint: endpoint,
