@@ -17,6 +17,7 @@ struct MoviesListView: View {
                     .foregroundStyle(Color.onContainer)
             }
             .padding(.horizontal, SizeTokens.regular)
+            .padding(.vertical, SizeTokens.extraSmall)
             
             List {
                 ForEach(viewModel.movies) { movie in
@@ -26,6 +27,8 @@ struct MoviesListView: View {
                                 viewModel.currentPage += 1
                                 viewModel.fetchData()
                             }
+                        }.onTapGesture {
+                            router.push(.details(movie.id))
                         }
                 }
                 if viewModel.currentPage < viewModel.totalPages {
