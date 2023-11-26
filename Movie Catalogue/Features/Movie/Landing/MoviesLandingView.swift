@@ -51,10 +51,15 @@ struct MoviesLandingView: View {
                     .padding(.horizontal, SizeTokens.regular)
                 }
                 Spacer()
-            }.task {
-                viewModel.onAppear()
             }
-        }.confirmationDialog("", isPresented: $viewModel.presentDialog) {
+        }
+        .task {
+            viewModel.onAppear()
+        }
+        .refreshable {
+            viewModel.onAppear()
+        }
+        .confirmationDialog("", isPresented: $viewModel.presentDialog) {
             let isFavorited = viewModel.isSelectedMovieFavourited(movies: favorites)
             Button(action: {
                 if isFavorited {

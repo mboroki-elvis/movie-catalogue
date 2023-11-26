@@ -72,7 +72,7 @@ struct MovieDetailsView: View {
                 .background(Color.container)
             }
         }
-        .onAppear {
+        .task {
             viewModel.onAppear()
         }
         .navigationBarBackButtonHidden()
