@@ -15,7 +15,7 @@ import SwiftData
   ```
  */
 @Observable
-class MovieLandingViewModel {
+final class MovieLandingViewModel {
     /// An array of trending movies.
     var trending = [Movie]()
     /// An array of top-rated movies.

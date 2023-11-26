@@ -28,7 +28,7 @@ protocol MovieDatasource {
   let datasource = MovieDatasourceImpl()
  ```
  */
-class MovieDatasourceImplementation: MovieDatasource {
+final class MovieDatasourceImplementation: MovieDatasource {
     /// The network client for making API requests.
     let client: NetworkClient
     let environment: AppEnvironment

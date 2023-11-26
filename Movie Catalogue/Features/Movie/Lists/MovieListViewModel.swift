@@ -1,7 +1,7 @@
 import Foundation
 import Observation
 
-@Observable class MovieListViewModel {
+@Observable final class MovieListViewModel {
     var movies: [Movie] = []
     var totalPages = 1000
     var currentPage = 1

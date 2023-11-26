@@ -17,7 +17,7 @@ import Observation
  **/
 
 @Observable
-class Router<T: Hashable> {
+final class Router<T: Hashable> {
     /// The information about the current path.
     var pathInfo: PathInfo<T>
     /// The weak reference to the top path information in the stack.

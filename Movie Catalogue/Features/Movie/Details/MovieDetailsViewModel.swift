@@ -15,7 +15,7 @@ import SwiftData
   ```
  */
 @Observable
-class MovieDetailsViewModel {
+final class MovieDetailsViewModel {
     /// An error encountered during data fetching, if any.
     private(set) var error: Error?
     /// The details of the movie.

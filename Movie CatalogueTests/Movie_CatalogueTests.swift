@@ -6,31 +6,68 @@
 //
 
 import XCTest
+import SwiftData
 @testable import Movie_Catalogue
 
-final class Movie_CatalogueTests: XCTestCase {
+final class MovieLandingViewModelTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    var viewModel: MovieLandingViewModel!
+    var favoritesUseCase: MockFavoritesUseCase!
+    override func setUp() {
+        super.setUp()
+        // Initialize the view model with mock dependencies
+        favoritesUseCase = MockFavoritesUseCase()
+        viewModel = MovieLandingViewModel(
+            datasource: MovieDatasourceImplementation(
+                environment: EnvironmentMock()
+            ),
+            favoritesUseCase: favoritesUseCase
+        )
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    override func tearDown() {
+        viewModel = nil
+        favoritesUseCase = nil
+        super.tearDown()
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    // MARK: - Test onAppear method
+
+    @MainActor func testOnAppearSuccess() {
+
+        // Call the onAppear method
+        favoritesUseCase.movie = defaultMovie
+        viewModel.onAppear()
+
+        // Assert that the view model's properties are updated as expected
+        XCTAssertTrue(viewModel.isLoading)
+        XCTAssertNil(viewModel.error)
+        XCTAssertEqual(viewModel.topRated.count, 1)
+        XCTAssertEqual(viewModel.trending.count, 1)
+        XCTAssertFalse(viewModel.isLoading)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testOnAppearFailure() {
+//        // Create a mock error for the datasource
+//        let mockError = /* create a mock error here */
+//
+//        // Inject the mock error into the MockMovieDatasource
+//        (viewModel.datasource as? MockMovieDatasource)?.mockError = mockError
+//
+//        // Call the onAppear method
+//        viewModel.onAppear()
+//
+//        // Assert that the view model's properties are updated as expected
+//        XCTAssertTrue(viewModel.isLoading)
+//        XCTAssertNotNil(viewModel.error)
+//        XCTAssertEqual(viewModel.topRated.count, 0)
+//        XCTAssertEqual(viewModel.trending.count, 0)
+//        XCTAssertFalse(viewModel.isLoading)
     }
+
+    // MARK: - Test other methods...
+
+    // Write similar test methods for other functions in the view model
 
 }
+

@@ -101,4 +101,54 @@ struct MovieResponse: Decodable, Equatable {
         voteAverage = try? container.decode(Double.self, forKey: .voteAverage)
         voteCount = try? container.decode(Int.self, forKey: .voteCount)
     }
+
+    init(
+        id: Int,
+        adult: Bool? = nil,
+        backdropPath: String? = nil,
+        budget: Int? = nil,
+        collection: CollectionResponse? = nil,
+        genres: [GenreResponse]? = nil,
+        homepage: String? = nil,
+        imdbID: ExternalIDType? = nil,
+        mediaType: String? = nil,
+        originalTitle: String? = nil,
+        overview: String? = nil,
+        popularity: Double? = nil,
+        releaseDate: Date? = nil,
+        revenue: Int? = nil,
+        runtime: Int? = nil,
+        status: String? = nil,
+        tagline: String? = nil,
+        title: String? = nil,
+        video: Bool? = nil,
+        voteAverage: Int? = nil,
+        voteCount: Int? = nil,
+        languages: [LanguageResponse]? = nil,
+        productionCompanies: [CompanyResponse]? = nil
+    ) {
+        self.id = id
+        self.adult = adult
+        self.backdropPath = backdropPath
+        self.budget = budget
+        self.collection = collection
+        self.genres = genres
+        self.homepage = homepage
+        self.imdbID = imdbID
+        self.mediaType = mediaType
+        self.originalTitle = originalTitle
+        self.overview = overview
+        self.popularity = popularity
+        self.releaseDate = releaseDate
+        self.revenue = revenue
+        self.runtime = runtime
+        self.status = status
+        self.tagline = tagline
+        self.title = title
+        self.video = video
+        self.voteAverage = Double(voteAverage ?? .zero)
+        self.voteCount = voteCount
+        spokenLanguages = languages
+        self.productionCompanies = productionCompanies
+    }
 }

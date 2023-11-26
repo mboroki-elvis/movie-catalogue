@@ -4,6 +4,7 @@ protocol AppEnvironment {
     var apiKey: String { get }
     var baseURL: String { get }
     var imageURL: String { get }
+    var apiEnronment: ApiEnvironment { get }
     func string(for key: EnvironmentKeys) -> String
 }
 
@@ -14,12 +15,16 @@ extension AppEnvironment {
 }
 
 struct EnvironmentLive: AppEnvironment {
+    var apiEnronment: ApiEnvironment { .live }
+    
     var apiKey: String { string(for: .apiKey) }
     var imageURL: String { string(for: .imageURL) }
     var baseURL: String { string(for: .apiURL) }
 }
 
 struct EnvironmentMock: AppEnvironment {
+    var apiEnronment: ApiEnvironment { .mock }
+    
     var apiKey: String { "" }
     var imageURL: String { "" }
     var baseURL: String { "" }

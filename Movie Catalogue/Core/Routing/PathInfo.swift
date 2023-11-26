@@ -15,7 +15,7 @@ import SwiftUI
   ```
  */
 @Observable
-class PathInfo<T: Hashable> {
+final class PathInfo<T: Hashable> {
     /// The root of the navigation path.
     var root: T
     /// The current path in the navigation stack.

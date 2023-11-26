@@ -8,7 +8,7 @@ protocol FavoritesUseCase: AnyObject {
     func contextHasMovie(context: ModelContext) throws -> Bool
 }
 
-class FavoritesUseCaseImplementation: FavoritesUseCase {
+final class FavoritesUseCaseImplementation: FavoritesUseCase {
     var movie: Movie?
     func addSelectedMovieToContext(context: ModelContext) throws {
         guard let movie else { throw FavoritesSaveError.noMovie }
