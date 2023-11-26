@@ -1,11 +1,29 @@
 import Foundation
 import Observation
 
-@Observable class Router<Т: Hashable> {
-    var pathInfo: PathInfo<Т>
-    private weak var topPathInfo: PathInfo<Т>?
+/**
+ A router for managing navigation within an application.
 
-    var currentRoute: Т {
+ The router maintains a stack of routes and provides methods for pushing, popping, and navigating through the routes.
+
+ - Note: This class is designed to be used with the `@Observable` property wrapper.
+
+ - Requires: The `Observation` module for observable functionality.
+
+ ### Example Usage:
+ ```swift
+ @Bindable var myRouter = Router<MyRouteType>(.initialRoute)
+ ```
+ **/
+
+@Observable
+class Router<T: Hashable> {
+    /// The information about the current path.
+    var pathInfo: PathInfo<T>
+    /// The weak reference to the top path information in the stack.
+    private weak var topPathInfo: PathInfo<T>?
+    /// The current active route in the stack.
+    var currentRoute: T {
         let info: PathInfo = topPathInfo ?? pathInfo
         if info.path.count > 0 {
             return info.path.last!
@@ -13,26 +31,23 @@ import Observation
         return info.root
     }
 
-    /// Initialises a new router
-    ///
-    /// - Parameters:
-    ///   - root: The initial route
-    ///
-    init(_ root: Т) {
+    /**
+     Initializes a new router with the specified initial route.
+     Parameter root: The initial route for the router.
+     */
+    init(_ root: T) {
         self.pathInfo = PathInfo(root: root)
         self.topPathInfo = pathInfo
     }
 
-    /// A method used to push a new route to the stack
-    ///
-    /// - Parameters:
-    ///   - route: the route to append
-    ///   - presentationMode: Defines the presentation mode. It can be one of the following:
-    ///     - stack - this is the default option, presents the route as in NavigationStack
-    ///     - sheet - presents the route in a sheet
-    ///     - fullScreen - uses fullScreenCover to present the route
-    ///
-    func push(_ route: Т, presentationMode: PresentationMode = .stack) {
+    /**
+     Pushes a new route onto the stack.
+     Parameters:
+     route: The route to append to the stack.
+     presentationMode: Defines the presentation mode for the route.
+     Note: This method is asynchronous and should be called on the main thread.
+     */
+    func push(_ route: T, presentationMode: PresentationMode = .stack) {
         DispatchQueue.main.async {
             if presentationMode == .stack {
                 self.topPathInfo?.path.append(route)
@@ -48,8 +63,10 @@ import Observation
         }
     }
 
-    /// Pops the top route from the stack
-    ///
+    /**
+     Pops the top route from the stack.
+     Note: This method is asynchronous and should be called on the main thread.
+     */
     func pop() {
         DispatchQueue.main.async {
             if self.topPathInfo != nil, self.topPathInfo!.path.count > 0 {
@@ -61,9 +78,12 @@ import Observation
         }
     }
 
-    /// This method is used internally by the VBRouterView class
-    ///
-    func popTo(_ pathInfo: PathInfo<Т>) {
+    /**
+     Pops routes from the stack until the specified path information is reached.
+     Parameter pathInfo: The target path information to pop routes up to.
+     Note: This method is asynchronous and should be called on the main thread.
+     */
+    func popTo(_ pathInfo: PathInfo<T>) {
         DispatchQueue.main.async {
             var current = self.topPathInfo
             while current != nil {
