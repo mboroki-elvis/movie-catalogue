@@ -2,12 +2,13 @@ import Foundation
 import Observation
 
 @Observable class MovieListViewModel {
-     var movies: [Movie] = []
-     var totalPages = 0
-     var currentPage = 1
+    var movies: [Movie] = []
+    var totalPages = 1000
+    var currentPage = 1
 
     private let list: MovieList
     private let datasource: MovieDatasource
+
     /**
      Initializes a new MovieViewModel with the specified data source.
      Parameter datasource: The data source for movie-related operations.
@@ -16,30 +17,28 @@ import Observation
         self.datasource = datasource
         self.list = list
     }
-    
+
     func fetchData() {
         Task {
-          await fetchMovies(page: currentPage)
+            await fetchMovies(page: currentPage)
         }
     }
 
     @MainActor
     private func fetchMovies(page: Int) async {
-
         do {
             let moviesResponse: [MovieResponse]
             switch list {
             case .trending:
-                moviesResponse =  try await datasource.getTrending(page: 1)
+                moviesResponse = try await datasource.getTrending(page: page)
             case .topRated:
-                moviesResponse =  try await datasource.topRated(page: 1)
+                moviesResponse = try await datasource.topRated(page: page)
             }
-            movies.append(contentsOf: moviesResponse.map{.init(movie: $0)})
+            movies.append(contentsOf: moviesResponse.map { .init(movie: $0) })
 //                    totalPages = placeholderResponse.totalPages
         } catch {
             print(error)
         }
-
     }
 }
 

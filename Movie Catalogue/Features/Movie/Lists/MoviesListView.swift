@@ -1,26 +1,44 @@
 import SwiftUI
 
 struct MoviesListView: View {
+    @Environment(AppRouter.self) private var router: AppRouter
     var viewModel: MovieListViewModel
     var body: some View {
-        VStack {
+        VStack(alignment: .leading, spacing: .zero) {
+            HStack(alignment: .top) {
+                Button(action: {
+                    router.pop()
+                }, label: {
+                    Image(systemName: "arrow.backward")
+                        .font(.headline)
+                })
+                Text(with: .viewAll)
+                    .font(.headline)
+                    .foregroundStyle(Color.onContainer)
+            }
+            .padding(.horizontal, SizeTokens.regular)
+            
             List {
                 ForEach(viewModel.movies) { movie in
-                    // Display your data here
-                    Text(movie.title ?? "")
+                    TrendingMoviesView(movie: movie)
+                        .onAppear {
+                            if movie == viewModel.movies.last {
+                                viewModel.currentPage += 1
+                                viewModel.fetchData()
+                            }
+                        }
                 }
                 if viewModel.currentPage < viewModel.totalPages {
                     ProgressView()
-                        .onAppear {
-                            // Load more data when the last item is displayed
-                            viewModel.currentPage += 1
-                            viewModel.fetchData()
-                        }
+                        .foregroundStyle(.accent)
                 }
             }
+            Spacer()
         }
-        .onAppear {
+        .task {
             viewModel.fetchData()
         }
+        .navigationBarBackButtonHidden()
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
