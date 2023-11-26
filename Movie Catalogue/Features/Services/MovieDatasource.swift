@@ -7,13 +7,13 @@ import Foundation
  */
 protocol MovieDatasource {
     /// Asynchronously fetches a list of top-rated movies.
-    func topRated() async throws -> [Movie]
+    func topRated(page: Int) async throws -> [MovieResponse]
 
     /// Asynchronously fetches a list of trending movies.
-    func getTrending() async throws -> [Movie]
+    func getTrending(page: Int) async throws -> [MovieResponse]
 
     /// Asynchronously fetches details for a specific movie.
-    func getDetails(movie id: Int) async throws -> Movie?
+    func getDetails(movie id: Int) async throws -> MovieResponse?
 }
 
 /**
@@ -28,7 +28,7 @@ protocol MovieDatasource {
   let datasource = MovieDatasourceImpl()
  ```
  */
-class MovieDatasourceImplimentation: MovieDatasource {
+class MovieDatasourceImplementation: MovieDatasource {
     /// The network client for making API requests.
     let client: NetworkClient
     let environment: AppEnvironment
@@ -49,11 +49,11 @@ class MovieDatasourceImplimentation: MovieDatasource {
      Returns: An array of Movie objects representing top-rated movies.
      Throws: An error of type MovieAPIError if the request encounters an issue.
      */
-    func topRated() async throws -> [Movie] {
+    func topRated(page: Int = 1) async throws -> [MovieResponse] {
         do {
-            let request = TopRatedRequest()
+            let request = TopRatedRequest(page: page)
             if let response = try await request.doRequest(environment: environment, client) {
-                return response.results.map { Movie(movie: $0) }
+                return response.results
             }
             throw MovieAPIError.badRequest
         } catch APIException.unknownError {
@@ -68,11 +68,11 @@ class MovieDatasourceImplimentation: MovieDatasource {
      Returns: An array of Movie objects representing trending movies.
      Throws: An error of type MovieAPIError if the request encounters an issue.
      */
-    func getTrending() async throws -> [Movie] {
+    func getTrending(page: Int = 1) async throws -> [MovieResponse] {
         do {
-            let request = TrendingMoviesRequest()
+            let request = TrendingMoviesRequest(page: page)
             if let response = try await request.doRequest(environment: environment, client) {
-                return response.results.map { Movie(movie: $0) }
+                return response.results
             }
             throw MovieAPIError.badRequest
         } catch APIException.unknownError {
@@ -88,13 +88,10 @@ class MovieDatasourceImplimentation: MovieDatasource {
      Returns: A Movie object representing the details of the specified movie, or nil if not found.
      Throws: An error of type MovieAPIError if the request encounters an issue.
      */
-    func getDetails(movie id: Int) async throws -> Movie? {
+    func getDetails(movie id: Int) async throws -> MovieResponse? {
         do {
             let request = MovieDetailsRequest(movie: id)
-            if let movie = try await request.doRequest(environment: environment, client) {
-                return Movie(movie: movie)
-            }
-            throw MovieAPIError.badRequest
+            return try await request.doRequest(environment: environment, client)
         } catch APIException.unknownError {
             throw MovieAPIError.unknownError
         } catch {
@@ -103,7 +100,7 @@ class MovieDatasourceImplimentation: MovieDatasource {
     }
 }
 
-private extension MovieDatasourceImplimentation {
+private extension MovieDatasourceImplementation {
     /// Enumeration defining errors specific to the movie API.
     enum MovieAPIError: Error {
         case badRequest

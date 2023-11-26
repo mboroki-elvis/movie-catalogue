@@ -23,12 +23,14 @@ struct NetworkClientImpl: NetworkClient {
     func get<T: Decodable>(
         endpoint: String,
         headers: HTTPHeaders,
+        queryParams: [String: Any]?,
         expecting type: T.Type
     ) async -> Result<T, NetworkError> {
         await request(
             endpoint: endpoint,
             method: .get,
             headers: headers,
+            queryParams: queryParams,
             expecting: type
         )
     }
@@ -55,12 +57,20 @@ struct NetworkClientImpl: NetworkClient {
         method: HTTPMethod,
         headers: HTTPHeaders,
         body: Data? = nil,
+        queryParams: [String: Any]? = nil,
         expecting type: T.Type
     ) async -> Result<T, NetworkError> {
         do {
-            guard let url = URL(string: environment.baseURL + endpoint) else {
+            guard var urlComponents = URLComponents(string: environment.baseURL + endpoint) else {
                 return .failure(NetworkError.invalidURL)
             }
+            if let queryParams {
+                urlComponents.queryItems = queryParams.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
+            }
+
+            let url = urlComponents.url!
+
+            // Create a URLRequest with the URL
 
             var request = URLRequest(url: url)
 

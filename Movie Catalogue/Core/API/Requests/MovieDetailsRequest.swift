@@ -10,6 +10,6 @@ struct MovieDetailsRequest: APIRequest {
     init(movie id: Int) {
         self.movieId = id
     }
-
+    enum CodingKeys: CodingKey {}
     func response(environment: AppEnvironment, networkClient: NetworkClient) async throws -> MovieResponse? { nil }
 }

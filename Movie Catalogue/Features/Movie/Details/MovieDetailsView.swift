@@ -83,7 +83,7 @@ struct MovieDetailsView: View {
 #Preview(body: {
     ScrollView {
         MovieDetailsView(
-            viewModel: MovieDetailsViewModel(movie: 0)
+            viewModel: MovieDetailsViewModel(movieID: 0)
         )
         .environment(AppRouter(.landing))
     }

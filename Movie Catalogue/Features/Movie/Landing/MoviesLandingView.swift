@@ -7,7 +7,7 @@ struct MoviesLandingView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(AppRouter.self) private var router: AppRouter
     @Query private var favorites: [Movie]
-    @Bindable private var viewModel = MovieViewModel()
+    @Bindable private var viewModel = MovieLandingViewModel()
 
     // MARK: UI
 
@@ -27,7 +27,7 @@ struct MoviesLandingView: View {
                             viewModel.presentDialog.toggle()
                         }
                     )
-                    .padding(.leading, SizeTokens.regular)
+                    .padding(.horizontal, SizeTokens.regular)
 
                     TrendingMoviesRow(
                         category: .trending,
@@ -38,7 +38,7 @@ struct MoviesLandingView: View {
                             viewModel.presentDialog.toggle()
                         }
                     )
-                    .padding(.leading, SizeTokens.regular)
+                    .padding(.horizontal, SizeTokens.regular)
 
                     FavoriteMovieRow(
                         movies: favorites, 
@@ -48,7 +48,7 @@ struct MoviesLandingView: View {
                             viewModel.presentDialog.toggle()
                         }
                     )
-                    .padding(.leading, SizeTokens.regular)
+                    .padding(.horizontal, SizeTokens.regular)
                 }
                 Spacer()
             }.task {

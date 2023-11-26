@@ -15,7 +15,7 @@ import SwiftData
  ```
  */
 @Observable
-class MovieViewModel {
+class MovieLandingViewModel {
     /// An array of trending movies.
     var trending = [Movie]()
     /// An array of top-rated movies.
@@ -32,7 +32,7 @@ class MovieViewModel {
      Initializes a new MovieViewModel with the specified data source.
      Parameter datasource: The data source for movie-related operations.
      */
-    init(datasource: MovieDatasource = MovieDatasourceImplimentation()) {
+    init(datasource: MovieDatasource = MovieDatasourceImplementation()) {
         self.datasource = datasource
     }
 
@@ -48,8 +48,10 @@ class MovieViewModel {
             self.isLoading = true
             defer { self.isLoading = false }
             do {
-                self.topRated = try await datasource.topRated()
-                self.trending = try await datasource.getTrending()
+                let ratedResponse = try await datasource.topRated(page: 1)
+                self.topRated = ratedResponse.map { .init(movie: $0)}
+                let tendingResponse = try await datasource.getTrending(page: 1)
+                self.trending = tendingResponse.map { .init(movie: $0)}
             } catch {
                 print(error)
             }

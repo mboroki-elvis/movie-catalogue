@@ -20,12 +20,14 @@ class NetworkClientMock: NetworkClient {
     func get<T: Decodable>(
         endpoint: String,
         headers: HTTPHeaders,
+        queryParams: [String : Any]?,
         expecting type: T.Type
     ) async -> Result<T, NetworkError> {
         return await request(
             endpoint: endpoint,
             method: .get,
             headers: headers,
+            queryParams: queryParams,
             expecting: type
         )
     }
@@ -52,6 +54,7 @@ class NetworkClientMock: NetworkClient {
         method: HTTPMethod,
         headers: HTTPHeaders,
         body: Data? = nil,
+        queryParams: [String : Any]? = nil,
         expecting type: T.Type
     ) async -> Result<T, NetworkError> {
         self.endpoint = endpoint

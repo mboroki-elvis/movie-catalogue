@@ -15,6 +15,7 @@ protocol NetworkClient {
     func get<T: Decodable>(
         endpoint: String,
         headers: HTTPHeaders,
+        queryParams: [String: Any]?,
         expecting type: T.Type
     ) async -> Result<T, NetworkError>
 
@@ -55,6 +56,7 @@ protocol NetworkClient {
         method: HTTPMethod,
         headers: HTTPHeaders,
         body: Data?,
+        queryParams: [String: Any]?,
         expecting type: T.Type
     ) async -> Result<T, NetworkError>
 }

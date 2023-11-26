@@ -69,7 +69,10 @@
 		C4D1E1952B113E0B007AF0BA /* TrendingMoviesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D1E1942B113E0B007AF0BA /* TrendingMoviesRequest.swift */; };
 		C4D1E1982B113E53007AF0BA /* MovieAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D1E1972B113E53007AF0BA /* MovieAPI.swift */; };
 		C4D1E19D2B11416E007AF0BA /* MovieDetailsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D1E19C2B11416E007AF0BA /* MovieDetailsRequest.swift */; };
-		C4D1E1A02B1145D7007AF0BA /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D1E19F2B1145D7007AF0BA /* MovieViewModel.swift */; };
+		C4D1E1A02B1145D7007AF0BA /* MovieLandingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D1E19F2B1145D7007AF0BA /* MovieLandingViewModel.swift */; };
+		C4F9917B2B1382CD00F2F7B6 /* MoviesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F9917A2B1382CD00F2F7B6 /* MoviesListView.swift */; };
+		C4F9917E2B138A2C00F2F7B6 /* Codable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F9917D2B138A2C00F2F7B6 /* Codable+Extension.swift */; };
+		C4F991802B13958B00F2F7B6 /* MovieListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F9917F2B13958B00F2F7B6 /* MovieListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,9 +158,12 @@
 		C4D1E1942B113E0B007AF0BA /* TrendingMoviesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingMoviesRequest.swift; sourceTree = "<group>"; };
 		C4D1E1972B113E53007AF0BA /* MovieAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAPI.swift; sourceTree = "<group>"; };
 		C4D1E19C2B11416E007AF0BA /* MovieDetailsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsRequest.swift; sourceTree = "<group>"; };
-		C4D1E19F2B1145D7007AF0BA /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
+		C4D1E19F2B1145D7007AF0BA /* MovieLandingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieLandingViewModel.swift; sourceTree = "<group>"; };
 		C4F991762B136A2600F2F7B6 /* AppConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AppConfig.xcconfig; sourceTree = "<group>"; };
 		C4F991772B13741D00F2F7B6 /* Movie-Catalogue-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Movie-Catalogue-Info.plist"; sourceTree = SOURCE_ROOT; };
+		C4F9917A2B1382CD00F2F7B6 /* MoviesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListView.swift; sourceTree = "<group>"; };
+		C4F9917D2B138A2C00F2F7B6 /* Codable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+Extension.swift"; sourceTree = "<group>"; };
+		C4F9917F2B13958B00F2F7B6 /* MovieListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,7 +204,7 @@
 		C47C44352B1160C300763142 /* Landing */ = {
 			isa = PBXGroup;
 			children = (
-				C4D1E19F2B1145D7007AF0BA /* MovieViewModel.swift */,
+				C4D1E19F2B1145D7007AF0BA /* MovieLandingViewModel.swift */,
 				C4D1E1312B1116D9007AF0BA /* MoviesLandingView.swift */,
 				C4C8F4242B11CE2400DA04FF /* TopRated */,
 				C4C8F4212B11CE0700DA04FF /* Trending */,
@@ -383,6 +389,7 @@
 			isa = PBXGroup;
 			children = (
 				C4D1E16A2B111C18007AF0BA /* Data+prettyPrinted.swift */,
+				C4F9917D2B138A2C00F2F7B6 /* Codable+Extension.swift */,
 				C4D1E1682B111C18007AF0BA /* NetworkError+Extensions.swift */,
 				C4D1E1632B111C18007AF0BA /* String+AppStorageKey.swift */,
 				C4D1E1652B111C18007AF0BA /* URLRequest+curl.swift */,
@@ -444,6 +451,7 @@
 			isa = PBXGroup;
 			children = (
 				C4C8F4252B11DB1000DA04FF /* Constants.swift */,
+				C4F9917C2B1382D300F2F7B6 /* Lists */,
 				C4BF8C4E2B127611005D7A22 /* Details */,
 				C47C44352B1160C300763142 /* Landing */,
 			);
@@ -497,6 +505,15 @@
 				C4F991762B136A2600F2F7B6 /* AppConfig.xcconfig */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		C4F9917C2B1382D300F2F7B6 /* Lists */ = {
+			isa = PBXGroup;
+			children = (
+				C4F9917A2B1382CD00F2F7B6 /* MoviesListView.swift */,
+				C4F9917F2B13958B00F2F7B6 /* MovieListViewModel.swift */,
+			);
+			path = Lists;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -642,6 +659,7 @@
 				C4C8F4232B11CE2000DA04FF /* TopRatedMoviesRow.swift in Sources */,
 				C4C8F4202B11C8E100DA04FF /* TrendingMoviesRow.swift in Sources */,
 				C4BF8C562B128A98005D7A22 /* CompanyResponse.swift in Sources */,
+				C4F9917E2B138A2C00F2F7B6 /* Codable+Extension.swift in Sources */,
 				C4D1E18A2B112A02007AF0BA /* Movie.swift in Sources */,
 				C4C8F4282B11DBF400DA04FF /* FavoriteMovieView.swift in Sources */,
 				C4D1E1982B113E53007AF0BA /* MovieAPI.swift in Sources */,
@@ -662,7 +680,7 @@
 				C4D1E1722B111C18007AF0BA /* NetworkClient.swift in Sources */,
 				C4C8F41E2B116A5900DA04FF /* TopRatedRequest.swift in Sources */,
 				C4D1E1872B11287D007AF0BA /* GenreResponse.swift in Sources */,
-				C4D1E1A02B1145D7007AF0BA /* MovieViewModel.swift in Sources */,
+				C4D1E1A02B1145D7007AF0BA /* MovieLandingViewModel.swift in Sources */,
 				C4BF8C462B12394D005D7A22 /* SkeletonAnimationItem.swift in Sources */,
 				C4D1E16E2B111C18007AF0BA /* String+AppStorageKey.swift in Sources */,
 				C4BF8C3A2B121AF9005D7A22 /* ErrorView.swift in Sources */,
@@ -687,6 +705,8 @@
 				C4D1E1302B1116D9007AF0BA /* MovieCatalogueApp.swift in Sources */,
 				C4D1E1742B111C18007AF0BA /* NetworkClientImpl.swift in Sources */,
 				C4C8F4262B11DB1000DA04FF /* Constants.swift in Sources */,
+				C4F9917B2B1382CD00F2F7B6 /* MoviesListView.swift in Sources */,
+				C4F991802B13958B00F2F7B6 /* MovieListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

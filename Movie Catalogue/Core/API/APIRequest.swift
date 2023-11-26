@@ -47,12 +47,17 @@ extension APIRequest {
         for (key, value) in headers {
             requestHeaders[key] = value
         }
+        var params: [String: Any] = ["api_key": environment.apiKey]
+        if let queryParams = convertToQueryParameters() {
+            params = params.merging(queryParams) { (_, new) in new }
+        }
         let jsonData = try JSONEncoder().encode(self)
         let result = await client.request(
-            endpoint: endpoint + "?api_key=\(environment.apiKey)",
+            endpoint: endpoint,
             method: method,
             headers: requestHeaders,
-            body: method == .get ? nil : jsonData,
+            body: method == .get ? nil : jsonData, 
+            queryParams: params,
             expecting: ResponseType.self
         )
         switch result {
