@@ -21,7 +21,7 @@ struct MovieDetailsView: View {
                             Image(systemName: "arrow.backward")
                                 .font(.headline)
                         })
-                        Text("Video Details")
+                        Text(with: .movieDetails)
                             .font(.headline)
                             .foregroundStyle(Color.onContainerAlternate)
                     }

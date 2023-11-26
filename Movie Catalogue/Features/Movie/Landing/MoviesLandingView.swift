@@ -17,9 +17,9 @@ struct MoviesLandingView: View {
                 Color(UIColor.systemGroupedBackground)
                     .ignoresSafeArea(.all)
 
-                VStack(alignment: .center, spacing: 0) {
+                VStack(alignment: .center, spacing: .zero) {
                     TopRatedMoviesRow(
-                        category: "Top Rated",
+                        category: .topRated,
                         movies: viewModel.topRated,
                         isLoading: viewModel.isLoading,
                         onTap: { movie in
@@ -27,10 +27,10 @@ struct MoviesLandingView: View {
                             viewModel.presentDialog.toggle()
                         }
                     )
-                    .padding(.leading, 16)
+                    .padding(.leading, SizeTokens.regular)
 
                     TrendingMoviesRow(
-                        category: "Trending",
+                        category: .trending,
                         movies: viewModel.trending,
                         isLoading: viewModel.isLoading,
                         onTap: { movie in
@@ -38,7 +38,7 @@ struct MoviesLandingView: View {
                             viewModel.presentDialog.toggle()
                         }
                     )
-                    .padding(.leading, 16)
+                    .padding(.leading, SizeTokens.regular)
 
                     FavoriteMovieRow(
                         movies: favorites, 
@@ -48,7 +48,7 @@ struct MoviesLandingView: View {
                             viewModel.presentDialog.toggle()
                         }
                     )
-                    .padding(.leading, 16)
+                    .padding(.leading, SizeTokens.regular)
                 }
                 Spacer()
             }.task {
@@ -64,18 +64,17 @@ struct MoviesLandingView: View {
                 }
             }, label: {
                 HStack {
-                    Text(isFavorited ? "Remove favorite" : "Add favorite")
+                    Text(with: isFavorited ? .removeFavorite : .addFavorite)
                 }
             })
 
             Button(action: {
                 if let selected = viewModel.currentSelectedMovie {
-                    print("go to \(selected.title ?? "")")
                     router.push(.details(selected.id))
                 }
             }, label: {
                 HStack {
-                    Text("View Movie Details")
+                    Text(with: .viewMovieDetails)
                 }
             })
         }

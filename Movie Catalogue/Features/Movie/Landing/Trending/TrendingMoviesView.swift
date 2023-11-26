@@ -4,7 +4,7 @@ import SwiftUI
 struct TrendingMoviesView: View {
     let movie: Movie
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: .zero) {
             // Leading Image
             if let url = URL(string: movie.backdropURLString ?? "") {
                 AsyncImageCache(
@@ -36,14 +36,14 @@ struct TrendingMoviesView: View {
 
                 // Category Labels
                 HStack {
-                    Text("Rating \(movie.voteAverage ?? .zero)")
+                    Text(with: .rating, args: movie.voteAverage ?? .zero)
                         .font(.caption)
                         .padding(SizeTokens.extraSmall)
                         .background(.containerAlternate)
                         .foregroundColor(.onContainerAlternate)
                         .cornerRadius(SizeTokens.extraSmall)
 
-                    Text("Votes \(movie.voteCount ?? .zero)")
+                    Text(with: .votes, args: movie.voteCount ?? .zero)
                         .font(.caption)
                         .padding(SizeTokens.extraSmall)
                         .background(.container)

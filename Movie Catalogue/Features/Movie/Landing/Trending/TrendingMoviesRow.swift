@@ -1,19 +1,19 @@
 import SwiftUI
 
 struct TrendingMoviesRow: View {
-    let category: String
+    let category: LocalizableKeys
     let movies: [Movie]
     var isLoading: Bool
     var onTap: (Movie) -> Void
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(category)
+                Text(with: category)
                     .font(.headline)
                     .padding(.top, SizeTokens.extraSmall)
                 Spacer()
                 Button(action: {}, label: {
-                    Text("View All")
+                    Text(with: .viewAll)
                         .foregroundStyle(.onContainerAlternate)
                         .padding(.horizontal, SizeTokens.small)
                         .background(
@@ -50,14 +50,14 @@ struct TrendingMoviesRow: View {
 #Preview {
     VStack {
         TrendingMoviesRow(
-            category: "Trending",
+            category: .trending,
             movies: [defaultMovie],
             isLoading: false,
             onTap: { _ in }
         ).aspectRatio(3 / 2, contentMode: .fit)
         
         TrendingMoviesRow(
-            category: "Trending",
+            category: .trending,
             movies: [defaultMovie],
             isLoading: true,
             onTap: { _ in }

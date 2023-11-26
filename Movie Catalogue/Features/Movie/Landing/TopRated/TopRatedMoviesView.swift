@@ -16,7 +16,7 @@ struct TopRatedMoviesView: View {
                             .font(.headline)
                             .foregroundColor(.onContainerAlternate)
                             + Text("\n") +
-                        Text("Popularity \(movie.popularity?.roundedInt ?? .zero)")
+                        Text(with: .popularity, args: (movie.popularity?.roundedInt ?? .zero))
                             .font(.caption)
                             .foregroundColor(.onContainerAlternate)
                     }
@@ -37,7 +37,7 @@ struct TopRatedMoviesView: View {
                 }
             }
             .overlay(
-                Rectangle().fill(Color.accentColor).frame(width: 4),
+                Rectangle().fill(Color.accentColor).frame(width: SizeTokens.extraSmall),
                 alignment: .leading
             )
             .padding()

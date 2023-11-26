@@ -4,10 +4,9 @@ struct FavoriteMovieRow: View {
     let movies: [Movie]
     var isLoading: Bool
     var onTap: (Movie) -> Void
-    let category: String = "Favorites"
     var body: some View {
         VStack(alignment: .leading) {
-            Text(category)
+            Text(with: .favorites)
                 .font(.headline)
                 .padding(.top, SizeTokens.extraSmall)
 
