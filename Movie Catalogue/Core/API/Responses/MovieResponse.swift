@@ -88,9 +88,7 @@ struct MovieResponse: Decodable, Equatable {
         productionCompanies = try? container.decode([CompanyResponse].self, forKey: .productionCompanies)
 
         if let dateString = try? container.decode(String.self, forKey: .releaseDate) {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            releaseDate = dateFormatter.date(from: dateString)
+            releaseDate = Date.formatter.date(from: dateString)
         }
         revenue = try? container.decode(Int.self, forKey: .revenue)
         runtime = try? container.decode(Int.self, forKey: .runtime)

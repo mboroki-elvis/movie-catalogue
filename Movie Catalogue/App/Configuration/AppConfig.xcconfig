@@ -1,0 +1,3 @@
+API_KEY = c9856d0cb57c3f14bf75bdc6c063b8f3 // Replace with own key
+IMAGE_BASE_URL = https:/$()/image.tmdb.org/t/p/
+APP_BASE_URL = https:/$()/api.themoviedb.org/

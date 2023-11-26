@@ -32,7 +32,7 @@ class MovieViewModel {
      Initializes a new MovieViewModel with the specified data source.
      Parameter datasource: The data source for movie-related operations.
      */
-    init(datasource: MovieDatasource = MovieDatasourceImpl()) {
+    init(datasource: MovieDatasource = MovieDatasourceImplimentation()) {
         self.datasource = datasource
     }
 

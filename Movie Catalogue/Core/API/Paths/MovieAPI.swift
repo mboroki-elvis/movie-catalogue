@@ -7,11 +7,11 @@ enum MovieAPI {
     var api: String {
         switch self {
         case .trending:
-            return "discover/movie"
+            return "3/discover/movie"
         case .details(let id):
-            return "movie/\(id)"
+            return "3/movie/\(id)"
         case .topRated:
-            return "movie/top_rated"
+            return "3/movie/top_rated"
         }
     }
 }

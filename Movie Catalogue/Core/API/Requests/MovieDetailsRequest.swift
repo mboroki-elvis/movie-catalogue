@@ -11,5 +11,5 @@ struct MovieDetailsRequest: APIRequest {
         self.movieId = id
     }
 
-    func response(networkClient: NetworkClient) async throws -> MovieResponse? { nil }
+    func response(environment: AppEnvironment, networkClient: NetworkClient) async throws -> MovieResponse? { nil }
 }

@@ -80,7 +80,7 @@ final class Movie: Identifiable {
 
     var backdropURLString: String? {
         guard let backdropPath else { return nil }
-        return "\(BaseURL.images.prefix)\(backdropPath)"
+        return "\(EnvironmentLive().imageURL)w300\(backdropPath)"
     }
 }
 

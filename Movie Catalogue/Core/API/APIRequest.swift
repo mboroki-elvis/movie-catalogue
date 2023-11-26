@@ -23,7 +23,7 @@ protocol APIRequest: Encodable {
     /// - Returns: The server response
     /// - Throws: An ApiError containing all backend error information coming from the server.
     ///
-    func response(networkClient: NetworkClient) async throws -> ResponseType?
+    func response(environment: AppEnvironment ,networkClient: NetworkClient) async throws -> ResponseType?
 }
 
 extension APIRequest {
@@ -35,24 +35,21 @@ extension APIRequest {
     /// - Returns: the backend response encoded by using the infered request response type.
     /// - Throws: An ApiError exception containing all the information from the server.
     ///
-    func doRequest(_ client: NetworkClient) async throws -> ResponseType? {
-        if let response = try await response(networkClient: client) {
+    func doRequest(environment: AppEnvironment, _ client: NetworkClient) async throws -> ResponseType? {
+        if let response = try await response(environment: environment, networkClient: client) {
             return response
         }
-        return try await doLiveRequest(client)
+        return try await doLiveRequest(environment: environment, client)
     }
 
-    func doLiveRequest(_ client: NetworkClient) async throws -> ResponseType {
-        var requestHeaders = [
-            "Content-Type": "application/json; charset=utf-8"
-        ]
+    func doLiveRequest(environment: AppEnvironment, _ client: NetworkClient) async throws -> ResponseType {
+        var requestHeaders = ["Content-Type": "application/json"]
         for (key, value) in headers {
             requestHeaders[key] = value
         }
-        requestHeaders["Authorization"] = "Bearer "
         let jsonData = try JSONEncoder().encode(self)
         let result = await client.request(
-            endpoint: endpoint,
+            endpoint: endpoint + "?api_key=\(environment.apiKey)",
             method: method,
             headers: requestHeaders,
             body: method == .get ? nil : jsonData,

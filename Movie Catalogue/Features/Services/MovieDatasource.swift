@@ -28,15 +28,20 @@ protocol MovieDatasource {
   let datasource = MovieDatasourceImpl()
  ```
  */
-class MovieDatasourceImpl: MovieDatasource {
+class MovieDatasourceImplimentation: MovieDatasource {
     /// The network client for making API requests.
     let client: NetworkClient
+    let environment: AppEnvironment
     /**
      Initializes a new MovieDatasourceImpl with the specified network client.
      Parameter client: The network client for making API requests.
      */
-    init(client: NetworkClient = NetworkClientImpl(environment: EnvironmentLive())) {
+    init(
+        client: NetworkClient = NetworkClientImpl(environment: EnvironmentLive()),
+        environment: AppEnvironment = EnvironmentLive()
+    ) {
         self.client = client
+        self.environment = environment
     }
 
     /**
@@ -47,7 +52,7 @@ class MovieDatasourceImpl: MovieDatasource {
     func topRated() async throws -> [Movie] {
         do {
             let request = TopRatedRequest()
-            if let response = try await request.doRequest(client) {
+            if let response = try await request.doRequest(environment: environment, client) {
                 return response.results.map { Movie(movie: $0) }
             }
             throw MovieAPIError.badRequest
@@ -66,7 +71,7 @@ class MovieDatasourceImpl: MovieDatasource {
     func getTrending() async throws -> [Movie] {
         do {
             let request = TrendingMoviesRequest()
-            if let response = try await request.doRequest(client) {
+            if let response = try await request.doRequest(environment: environment, client) {
                 return response.results.map { Movie(movie: $0) }
             }
             throw MovieAPIError.badRequest
@@ -86,7 +91,7 @@ class MovieDatasourceImpl: MovieDatasource {
     func getDetails(movie id: Int) async throws -> Movie? {
         do {
             let request = MovieDetailsRequest(movie: id)
-            if let movie = try await request.doRequest(client) {
+            if let movie = try await request.doRequest(environment: environment, client) {
                 return Movie(movie: movie)
             }
             throw MovieAPIError.badRequest
@@ -98,7 +103,7 @@ class MovieDatasourceImpl: MovieDatasource {
     }
 }
 
-private extension MovieDatasourceImpl {
+private extension MovieDatasourceImplimentation {
     /// Enumeration defining errors specific to the movie API.
     enum MovieAPIError: Error {
         case badRequest

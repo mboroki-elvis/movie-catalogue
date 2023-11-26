@@ -12,7 +12,6 @@
 		C40900C32B135046009EA30A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C40900C22B135046009EA30A /* Localizable.xcstrings */; };
 		C40900C62B1354AC009EA30A /* LocalizableKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40900C52B1354AC009EA30A /* LocalizableKeys.swift */; };
 		C47C442E2B114F3D00763142 /* ResultResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47C442D2B114F3D00763142 /* ResultResponse.swift */; };
-		C47C44302B11549300763142 /* BaseURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47C442F2B11549300763142 /* BaseURL.swift */; };
 		C47C44322B1159F500763142 /* TrendingMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47C44312B1159F500763142 /* TrendingMoviesView.swift */; };
 		C47C44342B1160B600763142 /* TopRatedMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47C44332B1160B600763142 /* TopRatedMoviesView.swift */; };
 		C4BAAC482B132CF900D42614 /* ParallaxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BAAC472B132CF900D42614 /* ParallaxView.swift */; };
@@ -96,7 +95,6 @@
 		C40900C22B135046009EA30A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		C40900C52B1354AC009EA30A /* LocalizableKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableKeys.swift; sourceTree = "<group>"; };
 		C47C442D2B114F3D00763142 /* ResultResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultResponse.swift; sourceTree = "<group>"; };
-		C47C442F2B11549300763142 /* BaseURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseURL.swift; sourceTree = "<group>"; };
 		C47C44312B1159F500763142 /* TrendingMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingMoviesView.swift; sourceTree = "<group>"; };
 		C47C44332B1160B600763142 /* TopRatedMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRatedMoviesView.swift; sourceTree = "<group>"; };
 		C4BAAC472B132CF900D42614 /* ParallaxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxView.swift; sourceTree = "<group>"; };
@@ -158,6 +156,8 @@
 		C4D1E1972B113E53007AF0BA /* MovieAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAPI.swift; sourceTree = "<group>"; };
 		C4D1E19C2B11416E007AF0BA /* MovieDetailsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsRequest.swift; sourceTree = "<group>"; };
 		C4D1E19F2B1145D7007AF0BA /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
+		C4F991762B136A2600F2F7B6 /* AppConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AppConfig.xcconfig; sourceTree = "<group>"; };
+		C4F991772B13741D00F2F7B6 /* Movie-Catalogue-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Movie-Catalogue-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,6 +310,7 @@
 		C4D1E12E2B1116D9007AF0BA /* Movie Catalogue */ = {
 			isa = PBXGroup;
 			children = (
+				C4F991772B13741D00F2F7B6 /* Movie-Catalogue-Info.plist */,
 				C4BF8C382B121A93005D7A22 /* UI */,
 				C4D1E1622B111B11007AF0BA /* Core */,
 				C4D1E17F2B1123A9007AF0BA /* Features */,
@@ -392,7 +393,6 @@
 		C4D1E17B2B111CD5007AF0BA /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C4D1E16C2B111C18007AF0BA /* AppEnvironment.swift */,
 				C4D1E16D2B111C18007AF0BA /* HTTPFields.swift */,
 				C4D1E1642B111C18007AF0BA /* MockedResponses.swift */,
 				C4D1E16B2B111C18007AF0BA /* NetworkError.swift */,
@@ -405,6 +405,7 @@
 			children = (
 				C4BF8C4B2B1272D9005D7A22 /* AppCoordinator.swift */,
 				C4D1E12F2B1116D9007AF0BA /* MovieCatalogueApp.swift */,
+				C4F991782B1379B700F2F7B6 /* Configuration */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -477,7 +478,6 @@
 			isa = PBXGroup;
 			children = (
 				C4D1E1972B113E53007AF0BA /* MovieAPI.swift */,
-				C47C442F2B11549300763142 /* BaseURL.swift */,
 			);
 			path = Paths;
 			sourceTree = "<group>";
@@ -488,6 +488,15 @@
 				C4D1E17D2B1123A4007AF0BA /* MovieDatasource.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		C4F991782B1379B700F2F7B6 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				C4D1E16C2B111C18007AF0BA /* AppEnvironment.swift */,
+				C4F991762B136A2600F2F7B6 /* AppConfig.xcconfig */,
+			);
+			path = Configuration;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -670,7 +679,6 @@
 				C4BF8C402B1236CB005D7A22 /* CarouselLoadingState.swift in Sources */,
 				C4D1E1852B1127F1007AF0BA /* CollectionResponse.swift in Sources */,
 				C4D1E16F2B111C18007AF0BA /* MockedResponses.swift in Sources */,
-				C47C44302B11549300763142 /* BaseURL.swift in Sources */,
 				C4D1E1602B111973007AF0BA /* PathInfo.swift in Sources */,
 				C47C44322B1159F500763142 /* TrendingMoviesView.swift in Sources */,
 				C4BF8C442B123765005D7A22 /* ShimmerMask.swift in Sources */,
@@ -717,6 +725,7 @@
 /* Begin XCBuildConfiguration section */
 		C4D1E1502B1116DB007AF0BA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C4F991762B136A2600F2F7B6 /* AppConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -780,6 +789,7 @@
 		};
 		C4D1E1512B1116DB007AF0BA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C4F991762B136A2600F2F7B6 /* AppConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -845,6 +855,7 @@
 				DEVELOPMENT_TEAM = X5E66Q9HX8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Movie-Catalogue-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -874,6 +885,7 @@
 				DEVELOPMENT_TEAM = X5E66Q9HX8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Movie-Catalogue-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

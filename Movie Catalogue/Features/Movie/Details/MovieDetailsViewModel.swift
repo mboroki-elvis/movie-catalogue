@@ -7,7 +7,7 @@ import SwiftData
     var isLoading = false
     private let id: Int
     private let datasource: MovieDatasource
-    init(datasource: MovieDatasource = MovieDatasourceImpl(), movie id: Int) {
+    init(datasource: MovieDatasource = MovieDatasourceImplimentation(), movie id: Int) {
         self.datasource = datasource
         self.id = id
     }
