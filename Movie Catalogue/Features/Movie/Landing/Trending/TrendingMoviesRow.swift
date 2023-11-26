@@ -1,18 +1,18 @@
 import SwiftUI
 
 struct TrendingMoviesRow: View {
-    let category: LocalizableKeys
     let movies: [Movie]
     var isLoading: Bool
     var onTap: (Movie) -> Void
+    var viewAll: () -> Void
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(with: category)
+                Text(with: .trending)
                     .font(.headline)
                     .padding(.top, SizeTokens.extraSmall)
                 Spacer()
-                Button(action: {}, label: {
+                Button(action: viewAll, label: {
                     Text(with: .viewAll)
                         .foregroundStyle(.onContainerAlternate)
                         .padding(.horizontal, SizeTokens.small)
@@ -25,7 +25,7 @@ struct TrendingMoviesRow: View {
             .padding(.init(top: SizeTokens.small, leading: .zero, bottom: .zero, trailing: SizeTokens.small))
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: SizeTokens.small) {
+                HStack(alignment: .top, spacing: SizeTokens.extraSmall) {
                     if isLoading {
                         ForEach(0 ..< 4, id: \.self) { _ in
                             CarouselLoadingState(height: 130).frame(width: width)
@@ -50,17 +50,17 @@ struct TrendingMoviesRow: View {
 #Preview {
     VStack {
         TrendingMoviesRow(
-            category: .trending,
             movies: [defaultMovie],
             isLoading: false,
-            onTap: { _ in }
+            onTap: { _ in }, 
+            viewAll: {}
         ).aspectRatio(3 / 2, contentMode: .fit)
         
         TrendingMoviesRow(
-            category: .trending,
             movies: [defaultMovie],
             isLoading: true,
-            onTap: { _ in }
+            onTap: { _ in }, 
+            viewAll: {}
         ).aspectRatio(3 / 2, contentMode: .fit)
         
     }

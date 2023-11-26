@@ -19,23 +19,27 @@ struct MoviesLandingView: View {
 
                 VStack(alignment: .center, spacing: .zero) {
                     TopRatedMoviesRow(
-                        category: .topRated,
                         movies: viewModel.topRated,
                         isLoading: viewModel.isLoading,
                         onTap: { movie in
                             viewModel.currentSelectedMovie = movie
                             viewModel.presentDialog.toggle()
+                        }, 
+                        viewAll: {
+                            router.push(.viewTopRated)
                         }
                     )
                     .padding(.horizontal, SizeTokens.regular)
 
                     TrendingMoviesRow(
-                        category: .trending,
                         movies: viewModel.trending,
                         isLoading: viewModel.isLoading,
                         onTap: { movie in
                             viewModel.currentSelectedMovie = movie
                             viewModel.presentDialog.toggle()
+                        },
+                        viewAll: {
+                            router.push(.viewTrending)
                         }
                     )
                     .padding(.horizontal, SizeTokens.regular)

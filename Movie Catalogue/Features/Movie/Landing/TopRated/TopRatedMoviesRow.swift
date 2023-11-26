@@ -1,18 +1,18 @@
 import SwiftUI
 
 struct TopRatedMoviesRow: View {
-    let category: LocalizableKeys
     let movies: [Movie]
     var isLoading: Bool
     var onTap: (Movie) -> Void
+    var viewAll: () -> Void
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(with: category)
+                Text(with: .topRated)
                     .font(.headline)
                     .padding(.top, SizeTokens.extraSmall)
                 Spacer()
-                Button(action: {}, label: {
+                Button(action: viewAll, label: {
                     Text(with: .viewAll)
                         .foregroundStyle(.onContainerAlternate)
                         .padding(.horizontal, SizeTokens.small)
@@ -24,7 +24,7 @@ struct TopRatedMoviesRow: View {
             }
             .padding(.trailing, SizeTokens.small)
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: SizeTokens.small) {
+                HStack(alignment: .top, spacing: SizeTokens.extraSmall) {
                     if isLoading {
                         ForEach(0 ..< 4, id: \.self) { _ in
                             CarouselLoadingState().frame(width: width)
@@ -49,17 +49,17 @@ struct TopRatedMoviesRow: View {
 #Preview {
     VStack(content: {
         TopRatedMoviesRow(
-            category: .topRated,
             movies: [defaultMovie, defaultMovie],
             isLoading: false,
-            onTap: { _ in }
+            onTap: { _ in }, 
+            viewAll: {}
         ).aspectRatio(3 / 2, contentMode: .fit)
 
         TopRatedMoviesRow(
-            category: .topRated,
             movies: [defaultMovie, defaultMovie],
             isLoading: true,
-            onTap: { _ in }
+            onTap: { _ in }, 
+            viewAll: {}
         ).aspectRatio(3 / 2, contentMode: .fit)
     })
 }
