@@ -1,5 +1,6 @@
 
 import SwiftUI
+import Kingfisher
 
 struct TrendingMoviesView: View {
     let movie: Movie
@@ -7,11 +8,7 @@ struct TrendingMoviesView: View {
         HStack(spacing: .zero) {
             // Leading Image
             if let url = URL(string: movie.backdropURLString ?? "") {
-                AsyncImageCache(
-                    url: url,
-                    imageFit: .fill,
-                    progressSize: 100
-                )
+                KFImage(url)
                 .frame(width: 100, height: 115)
                 .cornerRadius(SizeTokens.small)
                 .padding()

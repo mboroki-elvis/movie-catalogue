@@ -1,14 +1,16 @@
 
 import SwiftUI
+import Kingfisher
 
 struct TopRatedMoviesView: View {
     let movie: Movie
     var body: some View {
         ZStack(alignment: .bottomLeading) {
-            AsyncImageCache(
-                url: URL(string: movie.backdropURLString ?? "")!,
-                imageFit: .fill
+            KFImage(
+                URL(string: movie.backdropURLString ?? "")!
             )
+            .resizable()
+            .aspectRatio(contentMode: .fill)
             VStack(alignment: .trailing, spacing: SizeTokens.small) {
                 HStack {
                     VStack(alignment: .leading) {

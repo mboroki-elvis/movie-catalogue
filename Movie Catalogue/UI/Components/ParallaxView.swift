@@ -1,4 +1,5 @@
 import SwiftUI
+import Kingfisher
 
 struct ParallaxView<Header, Content>: View where Content: View, Header: View {
     private let axes: Axis.Set
@@ -25,6 +26,7 @@ struct ParallaxView<Header, Content>: View where Content: View, Header: View {
         VStack {
             header()
                 .frame(height: height)
+                .offset(y: max(0, offset.y))
             OffsetObservingScrollView(
                 axes: axes,
                 offset: $offset,
@@ -34,9 +36,7 @@ struct ParallaxView<Header, Content>: View where Content: View, Header: View {
                 let proposedHeight = height + newValue.y
                 if proposedHeight <= 44 {
                     height = 44
-                } else if proposedHeight >= headerHeight {
-                    height = headerHeight
-                } else {
+                }  else  {
                     height = proposedHeight
                 }
             }
@@ -46,7 +46,7 @@ struct ParallaxView<Header, Content>: View where Content: View, Header: View {
 
 #Preview {
     ParallaxView(.vertical) {
-        AsyncImageCache(url: URL(string: "https://placehold.co/600x400")!)
+        KFImage(URL(string: "https://placehold.co/600x400")!)
     } content: {
         GenresView(genres: ["Action", "Sci-fi", "Fantasy"])
     }

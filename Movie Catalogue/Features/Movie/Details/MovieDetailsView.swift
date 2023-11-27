@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import Kingfisher
 
 struct MovieDetailsView: View {
     @Environment(\.modelContext) private var modelContext
@@ -24,12 +25,11 @@ struct MovieDetailsView: View {
 
     private var header: some View {
         ZStack(alignment: .topLeading) {
-            AsyncImageCache(
-                url: URL(string: viewModel.movie?.backdropURLString ?? "https://placehold.co/600x400")!,
-                imageFit: .fill,
-                progressSize: 150
-            )
-            .shimmer(active: viewModel.isLoading)
+            KFImage(URL(string: viewModel.movie?.backdropURLString ?? "https://placehold.co/600x400")!)
+                .resizable()
+                .frame(width: UIScreen.main.bounds.width)
+                .shimmer(active: viewModel.isLoading)
+          
 
             HStack {
                 Button(action: {
@@ -53,8 +53,9 @@ struct MovieDetailsView: View {
             .padding(.horizontal, SizeTokens.small)
             .padding(.top, 60)
             .padding(.trailing, SizeTokens.regular)
+         
         }
-        .ignoresSafeArea(.all)
+        .ignoresSafeArea(.container)
     }
 
     private var content: some View {
