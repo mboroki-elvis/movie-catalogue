@@ -10,7 +10,7 @@ struct TopRatedMoviesView: View {
                 URL(string: movie.backdropURLString ?? "")!
             )
             .resizable()
-            .aspectRatio(contentMode: .fill)
+
             VStack(alignment: .trailing, spacing: SizeTokens.small) {
                 HStack {
                     VStack(alignment: .leading) {

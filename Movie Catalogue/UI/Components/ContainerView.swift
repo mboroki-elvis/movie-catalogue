@@ -10,7 +10,8 @@ import SwiftUI
 struct ContainerView<Content: View>: View {
     var error: Error?
     var dismissError: () -> Void
-    let content: () -> Content
+    @ViewBuilder let content: () -> Content
+
     var body: some View {
         VStack(spacing: .zero) {
             if let error {
