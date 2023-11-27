@@ -22,6 +22,7 @@ struct MovieDetailsView: View {
         .background(Color.container)
         .task {
             viewModel.onAppear()
+            viewModel.toggleIsFavorite(context: modelContext)
         }
         .navigationBarBackButtonHidden()
         .navigationBarTitleDisplayMode(.inline)
@@ -29,7 +30,7 @@ struct MovieDetailsView: View {
 
     private var header: some View {
         ZStack(alignment: .topLeading) {
-            KFImage(URL(string: viewModel.movie?.backdropURLString ?? "https://placehold.co/600x400")!)
+            KFImage(URL(string: viewModel.movie.backdropURLString ?? "https://placehold.co/600x400")!)
                 .resizable()
                 .frame(width: UIScreen.main.bounds.width)
                 .shimmer(active: viewModel.isLoading)
@@ -71,34 +72,34 @@ struct MovieDetailsView: View {
         // Content Overlay
         VStack(alignment: .leading, spacing: SizeTokens.regular) {
             // Movie Title
-            Text(viewModel.movie?.title ?? "")
+            Text(viewModel.movie.title ?? "")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundColor(.onContainer)
                 .shimmer(active: viewModel.isLoading)
 
             // Movie Description
-            Text(viewModel.movie?.overview ?? "")
+            Text(viewModel.movie.overview ?? "")
                 .foregroundColor(.onContainer)
                 .frame(width: UIScreen.main.bounds.width - SizeTokens.large)
                 .shimmer(active: viewModel.isLoading)
 
             // Genres View
-            if let genres = viewModel.movie?.genres?.compactMap(\.name) {
+            if let genres = viewModel.movie.genres?.compactMap(\.name) {
                 GenresView(genres: genres)
             }
 
             // Star Rating View
-            StarRatingView(rating: Double(viewModel.movie?.voteAverage ?? .zero))
+            StarRatingView(rating: Double(viewModel.movie.voteAverage ?? .zero))
                 .shimmer(active: viewModel.isLoading)
 
             // Language and Producers View
-            let languages = viewModel.movie?.languages
-            let producers = viewModel.movie?.productionCompanies
+            let languages = viewModel.movie.languages
+            let producers = viewModel.movie.productionCompanies
             LanguageAndProducersView(
                 languages: languages?.map(\.englishName) ?? [],
                 producers: producers?.map(\.name) ?? [],
-                year: viewModel.movie?.releaseDate?.toMovieYearString ?? ""
+                year: viewModel.movie.releaseDate?.toMovieYearString ?? ""
             )
             .shimmer(active: viewModel.isLoading)
 
@@ -114,7 +115,7 @@ struct MovieDetailsView: View {
 #Preview(body: {
     ScrollView {
         MovieDetailsView(
-            viewModel: MovieDetailsViewModel(movieID: 0)
+            viewModel: MovieDetailsViewModel(movie: defaultMovie)
         )
         .environment(AppRouter(.landing))
     }

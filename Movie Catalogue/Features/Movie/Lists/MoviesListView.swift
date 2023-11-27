@@ -29,7 +29,7 @@ struct MoviesListView: View {
                                 viewModel.fetchData()
                             }
                         }.onTapGesture {
-                            router.push(.details(movie.id))
+                            router.push(.details(movie))
                         }
                 }
                 if viewModel.currentPage < viewModel.totalPages {

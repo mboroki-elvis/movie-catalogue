@@ -25,11 +25,7 @@ final class MovieLandingViewModel {
     /// A boolean indicating whether a dialog should be presented.
     var presentDialog = false
     /// The currently selected movie.
-    var currentSelectedMovie: Movie? {
-        didSet {
-            favoritesUseCase.movie = currentSelectedMovie
-        }
-    }
+    var movie: Movie?
 
     /// An error encountered during data fetching or use case operations.
     var error: LocalizedError?
@@ -79,9 +75,10 @@ final class MovieLandingViewModel {
      Parameter context: The data context where the movie should be added.
      */
     func addSelectedMovieToContext(context: ModelContext) {
-        defer { currentSelectedMovie = nil }
+        defer { movie = nil }
         do {
-            try favoritesUseCase.addSelectedMovieToContext(context: context)
+            guard let movie else { return }
+            try favoritesUseCase.addSelectedMovieToContext(movie: movie, context: context)
         } catch {
             self.error = error.toLocalizeError
         }
@@ -92,9 +89,10 @@ final class MovieLandingViewModel {
      Parameter context: The data context from which the movie should be deleted.
      */
     func deleteSelectedMovieFromContext(context: ModelContext) {
-        defer { currentSelectedMovie = nil }
+        defer { movie = nil }
         do {
-            try favoritesUseCase.deleteSelectedMovieFromContext(context: context)
+            guard let movie else { return }
+            try favoritesUseCase.deleteSelectedMovieFromContext(movie: movie, context: context)
         } catch {
             self.error = error.toLocalizeError
         }
@@ -107,7 +105,8 @@ final class MovieLandingViewModel {
      */
     func isSelectedMovieFavourited(context: ModelContext) -> Bool {
         do {
-            return try favoritesUseCase.contextHasMovie(context: context)
+            guard let movie else { return false }
+            return try favoritesUseCase.contextHasMovie(movie: movie, context: context)
         } catch {
             self.error = error.toLocalizeError
             return false

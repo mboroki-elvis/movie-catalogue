@@ -11,22 +11,23 @@ import SwiftData
 @testable import Movie_Catalogue
 
 class MockFavoritesUseCase: FavoritesUseCase {
-    var movie: Movie?
-    
-    func addSelectedMovieToContext(context: ModelContext) throws {
-        if movie == nil {
+    var isFailing: Bool = false
+    func addSelectedMovieToContext(movie: Movie, context: ModelContext) throws {
+        if isFailing {
             throw NSError(domain: "", code: 1)
         }
+
     }
-    
-    func deleteSelectedMovieFromContext(context: ModelContext) throws {
-        if movie == nil {
+
+    func deleteSelectedMovieFromContext(movie: Movie, context: ModelContext) throws {
+        if isFailing {
             throw NSError(domain: "", code: 1)
         }
+
     }
-    
-    func contextHasMovie(context: ModelContext) throws -> Bool {
-        if movie == nil {
+
+    func contextHasMovie(movie: Movie, context: ModelContext) throws -> Bool {
+        if isFailing {
             throw NSError(domain: "", code: 1)
         }
         return true

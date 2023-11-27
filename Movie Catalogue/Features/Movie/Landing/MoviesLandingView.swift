@@ -28,7 +28,7 @@ struct MoviesLandingView: View {
                             movies: viewModel.topRated,
                             isLoading: viewModel.isLoading,
                             onTap: { movie in
-                                viewModel.currentSelectedMovie = movie
+                                viewModel.movie = movie
                                 viewModel.presentDialog.toggle()
                             },
                             viewAll: {
@@ -41,7 +41,7 @@ struct MoviesLandingView: View {
                             movies: viewModel.trending,
                             isLoading: viewModel.isLoading,
                             onTap: { movie in
-                                viewModel.currentSelectedMovie = movie
+                                viewModel.movie = movie
                                 viewModel.presentDialog.toggle()
                             },
                             viewAll: {
@@ -54,7 +54,7 @@ struct MoviesLandingView: View {
                             movies: favorites,
                             isLoading: viewModel.isLoading,
                             onTap: { movie in
-                                viewModel.currentSelectedMovie = movie
+                                viewModel.movie = movie
                                 viewModel.presentDialog.toggle()
                             }
                         )
@@ -73,14 +73,16 @@ struct MoviesLandingView: View {
         .confirmationDialog(
             "",
             isPresented: $viewModel.presentDialog,
-            presenting: $viewModel.currentSelectedMovie
+            presenting: $viewModel.movie
         ) { _ in
             let isFavorited = viewModel.isSelectedMovieFavourited(context: modelContext)
             Button(action: {
-                if isFavorited {
-                    viewModel.deleteSelectedMovieFromContext(context: modelContext)
-                } else {
-                    viewModel.addSelectedMovieToContext(context: modelContext)
+                withAnimation {
+                    if isFavorited {
+                        viewModel.deleteSelectedMovieFromContext(context: modelContext)
+                    } else {
+                        viewModel.addSelectedMovieToContext(context: modelContext)
+                    }
                 }
             }, label: {
                 HStack {
@@ -89,26 +91,14 @@ struct MoviesLandingView: View {
             })
 
             Button(action: {
-                if let selected = viewModel.currentSelectedMovie {
-                    router.push(.details(selected.id))
+                if let selected = viewModel.movie {
+                    router.push(.details(selected))
                 }
             }, label: {
                 HStack {
                     Text(with: .viewMovieDetails)
                 }
             })
-        }
-    }
-
-    private func addItem(movie: Movie) {
-        withAnimation {
-            viewModel.addSelectedMovieToContext(context: modelContext)
-        }
-    }
-
-    private func deleteItems(movie: Movie) {
-        withAnimation {
-            viewModel.deleteSelectedMovieFromContext(context: modelContext)
         }
     }
 }

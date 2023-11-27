@@ -18,17 +18,12 @@ import SwiftData
 final class MovieDetailsViewModel {
     /// An error encountered during data fetching, if any.
     var error: LocalizedError?
-    /// The details of the movie.
-    private(set) var movie: Movie? {
-        didSet {
-            favoritesUseCase.movie = movie
-        }
-    }
+
 
     /// A boolean indicating whether the data is currently being loaded.
     private(set) var isLoading = false
     /// The identifier of the movie for which details are fetched.
-    private let id: Int
+    var movie: Movie
     /// The data source for movie-related operations.
     private let datasource: MovieDatasource
     private let favoritesUseCase: FavoritesUseCase
@@ -42,11 +37,11 @@ final class MovieDetailsViewModel {
     init(
         datasource: MovieDatasource = MovieDatasourceImplementation(),
         favoritesUseCase: FavoritesUseCase = FavoritesUseCaseImplementation(),
-        movieID id: Int
+        movie: Movie
     ) {
         self.datasource = datasource
         self.favoritesUseCase = favoritesUseCase
-        self.id = id
+        self.movie = movie
     }
 
     /**
@@ -62,7 +57,7 @@ final class MovieDetailsViewModel {
             self.isLoading = true
             defer { self.isLoading = false }
             do {
-                if let movieResponse = try await datasource.getDetails(movie: id) {
+                if let movieResponse = try await datasource.getDetails(movie: movie.id) {
                     self.movie = .init(movie: movieResponse)
                 }
             } catch {
@@ -73,7 +68,7 @@ final class MovieDetailsViewModel {
 
     func toggleIsFavorite(context: ModelContext) {
         do {
-            isFavorite = try favoritesUseCase.contextHasMovie(context: context)
+            isFavorite = try favoritesUseCase.contextHasMovie(movie: movie, context: context)
         } catch {
             self.error = error.toLocalizeError
         }
@@ -85,12 +80,12 @@ final class MovieDetailsViewModel {
      */
     func addOrDelete(from context: ModelContext) {
         do {
-            favoritesUseCase.movie = movie
-            let hasMovie = try favoritesUseCase.contextHasMovie(context: context)
+            defer { toggleIsFavorite(context: context)}
+            let hasMovie = try favoritesUseCase.contextHasMovie(movie: movie, context: context)
             if hasMovie {
-                try favoritesUseCase.deleteSelectedMovieFromContext(context: context)
+                try favoritesUseCase.deleteSelectedMovieFromContext(movie: movie, context: context)
             } else {
-                try favoritesUseCase.addSelectedMovieToContext(context: context)
+                try favoritesUseCase.addSelectedMovieToContext(movie: movie, context: context)
             }
         } catch {
             self.error = error.toLocalizeError

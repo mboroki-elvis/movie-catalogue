@@ -9,7 +9,7 @@ import SwiftUI
 
 enum Routes: Hashable {
     case landing
-    case details(Int)
+    case details(Movie)
     case viewTrending
     case viewTopRated
 }
@@ -31,7 +31,7 @@ struct AppCoordinator: View {
             case .landing:
                 MoviesLandingView()
             case .details(let id):
-                MovieDetailsView(viewModel: .init(movieID: id))
+                MovieDetailsView(viewModel: .init(movie: id))
             case .viewTrending:
                 MoviesListView(viewModel: .init(list: .trending))
             case  .viewTopRated:
