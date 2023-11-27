@@ -26,12 +26,12 @@ struct ParallaxView<Header, Content>: View where Content: View, Header: View {
         VStack(spacing: .zero) {
             header()
                 .frame(height: height)
-//                .overlay {
-//                    Color.black.opacity(
-//                        height / headerHeight
-//                    )
-//                    .ignoresSafeArea(.all)
-//                }
+                .overlay {
+                    Color.containerAlternate.opacity(
+                        Double((height / headerHeight) - 1) * 0.5
+                    )
+                    .ignoresSafeArea(.all)
+                }
                 .offset(y: max(0, offset.y))
             OffsetObservingScrollView(
                 axes: axes,
@@ -40,20 +40,15 @@ struct ParallaxView<Header, Content>: View where Content: View, Header: View {
             )
             .onChange(of: offset) { _, newValue in
                 let proposedHeight = height + newValue.y
-
-                // when height = 0
-                // when height > 0.03
-                if proposedHeight <= 44 {
-                    height = 44
-                } else {
-                    let snappingThreshold = headerHeight * 2
-                    if proposedHeight >= snappingThreshold {
-                        withAnimation {
-                            height = headerHeight
-                        }
-                    } else {
-                        height = proposedHeight
+                let snappingThreshold = headerHeight * 2
+                if proposedHeight >= snappingThreshold {
+                    withAnimation(.snappy) {
+                        height = headerHeight
                     }
+                } else if proposedHeight <= 44  {
+                    height = 44
+                } else  {
+                    height = proposedHeight
                 }
             }
         }
