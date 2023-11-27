@@ -70,7 +70,11 @@ struct MoviesLandingView: View {
         .refreshable {
             viewModel.onAppear()
         }
-        .confirmationDialog("", isPresented: $viewModel.presentDialog) {
+        .confirmationDialog(
+            "",
+            isPresented: $viewModel.presentDialog,
+            presenting: $viewModel.currentSelectedMovie
+        ) { _ in
             let isFavorited = viewModel.isSelectedMovieFavourited(context: modelContext)
             Button(action: {
                 if isFavorited {
