@@ -65,10 +65,10 @@ struct MoviesLandingView: View {
             }
         }
         .task {
-            viewModel.onAppear()
+            viewModel.onAppear(favorite: favorites)
         }
         .refreshable {
-            viewModel.onAppear()
+            viewModel.onAppear(favorite: favorites)
         }
         .confirmationDialog(
             "",
