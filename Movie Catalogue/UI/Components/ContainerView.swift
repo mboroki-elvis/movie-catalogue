@@ -19,9 +19,16 @@ struct ContainerView<Content: View>: View {
                         Text(with: .error)
                             .lineLimit(2)
                             .font(.title3)
-                        Text(error.localizedDescription)
-                            .lineLimit(2)
-                            .font(.caption)
+                        if let error = error as? LocalizedError {
+                            Text(error.errorDescription ?? error.localizedDescription)
+                                .lineLimit(2)
+                                .font(.caption)
+                        } else {
+                            Text(error.localizedDescription)
+                                .lineLimit(2)
+                                .font(.caption)
+                        }
+
                     }
                     .padding()
 

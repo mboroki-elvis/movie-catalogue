@@ -13,7 +13,7 @@ final class FavoritesUseCaseImplementation: FavoritesUseCase {
     func addSelectedMovieToContext(context: ModelContext) throws {
         guard let movie else { throw FavoritesSaveError.noMovie }
         let exist = try contextHasMovie(context: context)
-        guard !exist else { throw FavoritesSaveError.saveError }
+        guard !exist else { throw FavoritesSaveError.saveError(movie.title ?? "") }
         context.insert(movie)
         self.movie = nil
     }
@@ -21,7 +21,7 @@ final class FavoritesUseCaseImplementation: FavoritesUseCase {
     func deleteSelectedMovieFromContext(context: ModelContext) throws {
         guard let movie else { throw FavoritesSaveError.noMovie }
         let exist = try contextHasMovie(context: context)
-        guard exist else { throw FavoritesSaveError.deleteError }
+        guard exist else { throw FavoritesSaveError.deleteError(movie.title ?? "") }
         context.delete(movie)
         self.movie = nil
     }
@@ -43,9 +43,20 @@ final class FavoritesUseCaseImplementation: FavoritesUseCase {
 }
 
 extension FavoritesUseCaseImplementation {
-    enum FavoritesSaveError: Error {
-        case deleteError
-        case saveError
+    enum FavoritesSaveError: Error, LocalizedError {
+        case deleteError(String)
+        case saveError(String)
         case noMovie
+        var errorDescription: String? {
+            switch self {
+
+            case .deleteError(let name):
+                return "Could not delete \(name) from favorites"
+            case .saveError(let name):
+                return "Could not save \(name) to favorites"
+            case .noMovie:
+                return "No favorite found"
+            }
+        }
     }
 }
