@@ -85,13 +85,12 @@ final class MovieDetailsViewModel {
      */
     func addOrDelete(from context: ModelContext) {
         do {
+            favoritesUseCase.movie = movie
             let hasMovie = try favoritesUseCase.contextHasMovie(context: context)
             if hasMovie {
                 try favoritesUseCase.deleteSelectedMovieFromContext(context: context)
-                isFavorite = false
             } else {
                 try favoritesUseCase.addSelectedMovieToContext(context: context)
-                isFavorite = true
             }
         } catch {
             self.error = error
