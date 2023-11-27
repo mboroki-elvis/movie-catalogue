@@ -11,10 +11,11 @@ struct MoviesListView: View {
                 }, label: {
                     Image(systemName: "arrow.backward")
                         .font(.headline)
+                    
+                    Text(with: .viewAll)
+                        .font(.headline)
+                        .foregroundStyle(Color.onContainer)
                 })
-                Text(with: .viewAll)
-                    .font(.headline)
-                    .foregroundStyle(Color.onContainer)
             }
             .padding(.horizontal, SizeTokens.regular)
             .padding(.vertical, SizeTokens.extraSmall)

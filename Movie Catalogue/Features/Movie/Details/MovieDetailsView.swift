@@ -35,10 +35,12 @@ struct MovieDetailsView: View {
                 }, label: {
                     Image(systemName: "arrow.backward")
                         .font(.headline)
+                    
+                    Text(with: .movieDetails)
+                        .font(.headline)
+                        .foregroundStyle(Color.onContainerAlternate)
                 })
-                Text(with: .movieDetails)
-                    .font(.headline)
-                    .foregroundStyle(Color.onContainerAlternate)
+                
                 Spacer()
 
                 Button {

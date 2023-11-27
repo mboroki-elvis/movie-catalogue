@@ -26,12 +26,6 @@ struct ParallaxView<Header, Content>: View where Content: View, Header: View {
         VStack(spacing: .zero) {
             header()
                 .frame(height: height)
-                .overlay {
-                    Color.containerAlternate.opacity(
-                        Double((height / headerHeight) - 1) * 0.5
-                    )
-                    .ignoresSafeArea(.all)
-                }
                 .offset(y: max(0, offset.y))
             OffsetObservingScrollView(
                 axes: axes,
@@ -39,10 +33,11 @@ struct ParallaxView<Header, Content>: View where Content: View, Header: View {
                 content: content
             )
             .onChange(of: offset) { _, newValue in
+                // TODO: Fix the strange flash due to animation of resizable images
                 let proposedHeight = height + newValue.y
-                let snappingThreshold = headerHeight * 2
+                let snappingThreshold = headerHeight * 1.8
                 if proposedHeight >= snappingThreshold {
-                    withAnimation(.snappy) {
+                    withAnimation {
                         height = headerHeight
                     }
                 } else if proposedHeight <= 44  {
