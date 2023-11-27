@@ -61,9 +61,9 @@ final class MovieLandingViewModel {
             defer { self.isLoading = false }
             do {
                 let ratedResponse = try await datasource.topRated(page: 1)
-                treatMovies(response: ratedResponse, favorites: movies, append: &topRated)
+                favoritesUseCase.treatMovies(response: ratedResponse, favorites: movies, append: &topRated)
                 let trendingResponse = try await datasource.getTrending(page: 1)
-                treatMovies(response: trendingResponse, favorites: movies, append: &trending)
+                favoritesUseCase.treatMovies(response: trendingResponse, favorites: movies, append: &trending)
             } catch {
                 self.error = error.toLocalizeError
             }
@@ -110,21 +110,6 @@ final class MovieLandingViewModel {
         } catch {
             self.error = error.toLocalizeError
             return false
-        }
-    }
-    
-    private func treatMovies(
-        response: [MovieResponse],
-        favorites: [Movie],
-        append to: inout [Movie]
-    ) {
-        response.forEach { response in
-            if let movie = favorites.first(where: { $0.id == response.id }) {
-                movie.updatingPropertiesExceptID(movie: response)
-                to.append(movie)
-            } else {
-                to.append(.init(movie: response))
-            }
         }
     }
 }

@@ -11,6 +11,7 @@ import SwiftData
 @testable import Movie_Catalogue
 
 class MockFavoritesUseCase: FavoritesUseCase {
+    
     func findMovieBy(id: Int, context: ModelContext) throws -> Movie_Catalogue.Movie? {
         nil
     }

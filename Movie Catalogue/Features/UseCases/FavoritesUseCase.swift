@@ -6,6 +6,20 @@ protocol FavoritesUseCase: AnyObject {
     func deleteSelectedMovieFromContext(movie: Movie, context: ModelContext) throws
     func contextHasMovie(movie: Movie, context: ModelContext) throws -> Bool
     func findMovieBy(id: Int, context: ModelContext) throws -> Movie?
+    func treatMovies(response: [MovieResponse], favorites: [Movie], append to: inout [Movie])
+}
+
+extension FavoritesUseCase {
+    func treatMovies(response: [MovieResponse], favorites: [Movie], append to: inout [Movie]) {
+        response.forEach { response in
+            if let movie = favorites.first(where: { $0.id == response.id }) {
+                movie.updatingPropertiesExceptID(movie: response)
+                to.append(movie)
+            } else {
+                to.append(.init(movie: response))
+            }
+        }
+    }
 }
 
 final class FavoritesUseCaseImplementation: FavoritesUseCase {
@@ -34,7 +48,7 @@ final class FavoritesUseCaseImplementation: FavoritesUseCase {
         let fetchedMovie = try context.fetch(FetchDescriptor<Movie>(predicate: predicate, sortBy: [SortDescriptor(\.id)]))
         return !fetchedMovie.isEmpty
     }
-    
+
     func findMovieBy(id: Int, context: ModelContext) throws -> Movie? {
         let predicate = #Predicate<Movie> { $0.id == id }
         let fetchedMovie = try context.fetch(FetchDescriptor<Movie>(predicate: predicate, sortBy: [SortDescriptor(\.id)]))
@@ -49,7 +63,6 @@ extension FavoritesUseCaseImplementation {
         case noMovie
         var errorDescription: String? {
             switch self {
-
             case .deleteError(let name):
                 return "Could not delete \(name) from favorites"
             case .saveError(let name):
