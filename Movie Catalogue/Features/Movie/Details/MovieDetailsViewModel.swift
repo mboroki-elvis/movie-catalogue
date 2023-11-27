@@ -32,6 +32,7 @@ final class MovieDetailsViewModel {
     /// The data source for movie-related operations.
     private let datasource: MovieDatasource
     private let favoritesUseCase: FavoritesUseCase
+    private(set) var isFavorite = false
     /**
      Initializes a new MovieDetailsViewModel with the specified data source and movie identifier.
      Parameters:
@@ -70,6 +71,14 @@ final class MovieDetailsViewModel {
         }
     }
 
+    func toggleIsFavorite(context: ModelContext) {
+        do {
+            isFavorite = try favoritesUseCase.contextHasMovie(context: context)
+        } catch {
+            self.error = error
+        }
+    }
+
     /**
      Adds or deletes the movie details from the specified data context based on its existence.
      Parameter context: The data context where the movie details should be added or deleted.
@@ -86,7 +95,7 @@ final class MovieDetailsViewModel {
             self.error = error
         }
     }
-    
+
     /**
      Adds the details of the movie to the specified data context.
      Parameter context: The data context where the movie details should be added.

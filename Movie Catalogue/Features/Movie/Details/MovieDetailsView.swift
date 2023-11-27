@@ -47,7 +47,9 @@ struct MovieDetailsView: View {
                     viewModel.addOrDelete(from: modelContext)
                 } label: {
                     Image(systemName: "heart.fill")
-                        .foregroundColor(.accentColor)
+                        .foregroundColor(
+                            viewModel.isFavorite ? .accentColor : .onContainerAlternate
+                        )
                 }
             }
             .padding(.horizontal, SizeTokens.small)
@@ -55,6 +57,9 @@ struct MovieDetailsView: View {
             .offset(y:  60)
         }
         .ignoresSafeArea(.container)
+        .onChange(of: viewModel.movie) { oldValue, newValue in
+            viewModel.toggleIsFavorite(context: modelContext)
+        }
     }
 
     private var content: some View {
