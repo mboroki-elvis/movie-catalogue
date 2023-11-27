@@ -4,6 +4,9 @@
 
 Welcome to the Movie App project! This document provides essential information for engineers to quickly get started with the codebase. The Movie App is a SwiftUI-based iOS application that allows users to explore trending and top-rated movies, view favorites, and access additional features.
 
+## APP Preview
+
+![App Preview](/app.gif)
 ## User Interface
 
 Check out the UI design on Dribbble: [Movie App UI](https://dribbble.com/shots/6389426-Movie-App)
@@ -41,6 +44,7 @@ The Movie App follows the MVVM-C (Model-View-ViewModel-Coordinator) architecture
 - **ViewModels:** Business logic resides in observable view models.
 - **UI Layer:** Implemented in SwiftUI.
 - **Dependency Injection:** The router is injected via the environment.
+![DataFlow](/DataFlow.drawio.png)
 
 ## Networking
 

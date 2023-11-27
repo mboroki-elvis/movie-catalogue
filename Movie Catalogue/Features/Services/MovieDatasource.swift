@@ -112,7 +112,7 @@ private extension MovieDatasourceImplementation {
                 return "Bad Request Check again"
             case .unknownError:
                 return "An unkown error has occured, please try again"
-            case .movieError(let error):
+            case .movieError:
                 return "There was an error on our end, try again later."
             }
         }
