@@ -11,6 +11,10 @@ import SwiftData
 @testable import Movie_Catalogue
 
 class MockFavoritesUseCase: FavoritesUseCase {
+    func fetchAllFavorites(context: ModelContext) throws -> [Movie] {
+        [defaultMovie]
+    }
+    
     
     func findMovieBy(id: Int, context: ModelContext) throws -> Movie_Catalogue.Movie? {
         nil

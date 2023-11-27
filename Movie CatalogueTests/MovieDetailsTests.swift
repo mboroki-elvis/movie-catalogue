@@ -11,7 +11,7 @@ final class MovieDetailsTests: XCTestCase {
                 environment: EnvironmentMock()
             ),
             favoritesUseCase: MockFavoritesUseCase(), 
-            movieID: 1
+            movie: defaultMovie
         )
     }
 
@@ -26,7 +26,7 @@ final class MovieDetailsTests: XCTestCase {
         // Call the onAppear method
 
         let expectCompleted = expectation(description: "completed")
-        let task = Task {
+        Task {
             await viewModel.onAppear()
         }
         await Task.yield()
@@ -48,10 +48,10 @@ final class MovieDetailsTests: XCTestCase {
                 environment: EnvironmentFailing()
             ),
             favoritesUseCase: MockFavoritesUseCase(), 
-            movieID: 1
+            movie: defaultMovie
         )
         let expectCompleted = expectation(description: "completed failure")
-        let task = Task {
+        Task {
             await viewModel.onAppear()
         }
        
@@ -64,7 +64,6 @@ final class MovieDetailsTests: XCTestCase {
         // Assert that the view model's properties are updated as expected
 
         XCTAssertNotNil(viewModel.error)
-        XCTAssertNil(viewModel.movie)
         XCTAssertFalse(viewModel.isLoading)
     }
 }

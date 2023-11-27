@@ -6,6 +6,7 @@ protocol FavoritesUseCase: AnyObject {
     func deleteSelectedMovieFromContext(movie: Movie, context: ModelContext) throws
     func contextHasMovie(movie: Movie, context: ModelContext) throws -> Bool
     func findMovieBy(id: Int, context: ModelContext) throws -> Movie?
+    func fetchAllFavorites(context: ModelContext) throws -> [Movie]
     func treatMovies(response: [MovieResponse], favorites: [Movie], append to: inout [Movie])
 }
 
@@ -53,6 +54,10 @@ final class FavoritesUseCaseImplementation: FavoritesUseCase {
         let predicate = #Predicate<Movie> { $0.id == id }
         let fetchedMovie = try context.fetch(FetchDescriptor<Movie>(predicate: predicate, sortBy: [SortDescriptor(\.id)]))
         return fetchedMovie.first
+    }
+    
+    func fetchAllFavorites(context: ModelContext) throws -> [Movie] {
+        try context.fetch(FetchDescriptor<Movie>(sortBy: [SortDescriptor(\.id)]))
     }
 }
 

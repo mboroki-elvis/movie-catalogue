@@ -76,6 +76,7 @@ final class MovieLandingViewModel {
      */
     func addSelectedMovieToContext(context: ModelContext) {
         defer { movie = nil }
+        defer { presentDialog = false }
         do {
             guard let movie else { return }
             try favoritesUseCase.addSelectedMovieToContext(movie: movie, context: context)
@@ -90,6 +91,7 @@ final class MovieLandingViewModel {
      */
     func deleteSelectedMovieFromContext(context: ModelContext) {
         defer { movie = nil }
+        defer { presentDialog = false }
         do {
             guard let movie else { return }
             try favoritesUseCase.deleteSelectedMovieFromContext(movie: movie, context: context)

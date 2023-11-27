@@ -29,7 +29,7 @@ struct MoviesLandingView: View {
                             isLoading: viewModel.isLoading,
                             onTap: { movie in
                                 viewModel.movie = movie
-                                viewModel.presentDialog.toggle()
+                                viewModel.presentDialog = true
                             },
                             viewAll: {
                                 router.push(.viewTopRated)
@@ -42,7 +42,7 @@ struct MoviesLandingView: View {
                             isLoading: viewModel.isLoading,
                             onTap: { movie in
                                 viewModel.movie = movie
-                                viewModel.presentDialog.toggle()
+                                viewModel.presentDialog = true
                             },
                             viewAll: {
                                 router.push(.viewTrending)
@@ -55,7 +55,7 @@ struct MoviesLandingView: View {
                             isLoading: viewModel.isLoading,
                             onTap: { movie in
                                 viewModel.movie = movie
-                                viewModel.presentDialog.toggle()
+                                viewModel.presentDialog = true
                             }
                         )
                         .padding(.horizontal, SizeTokens.regular)
