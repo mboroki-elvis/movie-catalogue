@@ -37,9 +37,9 @@ import Observation
             let moviesResponse: [MovieResponse]
             switch list {
             case .trending:
-                moviesResponse = try await datasource.getTrending(page: currentPage)
+                moviesResponse = try await datasource.getTrending(page: page)
             case .topRated:
-                moviesResponse = try await datasource.topRated(page: currentPage)
+                moviesResponse = try await datasource.topRated(page: page)
             }
             if favorites.isEmpty {
                 movies.append(contentsOf: moviesResponse.map { .init(movie: $0) })
