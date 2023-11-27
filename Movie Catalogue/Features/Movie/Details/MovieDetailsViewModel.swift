@@ -87,34 +87,12 @@ final class MovieDetailsViewModel {
         do {
             let hasMovie = try favoritesUseCase.contextHasMovie(context: context)
             if hasMovie {
-                deleteSelectedMovieFromContext(context: context)
+                try favoritesUseCase.deleteSelectedMovieFromContext(context: context)
+                isFavorite = false
             } else {
-                addSelectedMovieToContext(context: context)
+                try favoritesUseCase.addSelectedMovieToContext(context: context)
+                isFavorite = true
             }
-        } catch {
-            self.error = error
-        }
-    }
-
-    /**
-     Adds the details of the movie to the specified data context.
-     Parameter context: The data context where the movie details should be added.
-     */
-    private func addSelectedMovieToContext(context: ModelContext) {
-        do {
-            try favoritesUseCase.addSelectedMovieToContext(context: context)
-        } catch {
-            self.error = error
-        }
-    }
-
-    /**
-     Deletes the details of the movie from the specified data context.
-     Parameter context: The data context from which the movie details should be deleted.
-     */
-    private func deleteSelectedMovieFromContext(context: ModelContext) {
-        do {
-            try favoritesUseCase.deleteSelectedMovieFromContext(context: context)
         } catch {
             self.error = error
         }
