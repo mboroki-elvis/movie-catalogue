@@ -112,4 +112,30 @@ extension Movie {
             productionCompanies: movie.productionCompanies
         )
     }
+
+    func updatingAllExceptid(movie: MovieResponse) {
+        self.title = movie.title
+        self.adult = movie.adult
+        self.backdropPath = movie.backdropPath
+        self.budget = movie.budget
+        self.collection = movie.collection
+        self.genres = movie.genres
+        self.homepage = movie.homepage
+        self.imdbID = movie.imdbID
+        self.mediaType = movie.mediaType
+        self.originalTitle = movie.originalTitle
+        self.overview = movie.overview
+        self.popularity = movie.popularity
+        self.releaseDate = movie.releaseDate
+        self.revenue = movie.revenue
+        self.runtime = movie.runtime
+        self.status = movie.status
+        self.tagline = movie.tagline
+        self.title = movie.title
+        self.video = movie.video
+        self.voteAverage = movie.voteAverage?.roundedInt
+        self.voteCount = movie.voteCount
+        self.languages = movie.spokenLanguages
+        self.productionCompanies = movie.productionCompanies
+    }
 }
