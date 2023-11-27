@@ -58,7 +58,7 @@ final class MovieDetailsViewModel {
             defer { self.isLoading = false }
             do {
                 if let movieResponse = try await datasource.getDetails(movie: movie.id) {
-                    self.movie.updatingAllExceptid(movie: movieResponse)
+                    self.movie.updatingPropertiesExceptID(movie: movieResponse)
                 }
             } catch {
                 self.error = error.toLocalizeError

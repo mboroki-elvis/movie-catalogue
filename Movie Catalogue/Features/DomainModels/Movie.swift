@@ -113,7 +113,7 @@ extension Movie {
         )
     }
 
-    func updatingAllExceptid(movie: MovieResponse) {
+    func updatingPropertiesExceptID(movie: MovieResponse) {
         self.title = movie.title
         self.adult = movie.adult
         self.backdropPath = movie.backdropPath
