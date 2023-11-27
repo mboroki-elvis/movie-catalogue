@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ContainerView<Content: View>: View {
-    @State var error: Error?
+    var error: Error?
+    var dismissError: () -> Void
     let content: () -> Content
     var body: some View {
         VStack(spacing: .zero) {
@@ -27,12 +28,13 @@ struct ContainerView<Content: View>: View {
                     Spacer()
 
                     Button {
-                        self.error = nil
+                        dismissError()
                     } label: {
-                        Image(systemName: "close")
+                        Image(systemName: "x.circle")
                             .font(.title)
                             .foregroundStyle(Color.onContainer)
                     }
+                    .padding(.trailing)
                 }
                 .background(.accent.opacity(0.7))
                 .clipShape(

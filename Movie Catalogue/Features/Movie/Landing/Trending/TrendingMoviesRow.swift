@@ -26,7 +26,7 @@ struct TrendingMoviesRow: View {
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: SizeTokens.extraSmall) {
-                    if isLoading {
+                    if isLoading || movies.isEmpty {
                         ForEach(0 ..< 4, id: \.self) { _ in
                             CarouselLoadingState(height: 130).frame(width: width)
                         }

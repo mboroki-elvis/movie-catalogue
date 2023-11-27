@@ -7,7 +7,12 @@ struct MovieDetailsView: View {
     @Environment(AppRouter.self) private var router: AppRouter
     @Bindable var viewModel: MovieDetailsViewModel
     var body: some View {
-        ContainerView(error: viewModel.error) {
+        ContainerView(
+            error: viewModel.error,
+            dismissError: {
+                viewModel.error = nil
+            }
+        ) {
             ParallaxView {
                 header
             } content: {
@@ -35,12 +40,12 @@ struct MovieDetailsView: View {
                 }, label: {
                     Image(systemName: "arrow.backward")
                         .font(.headline)
-                    
+
                     Text(with: .movieDetails)
                         .font(.headline)
                         .foregroundStyle(Color.onContainerAlternate)
                 })
-                
+
                 Spacer()
 
                 Button {
@@ -54,10 +59,10 @@ struct MovieDetailsView: View {
             }
             .padding(.horizontal, SizeTokens.small)
             .padding(.trailing, SizeTokens.regular)
-            .offset(y:  60)
+            .offset(y: 60)
         }
         .ignoresSafeArea(.container)
-        .onChange(of: viewModel.movie) { oldValue, newValue in
+        .onChange(of: viewModel.movie) { _, _ in
             viewModel.toggleIsFavorite(context: modelContext)
         }
     }

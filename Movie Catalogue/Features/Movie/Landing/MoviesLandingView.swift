@@ -12,7 +12,12 @@ struct MoviesLandingView: View {
     // MARK: UI
 
     var body: some View {
-        ContainerView(error: viewModel.error) {
+        ContainerView(
+            error: viewModel.error,
+            dismissError: {
+                viewModel.error = nil
+            }
+        ) {
             ScrollView(.vertical, showsIndicators: false) {
                 ZStack {
                     Color(UIColor.systemGroupedBackground)

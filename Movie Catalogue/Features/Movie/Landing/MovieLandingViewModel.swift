@@ -32,7 +32,7 @@ final class MovieLandingViewModel {
     }
 
     /// An error encountered during data fetching or use case operations.
-    private(set) var error: Error?
+    var error: Error?
     /// The data source for movie-related operations.
     private let datasource: MovieDatasource
     /// The use case for managing favorite movies.
