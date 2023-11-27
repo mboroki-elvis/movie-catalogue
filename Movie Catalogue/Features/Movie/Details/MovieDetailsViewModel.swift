@@ -17,7 +17,7 @@ import SwiftData
 @Observable
 final class MovieDetailsViewModel {
     /// An error encountered during data fetching, if any.
-    var error: Error?
+    var error: LocalizedError?
     /// The details of the movie.
     private(set) var movie: Movie? {
         didSet {
@@ -66,7 +66,7 @@ final class MovieDetailsViewModel {
                     self.movie = .init(movie: movieResponse)
                 }
             } catch {
-                self.error = error
+                self.error = error.toLocalizeError
             }
         }
     }
@@ -75,7 +75,7 @@ final class MovieDetailsViewModel {
         do {
             isFavorite = try favoritesUseCase.contextHasMovie(context: context)
         } catch {
-            self.error = error
+            self.error = error.toLocalizeError
         }
     }
 
@@ -93,7 +93,13 @@ final class MovieDetailsViewModel {
                 try favoritesUseCase.addSelectedMovieToContext(context: context)
             }
         } catch {
-            self.error = error
+            self.error = error.toLocalizeError
         }
+    }
+}
+
+extension Error {
+    var toLocalizeError: LocalizedError? {
+        self as? LocalizedError
     }
 }

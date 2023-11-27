@@ -43,7 +43,7 @@ final class FavoritesUseCaseImplementation: FavoritesUseCase {
 }
 
 extension FavoritesUseCaseImplementation {
-    enum FavoritesSaveError: Error, LocalizedError {
+    enum FavoritesSaveError: LocalizedError {
         case deleteError(String)
         case saveError(String)
         case noMovie

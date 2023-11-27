@@ -102,9 +102,19 @@ final class MovieDatasourceImplementation: MovieDatasource {
 
 private extension MovieDatasourceImplementation {
     /// Enumeration defining errors specific to the movie API.
-    enum MovieAPIError: Error {
+    enum MovieAPIError: LocalizedError {
         case badRequest
         case unknownError
         case movieError(Error)
+        var errorDescription: String? {
+            switch self {
+            case .badRequest:
+                return "Bad Request Check again"
+            case .unknownError:
+                return "An unkown error has occured, please try again"
+            case .movieError(let error):
+                return "There was an error on our end, try again later."
+            }
+        }
     }
 }

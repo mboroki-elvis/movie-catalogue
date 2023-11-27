@@ -32,7 +32,7 @@ final class MovieLandingViewModel {
     }
 
     /// An error encountered during data fetching or use case operations.
-    var error: Error?
+    var error: LocalizedError?
     /// The data source for movie-related operations.
     private let datasource: MovieDatasource
     /// The use case for managing favorite movies.
@@ -69,7 +69,7 @@ final class MovieLandingViewModel {
                 let trendingResponse = try await datasource.getTrending(page: 1)
                 self.trending = trendingResponse.map { .init(movie: $0) }
             } catch {
-                self.error = error
+                self.error = error.toLocalizeError
             }
         }
     }
@@ -83,7 +83,7 @@ final class MovieLandingViewModel {
         do {
             try favoritesUseCase.addSelectedMovieToContext(context: context)
         } catch {
-            self.error = error
+            self.error = error.toLocalizeError
         }
     }
 
@@ -96,7 +96,7 @@ final class MovieLandingViewModel {
         do {
             try favoritesUseCase.deleteSelectedMovieFromContext(context: context)
         } catch {
-            self.error = error
+            self.error = error.toLocalizeError
         }
     }
 
@@ -109,7 +109,7 @@ final class MovieLandingViewModel {
         do {
             return try favoritesUseCase.contextHasMovie(context: context)
         } catch {
-            self.error = error
+            self.error = error.toLocalizeError
             return false
         }
     }

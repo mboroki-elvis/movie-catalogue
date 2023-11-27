@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContainerView<Content: View>: View {
-    var error: Error?
+    var error: LocalizedError?
     var dismissError: () -> Void
     @ViewBuilder let content: () -> Content
 
@@ -20,16 +20,9 @@ struct ContainerView<Content: View>: View {
                         Text(with: .error)
                             .lineLimit(2)
                             .font(.title3)
-                        if let error = error as? LocalizedError {
-                            Text(error.errorDescription ?? error.localizedDescription)
-                                .lineLimit(2)
-                                .font(.caption)
-                        } else {
-                            Text(error.localizedDescription)
-                                .lineLimit(2)
-                                .font(.caption)
-                        }
-
+                        Text(error.errorDescription ?? error.localizedDescription)
+                            .lineLimit(2)
+                            .font(.caption)
                     }
                     .padding()
 
