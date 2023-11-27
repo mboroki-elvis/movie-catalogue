@@ -1,21 +1,20 @@
-import SwiftUI
-import SwiftData
 import Kingfisher
+import SwiftData
+import SwiftUI
 
 struct MovieDetailsView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(AppRouter.self) private var router: AppRouter
     @Bindable var viewModel: MovieDetailsViewModel
     var body: some View {
-        VStack(alignment: .leading) {
-            ContainerView(error: viewModel.error) {
-                ParallaxView {
-                    header
-                } content: {
-                    content
-                }
+        ContainerView(error: viewModel.error) {
+            ParallaxView {
+                header
+            } content: {
+                content
             }
         }
+        .background(Color.container)
         .task {
             viewModel.onAppear()
         }
@@ -29,7 +28,6 @@ struct MovieDetailsView: View {
                 .resizable()
                 .frame(width: UIScreen.main.bounds.width)
                 .shimmer(active: viewModel.isLoading)
-          
 
             HStack {
                 Button(action: {
@@ -51,9 +49,8 @@ struct MovieDetailsView: View {
                 }
             }
             .padding(.horizontal, SizeTokens.small)
-            .padding(.top, 60)
             .padding(.trailing, SizeTokens.regular)
-         
+            .offset(y:  60)
         }
         .ignoresSafeArea(.container)
     }
@@ -97,8 +94,8 @@ struct MovieDetailsView: View {
 
             Spacer()
         }
-        .padding(SizeTokens.regular)
         .background(Color.container)
+        .padding(.horizontal, SizeTokens.regular)
     }
 }
 

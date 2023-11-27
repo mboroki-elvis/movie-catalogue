@@ -11,7 +11,7 @@ struct ContainerView<Content: View>: View {
     @State var error: Error?
     let content: () -> Content
     var body: some View {
-        VStack {
+        VStack(spacing: .zero) {
             if let error {
                 HStack {
                     VStack(alignment: .leading) {
