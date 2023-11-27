@@ -30,6 +30,14 @@ struct EnvironmentMock: AppEnvironment {
     var baseURL: String { "" }
 }
 
+struct EnvironmentFailing: AppEnvironment {
+    var apiEnronment: ApiEnvironment { .failing }
+    
+    var apiKey: String { "" }
+    var imageURL: String { "" }
+    var baseURL: String { "" }
+}
+
 enum EnvironmentKeys: String {
     case apiKey = "API_KEY"
     case apiURL = "APP_BASE_URL"

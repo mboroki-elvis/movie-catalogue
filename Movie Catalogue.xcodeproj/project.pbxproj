@@ -75,6 +75,7 @@
 		C4F991892B13D83000F2F7B6 /* MockFavoritesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F991882B13D83000F2F7B6 /* MockFavoritesUseCase.swift */; };
 		C4F9918B2B13DA3900F2F7B6 /* APIEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F9918A2B13DA3900F2F7B6 /* APIEnvironment.swift */; };
 		C4F9918E2B14193A00F2F7B6 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C4F9918D2B14193A00F2F7B6 /* Kingfisher */; };
+		C4F991922B1452DE00F2F7B6 /* MovieDetailsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F991912B1452DE00F2F7B6 /* MovieDetailsTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,6 +168,7 @@
 		C4F991832B13CB2400F2F7B6 /* FavoritesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesUseCase.swift; sourceTree = "<group>"; };
 		C4F991882B13D83000F2F7B6 /* MockFavoritesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFavoritesUseCase.swift; sourceTree = "<group>"; };
 		C4F9918A2B13DA3900F2F7B6 /* APIEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEnvironment.swift; sourceTree = "<group>"; };
+		C4F991912B1452DE00F2F7B6 /* MovieDetailsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -343,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				C4D1E1422B1116DB007AF0BA /* Movie_CatalogueTests.swift */,
+				C4F991912B1452DE00F2F7B6 /* MovieDetailsTests.swift */,
 				C4F991882B13D83000F2F7B6 /* MockFavoritesUseCase.swift */,
 			);
 			path = "Movie CatalogueTests";
@@ -734,6 +737,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4D1E1432B1116DB007AF0BA /* Movie_CatalogueTests.swift in Sources */,
+				C4F991922B1452DE00F2F7B6 /* MovieDetailsTests.swift in Sources */,
 				C4F991892B13D83000F2F7B6 /* MockFavoritesUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

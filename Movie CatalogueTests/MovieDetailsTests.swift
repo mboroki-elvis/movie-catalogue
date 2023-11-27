@@ -1,23 +1,17 @@
-//
-//  Movie_CatalogueTests.swift
-//  Movie CatalogueTests
-//
-//  Created by Elvis Mwenda on 24/11/2023.
-//
-
 @testable import Movie_Catalogue
 import SwiftData
 import XCTest
 
-final class MovieLandingViewModelTests: XCTestCase {
-    var viewModel: MovieLandingViewModel!
+final class MovieDetailsTests: XCTestCase {
+    var viewModel: MovieDetailsViewModel!
     override func setUp() {
         super.setUp()
-        viewModel = MovieLandingViewModel(
+        viewModel = MovieDetailsViewModel(
             datasource: MovieDatasourceImplementation(
                 environment: EnvironmentMock()
             ),
-            favoritesUseCase: MockFavoritesUseCase()
+            favoritesUseCase: MockFavoritesUseCase(), 
+            movieID: 1
         )
     }
 
@@ -44,17 +38,17 @@ final class MovieLandingViewModelTests: XCTestCase {
         // Assert that the view model's properties are updated as expected
 
         XCTAssertNil(viewModel.error)
-        XCTAssertEqual(viewModel.topRated.count, 1)
-        XCTAssertEqual(viewModel.trending.count, 1)
+        XCTAssertNotNil(viewModel.movie)
         XCTAssertFalse(viewModel.isLoading)
     }
 
     func testOnAppearFailure() async {
-        viewModel = MovieLandingViewModel(
+        viewModel = MovieDetailsViewModel(
             datasource: MovieDatasourceImplementation(
                 environment: EnvironmentFailing()
             ),
-            favoritesUseCase: MockFavoritesUseCase()
+            favoritesUseCase: MockFavoritesUseCase(), 
+            movieID: 1
         )
         let expectCompleted = expectation(description: "completed failure")
         let task = Task {
@@ -70,8 +64,7 @@ final class MovieLandingViewModelTests: XCTestCase {
         // Assert that the view model's properties are updated as expected
 
         XCTAssertNotNil(viewModel.error)
-        XCTAssertEqual(viewModel.topRated.count, 0)
-        XCTAssertEqual(viewModel.trending.count, 0)
+        XCTAssertNil(viewModel.movie)
         XCTAssertFalse(viewModel.isLoading)
     }
 }
