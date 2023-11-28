@@ -21,23 +21,28 @@ struct MoviesListView: View {
             .padding(.horizontal, SizeTokens.regular)
             .padding(.vertical, SizeTokens.extraSmall)
             
-            List {
-                ForEach(viewModel.movies) { movie in
-                    TrendingMoviesView(movie: movie)
-                        .onAppear {
-                            if movie == viewModel.movies.last {
-                                viewModel.currentPage += 1
-                                viewModel.fetchData()
+            ContainerView(error: viewModel.error) {
+                viewModel.error = nil
+            } content: {
+                List {
+                    ForEach(viewModel.movies) { movie in
+                        TrendingMoviesView(movie: movie)
+                            .onAppear {
+                                if movie == viewModel.movies.last {
+                                    viewModel.currentPage += 1
+                                    viewModel.fetchData()
+                                }
+                            }.onTapGesture {
+                                router.push(.details(movie))
                             }
-                        }.onTapGesture {
-                            router.push(.details(movie))
-                        }
-                }
-                if viewModel.currentPage < viewModel.totalPages {
-                    ProgressView()
-                        .foregroundStyle(.accent)
+                    }
+                    if viewModel.currentPage < viewModel.totalPages {
+                        ProgressView()
+                            .foregroundStyle(.accent)
+                    }
                 }
             }
+
             Spacer()
         }
         .task {

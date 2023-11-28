@@ -9,7 +9,7 @@ struct MovieDetailsView: View {
     var body: some View {
         ContainerView(
             error: viewModel.error,
-            dismissError: {
+            onDismissError: {
                 viewModel.error = nil
             }
         ) {

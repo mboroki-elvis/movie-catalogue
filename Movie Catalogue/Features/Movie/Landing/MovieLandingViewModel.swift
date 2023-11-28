@@ -61,9 +61,9 @@ final class MovieLandingViewModel {
             defer { self.isLoading = false }
             do {
                 let ratedResponse = try await datasource.topRated(page: 1)
-                topRated = ratedResponse.map({.init(movie:$0)})
+                topRated = ratedResponse.map { .init(movie: $0) }
                 let trendingResponse = try await datasource.getTrending(page: 1)
-                trending = trendingResponse.map({.init(movie:$0)})
+                trending = trendingResponse.map { .init(movie: $0) }
             } catch {
                 self.error = error.toLocalizeError
             }

@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ContainerView<Content: View>: View {
     var error: LocalizedError?
-    var dismissError: () -> Void
+    var onDismissError: () -> Void
     @ViewBuilder let content: () -> Content
 
     var body: some View {
@@ -22,7 +22,7 @@ struct ContainerView<Content: View>: View {
                     Spacer()
 
                     Button {
-                        dismissError()
+                        onDismissError()
                     } label: {
                         Image(systemName: "x.circle")
                             .font(.title)

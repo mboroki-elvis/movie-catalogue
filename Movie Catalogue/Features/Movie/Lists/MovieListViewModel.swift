@@ -9,6 +9,9 @@ import Observation
     private let list: MovieList
     private let datasource: MovieDatasource
 
+    /// An error encountered during data fetching or use case operations.
+    var error: LocalizedError?
+    
     /**
      Initializes a new MovieViewModel with the specified data source.
      Parameter datasource: The data source for movie-related operations.
@@ -41,7 +44,7 @@ import Observation
             // TODO: For now we are faking the total pages the results response does return the count, we have set the count to 1000
            // totalPages = respnse.totalPages
         } catch {
-            print(error)
+            self.error = error.toLocalizeError
         }
     }
 }
