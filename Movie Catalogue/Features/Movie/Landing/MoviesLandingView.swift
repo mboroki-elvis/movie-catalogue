@@ -85,9 +85,8 @@ struct MoviesLandingView: View {
                     }
                 }
             }, label: {
-                HStack {
-                    Text(with: isFavorited ? .removeFavorite : .addFavorite)
-                }
+                Text(with: isFavorited ? .removeFavorite : .addFavorite)
+                    .foregroundStyle(.onContainer)
             })
 
             Button(action: {
@@ -95,9 +94,7 @@ struct MoviesLandingView: View {
                     router.push(.details(selected))
                 }
             }, label: {
-                HStack {
-                    Text(with: .viewMovieDetails)
-                }
+                Text(with: .viewMovieDetails)
             })
         }
     }
