@@ -6,7 +6,7 @@ struct LanguageAndProducersView: View {
     var year: String
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Languages:")
+            Text(with: .languages)
                 .foregroundColor(.onContainer)
                 .font(.headline)
             ForEach(languages, id: \.self) { language in
@@ -15,7 +15,7 @@ struct LanguageAndProducersView: View {
                     .foregroundColor(.onContainer)
             }
 
-            Text("Producers:")
+            Text(with: .producers)
                 .foregroundColor(.onContainer)
                 .font(.headline)
             ForEach(producers, id: \.self) { producer in
@@ -23,11 +23,11 @@ struct LanguageAndProducersView: View {
                     .font(.caption)
                     .foregroundColor(.onContainer)
             }
-            
-            Text("Released:")
+
+            Text(with: .released)
                 .foregroundColor(.onContainer)
                 .font(.headline)
-            
+
             Text(year)
                 .foregroundColor(.onContainer)
                 .font(.caption)

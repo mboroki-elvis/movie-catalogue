@@ -5,7 +5,7 @@ struct StarRatingView: View {
 
     var body: some View {
         HStack {
-            Text("Average Rating:")
+            Text(with: .averageRating)
                 .foregroundColor(.onContainer)
                 .font(.headline)
             Image(systemName: "hand.thumbsup.fill")

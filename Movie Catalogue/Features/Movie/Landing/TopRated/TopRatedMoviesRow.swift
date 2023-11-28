@@ -27,7 +27,9 @@ struct TopRatedMoviesRow: View {
                 HStack(alignment: .top, spacing: SizeTokens.extraSmall) {
                     if isLoading || movies.isEmpty {
                         ForEach(0 ..< 4, id: \.self) { _ in
-                            CarouselLoadingState().frame(width: width)
+                            CarouselLoadingState(
+                                height: width / 2
+                            ).frame(width: width)
                         }
                     } else {
                         ForEach(movies) { movie in
@@ -35,7 +37,7 @@ struct TopRatedMoviesRow: View {
                                 .onTapGesture {
                                     onTap(movie)
                                 }
-                        }.frame(width: width)
+                        }.frame(width: width, height: width / 2)
                     }
                 }
             }

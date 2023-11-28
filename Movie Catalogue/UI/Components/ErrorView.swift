@@ -6,7 +6,7 @@ struct ErrorView: View {
         VStack {
             Image(systemName: "exclamationmark.triangle.fill")
                 .foregroundColor(.onContainer)
-            Text("Ooops!! Something went wrong")
+            Text(with: .error)
                 .foregroundColor(.onContainer)
             Text(error.localizedDescription)
                 .foregroundColor(.onContainer)

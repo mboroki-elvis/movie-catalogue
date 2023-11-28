@@ -5,7 +5,7 @@ struct GenresView: View {
 
     var body: some View {
         HStack {
-            Text("Genres:")
+            Text(with: .genres)
                 .foregroundColor(.onContainer)
                 .font(.headline)
             ForEach(genres, id: \.self) { genre in

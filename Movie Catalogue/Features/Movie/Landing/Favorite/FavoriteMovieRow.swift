@@ -18,7 +18,7 @@ struct FavoriteMovieRow: View {
                                 onTap(movie)
                             }
                     }
-                    .frame(width: 150)
+                    .frame(width: 150, height: 150)
                     .shimmer(active: isLoading)
                 }
             }

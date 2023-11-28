@@ -51,9 +51,6 @@
         }
       }
     },
-    "Genres:" : {
-
-    },
     "Languages:" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -75,9 +72,6 @@
           }
         }
       }
-    },
-    "Ooops!! Something went wrong" : {
-
     },
     "Popularity" : {
       "extractionState" : "manual",

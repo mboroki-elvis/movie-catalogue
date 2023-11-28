@@ -29,8 +29,6 @@ struct SkeletonLoadingItem: View {
     }
 }
 
-struct SkeletonLoadingItem_Previews: PreviewProvider {
-    static var previews: some View {
-        return SkeletonLoadingItem()
-    }
+#Preview {
+    SkeletonLoadingItem()
 }

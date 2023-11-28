@@ -1,10 +1,3 @@
-//
-//  ContainerView.swift
-//  Movie Catalogue
-//
-//  Created by Elvis Mwenda on 26/11/2023.
-//
-
 import SwiftUI
 
 struct ContainerView<Content: View>: View {
@@ -50,5 +43,7 @@ struct ContainerView<Content: View>: View {
             }
             content()
         }
+        .transition(.slide)
+        .animation(.easeInOut, value: error != nil)
     }
 }
