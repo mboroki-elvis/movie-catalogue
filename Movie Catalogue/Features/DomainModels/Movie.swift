@@ -7,10 +7,12 @@ final class Movie: Identifiable {
     var adult: Bool?
     var backdropPath: String?
     var budget: Int?
-    var collection: CollectionResponse?
-    var genres: [GenreResponse]?
+
+    @Relationship(deleteRule: .cascade, inverse: \MovieCollection.movie)
+    var collection: MovieCollection?
+    @Relationship(deleteRule: .cascade, inverse: \Genre.movie)
+    var genres: [Genre]?
     var homepage: String?
-    var imdbID: ExternalIDType?
     var mediaType: String?
     var originalTitle: String?
     var overview: String?
@@ -25,18 +27,21 @@ final class Movie: Identifiable {
     var video: Bool?
     var voteAverage: Int?
     var voteCount: Int?
-    var productionCompanies: [CompanyResponse]?
-    var languages: [LanguageResponse]?
+
+    @Relationship(deleteRule: .cascade, inverse: \Company.movie)
+    var productionCompanies: [Company]?
+
+    @Relationship(deleteRule: .cascade, inverse: \MovieLanguage.movie)
+    var languages: [MovieLanguage]?
 
     init(
         id: Int,
         adult: Bool? = nil,
         backdropPath: String? = nil,
         budget: Int? = nil,
-        collection: CollectionResponse? = nil,
-        genres: [GenreResponse]? = nil,
+        collection: MovieCollection? = nil,
+        genres: [Genre]? = nil,
         homepage: String? = nil,
-        imdbID: ExternalIDType? = nil,
         mediaType: String? = nil,
         originalTitle: String? = nil,
         overview: String? = nil,
@@ -50,8 +55,8 @@ final class Movie: Identifiable {
         video: Bool? = nil,
         voteAverage: Int? = nil,
         voteCount: Int? = nil,
-        languages: [LanguageResponse]? = nil,
-        productionCompanies: [CompanyResponse]? = nil
+        languages: [MovieLanguage]? = nil,
+        productionCompanies: [Company]? = nil
     ) {
         self.id = id
         self.adult = adult
@@ -60,7 +65,6 @@ final class Movie: Identifiable {
         self.collection = collection
         self.genres = genres
         self.homepage = homepage
-        self.imdbID = imdbID
         self.mediaType = mediaType
         self.originalTitle = originalTitle
         self.overview = overview
@@ -82,46 +86,13 @@ final class Movie: Identifiable {
         guard let backdropPath else { return nil }
         return "\(EnvironmentLive().imageURL)w300\(backdropPath)"
     }
-}
 
-extension Movie {
-    convenience init(movie: MovieResponse) {
-        self.init(
-            id: movie.id,
-            adult: movie.adult,
-            backdropPath: movie.backdropPath,
-            budget: movie.budget,
-            collection: movie.collection,
-            genres: movie.genres,
-            homepage: movie.homepage,
-            imdbID: movie.imdbID,
-            mediaType: movie.mediaType,
-            originalTitle: movie.originalTitle,
-            overview: movie.overview,
-            popularity: movie.popularity,
-            releaseDate: movie.releaseDate,
-            revenue: movie.revenue,
-            runtime: movie.runtime,
-            status: movie.status,
-            tagline: movie.tagline,
-            title: movie.title,
-            video: movie.video,
-            voteAverage: movie.voteAverage?.roundedInt,
-            voteCount: movie.voteCount,
-            languages: movie.spokenLanguages,
-            productionCompanies: movie.productionCompanies
-        )
-    }
-
-    func updatingPropertiesExceptID(movie: MovieResponse) {
-        self.title = movie.title
+    init(movie: MovieResponse) {
+        self.id = movie.id
         self.adult = movie.adult
         self.backdropPath = movie.backdropPath
         self.budget = movie.budget
-        self.collection = movie.collection
-        self.genres = movie.genres
         self.homepage = movie.homepage
-        self.imdbID = movie.imdbID
         self.mediaType = movie.mediaType
         self.originalTitle = movie.originalTitle
         self.overview = movie.overview
@@ -135,7 +106,72 @@ extension Movie {
         self.video = movie.video
         self.voteAverage = movie.voteAverage?.roundedInt
         self.voteCount = movie.voteCount
-        self.languages = movie.spokenLanguages
-        self.productionCompanies = movie.productionCompanies
+    }
+}
+
+extension Movie {
+    func updatingPropertiesExceptID(movie: MovieResponse) {
+        self.title = movie.title
+        self.adult = movie.adult
+        self.backdropPath = movie.backdropPath
+        self.budget = movie.budget
+        if let collection = self.collection,
+           let newCollection = movie.collection,
+           collection.id == newCollection.id
+        {
+            collection.updatingPropertiesExceptID(collection: newCollection)
+        } else if let collection = movie.collection {
+            self.collection = .init(collection: collection, movie: self)
+        }
+
+        if self.genres == nil {
+            self.genres = movie.genres?.compactMap { .init(genre: $0) }
+        } else {
+            movie.genres?.forEach { response in
+                if let first = self.genres?.first(where: { $0.apiID == response.id }) {
+                    first.updatingPropertiesExceptID(genre: response)
+                } else {
+                    let genre: Genre = .init(genre: response)
+                    genre.movie = self
+                    self.genres?.append(genre)
+                }
+            }
+        }
+        self.homepage = movie.homepage
+        self.mediaType = movie.mediaType
+        self.originalTitle = movie.originalTitle
+        self.overview = movie.overview
+        self.popularity = movie.popularity
+        self.releaseDate = movie.releaseDate
+        self.revenue = movie.revenue
+        self.runtime = movie.runtime
+        self.status = movie.status
+        self.tagline = movie.tagline
+        self.title = movie.title
+        self.video = movie.video
+        self.voteAverage = movie.voteAverage?.roundedInt
+        self.voteCount = movie.voteCount
+        if self.languages == nil {
+            self.languages = movie.spokenLanguages?.compactMap { .init(language: $0, movie: self) }
+        } else {
+            movie.spokenLanguages?.forEach { response in
+                if let first = self.languages?.first(where: { $0.name == response.name }) {
+                    first.updatingPropertiesExceptID(language: response)
+                } else {
+                    self.languages?.append(.init(language: response, movie: self))
+                }
+            }
+        }
+        if self.productionCompanies == nil {
+            self.productionCompanies = movie.productionCompanies?.compactMap { .init(company: $0, movie: self) }
+        } else {
+            movie.productionCompanies?.forEach { response in
+                if let first = self.productionCompanies?.first(where: { $0.apiID == response.id }) {
+                    first.updatingPropertiesExceptID(company: response)
+                } else {
+                    self.productionCompanies?.append(.init(company: response, movie: self))
+                }
+            }
+        }
     }
 }

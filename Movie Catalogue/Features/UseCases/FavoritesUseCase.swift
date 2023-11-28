@@ -17,7 +17,22 @@ extension FavoritesUseCase {
                 movie.updatingPropertiesExceptID(movie: response)
                 to.append(movie)
             } else {
-                to.append(.init(movie: response))
+                let movie: Movie = .init(movie: response)
+    
+                if let genres = response.genres {
+                    movie.genres = genres.compactMap { Genre(genre: $0) }
+                }
+                
+                if let collection = response.collection {
+                    movie.collection = .init(collection: collection, movie: movie)
+                }
+                if let languages = response.spokenLanguages {
+                    movie.languages = languages.map { MovieLanguage(language: $0, movie: movie) }
+                }
+                if let companies = response.productionCompanies {
+                    movie.productionCompanies = companies.map { Company(company: $0, movie: movie) }
+                }
+                to.append(movie)
             }
         }
     }
@@ -55,7 +70,7 @@ final class FavoritesUseCaseImplementation: FavoritesUseCase {
         let fetchedMovie = try context.fetch(FetchDescriptor<Movie>(predicate: predicate, sortBy: [SortDescriptor(\.id)]))
         return fetchedMovie.first
     }
-    
+
     func fetchAllFavorites(context: ModelContext) throws -> [Movie] {
         try context.fetch(FetchDescriptor<Movie>(sortBy: [SortDescriptor(\.id)]))
     }
