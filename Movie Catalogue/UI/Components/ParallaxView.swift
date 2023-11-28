@@ -22,6 +22,21 @@ struct ParallaxView<Header, Content>: View where Content: View, Header: View {
         self.headerHeight = headerHeight
     }
 
+    private let snappingThresholdMultiplier: CGFloat = 1.8
+    private let minimumHeaderHeight: CGFloat = 44
+    private var dynamicHeaderHeight: CGFloat {
+        let proposedHeight = height + offset.y
+        let snappingThreshold = headerHeight * snappingThresholdMultiplier
+
+        if proposedHeight >= snappingThreshold {
+            return snappingThreshold
+        } else if proposedHeight <= minimumHeaderHeight {
+            return minimumHeaderHeight
+        } else {
+            return proposedHeight
+        }
+    }
+
     var body: some View {
         VStack(spacing: .zero) {
             header()
@@ -32,19 +47,9 @@ struct ParallaxView<Header, Content>: View where Content: View, Header: View {
                 offset: $offset,
                 content: content
             )
-            .onChange(of: offset) { _, newValue in
+            .onChange(of: offset) { _, _ in
                 // TODO: Fix the strange flash due to animation of resizable images
-                let proposedHeight = height + newValue.y
-                let snappingThreshold = headerHeight * 1.8
-                if proposedHeight >= snappingThreshold {
-                    withAnimation {
-                        height = headerHeight
-                    }
-                } else if proposedHeight <= 44  {
-                    height = 44
-                } else  {
-                    height = proposedHeight
-                }
+                height = dynamicHeaderHeight
             }
         }
     }

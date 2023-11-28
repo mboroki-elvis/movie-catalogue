@@ -62,7 +62,7 @@ struct MovieDetailsView: View {
             .padding(.trailing, SizeTokens.regular)
             .offset(y: 60)
         }
-        .ignoresSafeArea(.container)
+        .ignoresSafeArea()
         .onChange(of: viewModel.movie) { _, _ in
             viewModel.toggleIsFavorite(context: modelContext)
         }
