@@ -25,7 +25,7 @@ struct TrendingMoviesRow: View {
             .padding(.init(top: SizeTokens.small, leading: .zero, bottom: .zero, trailing: SizeTokens.small))
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: SizeTokens.extraSmall) {
+                LazyHStack(alignment: .top, spacing: SizeTokens.extraSmall) {
                     let actualWidth = width - SizeTokens.extraSmall
                     if isLoading || movies.isEmpty {
                         ForEach(0 ..< 4, id: \.self) { _ in
@@ -39,7 +39,7 @@ struct TrendingMoviesRow: View {
                                 .onTapGesture {
                                     onTap(movie)
                                 }
-                        }.frame(width: actualWidth, height: actualWidth / 2)
+                        }.frame(idealWidth: actualWidth, idealHeight: actualWidth / 2)
                     }
                 }
             }

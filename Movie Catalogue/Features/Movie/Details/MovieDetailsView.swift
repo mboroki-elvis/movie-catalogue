@@ -21,7 +21,7 @@ struct MovieDetailsView: View {
         }
         .background(Color.container)
         .task {
-            viewModel.onAppear()
+            viewModel.onAppear(modelContext)
             viewModel.toggleIsFavorite(context: modelContext)
         }
         .navigationBarBackButtonHidden()
@@ -44,7 +44,7 @@ struct MovieDetailsView: View {
 
                     Text(with: .movieDetails)
                         .font(.headline)
-                        .foregroundStyle(Color.onContainerAlternate)
+                        .foregroundStyle(Color.accentColor)
                 })
 
                 Spacer()

@@ -51,13 +51,15 @@ final class MovieDetailsViewModel {
      SeeAlso: MovieDatasource
      */
     @MainActor
-    func onAppear() {
+    func onAppear(_ context: ModelContext) {
         Task {
             self.error = nil
             self.isLoading = true
             defer { self.isLoading = false }
             do {
-                if let movieResponse = try await datasource.getDetails(movie: movie.id) {
+                if let favorite = try favoritesUseCase.findMovieBy(id: movie.id, context: context) {
+                    self.movie = .init(favorite: favorite)
+                } else if let movieResponse = try await datasource.getDetails(movie: movie.id) {
                     self.movie = .init(movie: movieResponse)
                 }
             } catch {

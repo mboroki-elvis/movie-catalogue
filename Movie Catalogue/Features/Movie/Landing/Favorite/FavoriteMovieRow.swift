@@ -5,20 +5,19 @@ struct FavoriteMovieRow: View {
     var isLoading: Bool
     var onTap: (FavoriteMovie) -> Void
     var body: some View {
-        VStack(alignment: .leading, spacing: .zero) {
+        VStack(alignment: .leading, spacing: SizeTokens.small) {
             Text(with: .favorites)
                 .font(.headline)
-                .padding(.top, SizeTokens.small)
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: SizeTokens.small) {
+                LazyHStack(alignment: .top, spacing: SizeTokens.small) {
                     ForEach(movies) { movie in
                         FavoriteMovieView(movie: movie)
                             .onTapGesture {
                                 onTap(movie)
                             }
                     }
-                    .frame(width: 150, height: 150)
+                    .frame(idealWidth: 150, idealHeight: 150)
                     .shimmer(active: isLoading)
                 }
             }

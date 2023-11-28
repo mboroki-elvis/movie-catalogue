@@ -42,6 +42,7 @@ struct ContainerView<Content: View>: View {
                 .padding()
             }
             content()
+            Spacer()
         }
         .transition(.slide)
         .animation(.easeInOut, value: error != nil)
