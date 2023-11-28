@@ -11,31 +11,31 @@ import SwiftData
 @testable import Movie_Catalogue
 
 class MockFavoritesUseCase: FavoritesUseCase {
-    func fetchAllFavorites(context: ModelContext) throws -> [Movie] {
-        [defaultMovie]
+    func fetchAllFavorites(context: ModelContext) throws -> [FavoriteMovie] {
+        [defaultFavoriteMovie]
     }
     
     
-    func findMovieBy(id: Int, context: ModelContext) throws -> Movie_Catalogue.Movie? {
+    func findMovieBy(id: Int, context: ModelContext) throws -> Movie_Catalogue.FavoriteMovie? {
         nil
     }
     
     var isFailing: Bool = false
-    func addSelectedMovieToContext(movie: Movie, context: ModelContext) throws {
+    func addSelectedMovieToContext(movie: FavoriteMovie, context: ModelContext) throws {
         if isFailing {
             throw NSError(domain: "", code: 1)
         }
 
     }
 
-    func deleteSelectedMovieFromContext(movie: Movie, context: ModelContext) throws {
+    func deleteSelectedMovieFromContext(movie: FavoriteMovie, context: ModelContext) throws {
         if isFailing {
             throw NSError(domain: "", code: 1)
         }
 
     }
 
-    func contextHasMovie(movie: Movie, context: ModelContext) throws -> Bool {
+    func contextHasMovie(movie: FavoriteMovie, context: ModelContext) throws -> Bool {
         if isFailing {
             throw NSError(domain: "", code: 1)
         }

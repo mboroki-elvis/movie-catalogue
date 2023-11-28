@@ -7,8 +7,8 @@ final class MovieCollection: Identifiable {
     var name: String
     var backdropPath: String?
     var posterPath: String?
-    var movie: Movie?
-    init(id: Int, name: String, backdropPath: String? = nil, posterPath: String? = nil, movie: Movie?) {
+    var movie: FavoriteMovie?
+    init(id: Int, name: String, backdropPath: String? = nil, posterPath: String? = nil, movie: FavoriteMovie?) {
         self.id = id
         self.name = name
         self.backdropPath = backdropPath
@@ -18,7 +18,7 @@ final class MovieCollection: Identifiable {
 }
 
 extension MovieCollection {
-    convenience init(collection: CollectionResponse, movie: Movie) {
+    convenience init(collection: CollectionResponse, movie: FavoriteMovie) {
         self.init(
             id: collection.id,
             name: collection.name,

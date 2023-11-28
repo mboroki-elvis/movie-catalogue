@@ -1,17 +1,12 @@
 import Foundation
-import SwiftData
 
-@Model
-final class Movie: Identifiable {
-    @Attribute(.unique) var id: Int
+struct Movie: Hashable, Identifiable {
+    var id: Int
     var adult: Bool?
     var backdropPath: String?
     var budget: Int?
-
-    @Relationship(deleteRule: .cascade, inverse: \MovieCollection.movie)
-    var collection: MovieCollection?
-    @Relationship(deleteRule: .cascade, inverse: \Genre.movie)
-    var genres: [Genre]?
+    var collection: CollectionResponse?
+    var genres: [GenreResponse]?
     var homepage: String?
     var mediaType: String?
     var originalTitle: String?
@@ -27,20 +22,16 @@ final class Movie: Identifiable {
     var video: Bool?
     var voteAverage: Int?
     var voteCount: Int?
-
-    @Relationship(deleteRule: .cascade, inverse: \Company.movie)
-    var productionCompanies: [Company]?
-
-    @Relationship(deleteRule: .cascade, inverse: \MovieLanguage.movie)
-    var languages: [MovieLanguage]?
+    var productionCompanies: [CompanyResponse]?
+    var languages: [LanguageResponse]?
 
     init(
         id: Int,
         adult: Bool? = nil,
         backdropPath: String? = nil,
         budget: Int? = nil,
-        collection: MovieCollection? = nil,
-        genres: [Genre]? = nil,
+        collection: CollectionResponse? = nil,
+        genres: [GenreResponse]? = nil,
         homepage: String? = nil,
         mediaType: String? = nil,
         originalTitle: String? = nil,
@@ -55,8 +46,8 @@ final class Movie: Identifiable {
         video: Bool? = nil,
         voteAverage: Int? = nil,
         voteCount: Int? = nil,
-        languages: [MovieLanguage]? = nil,
-        productionCompanies: [Company]? = nil
+        languages: [LanguageResponse]? = nil,
+        productionCompanies: [CompanyResponse]? = nil
     ) {
         self.id = id
         self.adult = adult
@@ -106,72 +97,54 @@ final class Movie: Identifiable {
         self.video = movie.video
         self.voteAverage = movie.voteAverage?.roundedInt
         self.voteCount = movie.voteCount
+        self.languages = movie.spokenLanguages
+        self.collection = movie.collection
+        self.productionCompanies = movie.productionCompanies
+        self.genres = movie.genres
     }
-}
 
-extension Movie {
-    func updatingPropertiesExceptID(movie: MovieResponse) {
-        self.title = movie.title
-        self.adult = movie.adult
-        self.backdropPath = movie.backdropPath
-        self.budget = movie.budget
-        if let collection = self.collection,
-           let newCollection = movie.collection,
-           collection.id == newCollection.id
-        {
-            collection.updatingPropertiesExceptID(collection: newCollection)
-        } else if let collection = movie.collection {
-            self.collection = .init(collection: collection, movie: self)
+    init(favorite: FavoriteMovie) {
+        self.id = favorite.id
+        self.adult = favorite.adult
+        self.backdropPath = favorite.backdropPath
+        self.budget = favorite.budget
+        self.homepage = favorite.homepage
+        self.mediaType = favorite.mediaType
+        self.originalTitle = favorite.originalTitle
+        self.overview = favorite.overview
+        self.popularity = favorite.popularity
+        self.releaseDate = favorite.releaseDate
+        self.revenue = favorite.revenue
+        self.runtime = favorite.runtime
+        self.status = favorite.status
+        self.tagline = favorite.tagline
+        self.title = favorite.title
+        self.video = favorite.video
+        self.voteAverage = favorite.voteAverage
+        self.voteCount = favorite.voteCount
+        if let collection = favorite.collection {
+            self.collection = .init(
+                id: collection.id,
+                name: collection.name,
+                backdropPath: collection.backdropPath,
+                posterPath: collection.posterPath
+            )
         }
 
-        if self.genres == nil {
-            self.genres = movie.genres?.compactMap { .init(genre: $0) }
-        } else {
-            movie.genres?.forEach { response in
-                if let first = self.genres?.first(where: { $0.apiID == response.id }) {
-                    first.updatingPropertiesExceptID(genre: response)
-                } else {
-                    let genre: Genre = .init(genre: response)
-                    genre.movie = self
-                    self.genres?.append(genre)
-                }
-            }
+        if let genres = favorite.genres {
+            self.genres = genres.map { .init(id: $0.apiID, name: $0.name) }
         }
-        self.homepage = movie.homepage
-        self.mediaType = movie.mediaType
-        self.originalTitle = movie.originalTitle
-        self.overview = movie.overview
-        self.popularity = movie.popularity
-        self.releaseDate = movie.releaseDate
-        self.revenue = movie.revenue
-        self.runtime = movie.runtime
-        self.status = movie.status
-        self.tagline = movie.tagline
-        self.title = movie.title
-        self.video = movie.video
-        self.voteAverage = movie.voteAverage?.roundedInt
-        self.voteCount = movie.voteCount
-        if self.languages == nil {
-            self.languages = movie.spokenLanguages?.compactMap { .init(language: $0, movie: self) }
-        } else {
-            movie.spokenLanguages?.forEach { response in
-                if let first = self.languages?.first(where: { $0.name == response.name }) {
-                    first.updatingPropertiesExceptID(language: response)
-                } else {
-                    self.languages?.append(.init(language: response, movie: self))
-                }
-            }
+
+        if let companies = favorite.productionCompanies {
+            self.productionCompanies = companies.map { .init(id: $0.apiID, logoPath: $0.logoPath, name: $0.name, originCountry: $0.originCountry) }
         }
-        if self.productionCompanies == nil {
-            self.productionCompanies = movie.productionCompanies?.compactMap { .init(company: $0, movie: self) }
-        } else {
-            movie.productionCompanies?.forEach { response in
-                if let first = self.productionCompanies?.first(where: { $0.apiID == response.id }) {
-                    first.updatingPropertiesExceptID(company: response)
-                } else {
-                    self.productionCompanies?.append(.init(company: response, movie: self))
-                }
-            }
+        
+        if let languages = favorite.languages {
+            self.languages = languages.map { .init(englishName: $0.englishName, name: $0.name, iso639_1: $0.iso639_1) }
         }
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

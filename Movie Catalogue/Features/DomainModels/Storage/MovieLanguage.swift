@@ -7,8 +7,8 @@ final class MovieLanguage: Identifiable {
     var englishName: String
     var name: String
     var iso639_1: String
-    var movie: Movie?
-    init(englishName: String, name: String, iso639_1: String, movie: Movie?) {
+    var movie: FavoriteMovie?
+    init(englishName: String, name: String, iso639_1: String, movie: FavoriteMovie?) {
         self.englishName = englishName
         self.name = name
         self.iso639_1 = iso639_1
@@ -17,7 +17,7 @@ final class MovieLanguage: Identifiable {
 }
 
 extension MovieLanguage {
-    convenience init(language: LanguageResponse, movie: Movie) {
+    convenience init(language: LanguageResponse, movie: FavoriteMovie) {
         self.init(
             englishName: language.englishName,
             name: language.name,

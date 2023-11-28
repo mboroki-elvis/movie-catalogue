@@ -6,8 +6,8 @@ class Genre: Identifiable {
     @Attribute(.unique) let id = UUID()
     var name: String?
     var apiID: Int
-    var movie: Movie?
-    init(apiID: Int, name: String? = nil, movie: Movie? = nil) {
+    var movie: FavoriteMovie?
+    init(apiID: Int, name: String? = nil, movie: FavoriteMovie? = nil) {
         self.apiID = apiID
         self.name = name
         self.movie = movie

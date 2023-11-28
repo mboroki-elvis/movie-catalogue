@@ -8,8 +8,8 @@ final class Company: Identifiable {
     let apiID: Int
     var name: String
     var originCountry: String?
-    var movie: Movie?
-    init(apiID: Int, logoPath: String? = nil, name: String, originCountry: String? = nil, movie: Movie?) {
+    var movie: FavoriteMovie?
+    init(apiID: Int, logoPath: String? = nil, name: String, originCountry: String? = nil, movie: FavoriteMovie?) {
         self.apiID = apiID
         self.logoPath = logoPath
         self.name = name
@@ -19,7 +19,7 @@ final class Company: Identifiable {
 }
 
 extension Company {
-    convenience init(company: CompanyResponse, movie: Movie) {
+    convenience init(company: CompanyResponse, movie: FavoriteMovie) {
         self.init(
             apiID: company.id,
             logoPath: company.logoPath,

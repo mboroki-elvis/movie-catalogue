@@ -8,8 +8,6 @@ import Observation
 
     private let list: MovieList
     private let datasource: MovieDatasource
-    /// The use case for managing favorite movies.
-    private let favoritesUseCase: FavoritesUseCase
 
     /**
      Initializes a new MovieViewModel with the specified data source.
@@ -17,22 +15,20 @@ import Observation
      */
     init(
         datasource: MovieDatasource = MovieDatasourceImplementation(),
-        favoritesUseCase: FavoritesUseCase = FavoritesUseCaseImplementation(),
         list: MovieList = .trending
     ) {
         self.datasource = datasource
-        self.favoritesUseCase = favoritesUseCase
         self.list = list
     }
 
-    func fetchData(favorites: [Movie]) {
+    func fetchData() {
         Task {
-            await fetchMovies(page: currentPage, favorites: favorites)
+            await fetchMovies(page: currentPage)
         }
     }
 
     @MainActor
-    private func fetchMovies(page: Int, favorites: [Movie]) async {
+    private func fetchMovies(page: Int) async {
         do {
             let moviesResponse: [MovieResponse]
             switch list {
@@ -41,11 +37,7 @@ import Observation
             case .topRated:
                 moviesResponse = try await datasource.topRated(page: page)
             }
-            if favorites.isEmpty {
-                movies.append(contentsOf: moviesResponse.map { .init(movie: $0) })
-            } else {
-                favoritesUseCase.treatMovies(response: moviesResponse, favorites: favorites, append: &movies)
-            }
+            movies.append(contentsOf: moviesResponse.map { .init(movie: $0) })
             // TODO: For now we are faking the total pages the results response does return the count, we have set the count to 1000
            // totalPages = respnse.totalPages
         } catch {

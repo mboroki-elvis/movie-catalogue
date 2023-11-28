@@ -30,8 +30,8 @@ struct AppCoordinator: View {
             switch route {
             case .landing:
                 MoviesLandingView()
-            case .details(let id):
-                MovieDetailsView(viewModel: .init(movie: id))
+            case .details(let movie):
+                MovieDetailsView(viewModel: .init(movie: movie))
             case .viewTrending:
                 MoviesListView(viewModel: .init(list: .trending))
             case  .viewTopRated:

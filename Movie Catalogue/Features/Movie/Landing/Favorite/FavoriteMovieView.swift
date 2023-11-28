@@ -1,7 +1,7 @@
 import Kingfisher
 import SwiftUI
 struct FavoriteMovieView: View {
-    let movie: Movie
+    let movie: FavoriteMovie
     var body: some View {
         VStack(alignment: .center) {
             KFImage(URL(string: movie.backdropURLString ?? "")!)
@@ -24,5 +24,5 @@ struct FavoriteMovieView: View {
 }
 
 #Preview {
-    FavoriteMovieView(movie: defaultMovie)
+    FavoriteMovieView(movie: defaultFavoriteMovie)
 }

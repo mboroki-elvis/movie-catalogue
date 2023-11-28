@@ -6,7 +6,7 @@ struct MovieCatalogueApp: App {
     @State private var router = AppRouter(.landing)
     private var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Movie.self,
+            FavoriteMovie.self,
             Genre.self,
             Company.self,
             MovieCollection.self,

@@ -58,7 +58,7 @@ final class MovieDetailsViewModel {
             defer { self.isLoading = false }
             do {
                 if let movieResponse = try await datasource.getDetails(movie: movie.id) {
-                    self.movie.updatingPropertiesExceptID(movie: movieResponse)
+                    self.movie = .init(movie: movieResponse)
                 }
             } catch {
                 self.error = error.toLocalizeError
@@ -68,7 +68,7 @@ final class MovieDetailsViewModel {
 
     func toggleIsFavorite(context: ModelContext) {
         do {
-            isFavorite = try favoritesUseCase.contextHasMovie(movie: movie, context: context)
+            isFavorite = try favoritesUseCase.findMovieBy(id: movie.id, context: context) != nil
         } catch {
             self.error = error.toLocalizeError
         }
@@ -81,11 +81,10 @@ final class MovieDetailsViewModel {
     func addOrDelete(from context: ModelContext) {
         do {
             defer { toggleIsFavorite(context: context)}
-            let hasMovie = try favoritesUseCase.contextHasMovie(movie: movie, context: context)
-            if hasMovie {
-                try favoritesUseCase.deleteSelectedMovieFromContext(movie: movie, context: context)
+            if let favorite = try favoritesUseCase.findMovieBy(id: movie.id, context: context) {
+                try favoritesUseCase.deleteSelectedMovieFromContext(movie: favorite, context: context)
             } else {
-                try favoritesUseCase.addSelectedMovieToContext(movie: movie, context: context)
+                try favoritesUseCase.addSelectedMovieToContext(movie: .init(movie: movie), context: context)
             }
         } catch {
             self.error = error.toLocalizeError
