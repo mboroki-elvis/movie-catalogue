@@ -5,7 +5,13 @@ import SwiftUI
 struct MovieCatalogueApp: App {
     @State private var router = AppRouter(.landing)
     private var sharedModelContainer: ModelContainer = {
-        let schema = Schema([Movie.self])
+        let schema = Schema([
+            FavoriteMovie.self,
+            Genre.self,
+            Company.self,
+            MovieCollection.self,
+            MovieLanguage.self
+        ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
         do {

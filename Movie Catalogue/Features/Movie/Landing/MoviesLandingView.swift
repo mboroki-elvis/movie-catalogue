@@ -6,7 +6,7 @@ struct MoviesLandingView: View {
 
     @Environment(\.modelContext) private var modelContext
     @Environment(AppRouter.self) private var router: AppRouter
-    @Query private var favorites: [Movie]
+    @Query private var favorites: [FavoriteMovie]
     @Bindable private var viewModel = MovieLandingViewModel()
 
     // MARK: UI
@@ -53,8 +53,8 @@ struct MoviesLandingView: View {
                         FavoriteMovieRow(
                             movies: favorites,
                             isLoading: viewModel.isLoading,
-                            onTap: { movie in
-                                viewModel.movie = movie
+                            onTap: { favorite in
+                                viewModel.movie = .init(favorite: favorite)
                                 viewModel.presentDialog = true
                             }
                         )
@@ -65,10 +65,10 @@ struct MoviesLandingView: View {
             }
         }
         .task {
-            viewModel.onAppear(favorite: favorites)
+            viewModel.onAppear()
         }
         .refreshable {
-            viewModel.onAppear(favorite: favorites)
+            viewModel.onAppear()
         }
         .confirmationDialog(
             "",
@@ -106,6 +106,6 @@ struct MoviesLandingView: View {
 #Preview {
     MoviesLandingView()
         .background(Color(UIColor.systemGroupedBackground))
-        .modelContainer(for: Movie.self, inMemory: true)
+        .modelContainer(for: FavoriteMovie.self, inMemory: true)
         .environment(AppRouter(.landing))
 }

@@ -3,7 +3,6 @@ import SwiftData
 
 struct MoviesListView: View {
     @Environment(AppRouter.self) private var router: AppRouter
-    @Query private var favorites: [Movie]
     var viewModel: MovieListViewModel
     var body: some View {
         VStack(alignment: .leading, spacing: .zero) {
@@ -28,7 +27,7 @@ struct MoviesListView: View {
                         .onAppear {
                             if movie == viewModel.movies.last {
                                 viewModel.currentPage += 1
-                                viewModel.fetchData(favorites: favorites)
+                                viewModel.fetchData()
                             }
                         }.onTapGesture {
                             router.push(.details(movie))
@@ -42,7 +41,7 @@ struct MoviesListView: View {
             Spacer()
         }
         .task {
-            viewModel.fetchData(favorites: favorites)
+            viewModel.fetchData()
         }
         .navigationBarBackButtonHidden()
         .navigationBarTitleDisplayMode(.inline)

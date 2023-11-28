@@ -33,7 +33,7 @@ final class MovieLandingViewModelTests: XCTestCase {
 
         let expectCompleted = expectation(description: "completed")
         Task {
-            await viewModel.onAppear(favorite: [defaultMovie])
+            await viewModel.onAppear()
         }
         await Task.yield()
         
@@ -58,7 +58,7 @@ final class MovieLandingViewModelTests: XCTestCase {
         )
         let expectCompleted = expectation(description: "completed failure")
         Task {
-            await viewModel.onAppear(favorite: [defaultMovie])
+            await viewModel.onAppear()
         }
        
         await Task.yield()

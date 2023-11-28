@@ -54,16 +54,16 @@ final class MovieLandingViewModel {
      SeeAlso: MovieDatasource
      */
     @MainActor
-    func onAppear(favorite movies: [Movie]) {
+    func onAppear() {
         Task {
             self.error = nil
             self.isLoading = true
             defer { self.isLoading = false }
             do {
                 let ratedResponse = try await datasource.topRated(page: 1)
-                favoritesUseCase.treatMovies(response: ratedResponse, favorites: movies, append: &topRated)
+                topRated = ratedResponse.map({.init(movie:$0)})
                 let trendingResponse = try await datasource.getTrending(page: 1)
-                favoritesUseCase.treatMovies(response: trendingResponse, favorites: movies, append: &trending)
+                trending = trendingResponse.map({.init(movie:$0)})
             } catch {
                 self.error = error.toLocalizeError
             }
@@ -79,7 +79,11 @@ final class MovieLandingViewModel {
         defer { presentDialog = false }
         do {
             guard let movie else { return }
-            try favoritesUseCase.addSelectedMovieToContext(movie: movie, context: context)
+            if let existingFavorite = try favoritesUseCase.findMovieBy(id: movie.id, context: context) {
+                existingFavorite.updatingPropertiesExceptID(movie: movie)
+            } else {
+                try favoritesUseCase.addSelectedMovieToContext(movie: .init(movie: movie), context: context)
+            }
         } catch {
             self.error = error.toLocalizeError
         }
@@ -94,7 +98,9 @@ final class MovieLandingViewModel {
         defer { presentDialog = false }
         do {
             guard let movie else { return }
-            try favoritesUseCase.deleteSelectedMovieFromContext(movie: movie, context: context)
+            if let existingFavorite = try favoritesUseCase.findMovieBy(id: movie.id, context: context) {
+                try favoritesUseCase.deleteSelectedMovieFromContext(movie: existingFavorite, context: context)
+            }
         } catch {
             self.error = error.toLocalizeError
         }
@@ -108,7 +114,7 @@ final class MovieLandingViewModel {
     func isSelectedMovieFavourited(context: ModelContext) -> Bool {
         do {
             guard let movie else { return false }
-            return try favoritesUseCase.contextHasMovie(movie: movie, context: context)
+            return try favoritesUseCase.findMovieBy(id: movie.id, context: context) != nil
         } catch {
             self.error = error.toLocalizeError
             return false

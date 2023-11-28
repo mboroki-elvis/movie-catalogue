@@ -1,16 +1,13 @@
 import Foundation
-import SwiftData
 
-@Model
-final class Movie: Identifiable {
-    @Attribute(.unique) var id: Int
+struct Movie: Hashable, Identifiable {
+    var id: Int
     var adult: Bool?
     var backdropPath: String?
     var budget: Int?
     var collection: CollectionResponse?
     var genres: [GenreResponse]?
     var homepage: String?
-    var imdbID: ExternalIDType?
     var mediaType: String?
     var originalTitle: String?
     var overview: String?
@@ -36,7 +33,6 @@ final class Movie: Identifiable {
         collection: CollectionResponse? = nil,
         genres: [GenreResponse]? = nil,
         homepage: String? = nil,
-        imdbID: ExternalIDType? = nil,
         mediaType: String? = nil,
         originalTitle: String? = nil,
         overview: String? = nil,
@@ -60,7 +56,6 @@ final class Movie: Identifiable {
         self.collection = collection
         self.genres = genres
         self.homepage = homepage
-        self.imdbID = imdbID
         self.mediaType = mediaType
         self.originalTitle = originalTitle
         self.overview = overview
@@ -82,46 +77,13 @@ final class Movie: Identifiable {
         guard let backdropPath else { return nil }
         return "\(EnvironmentLive().imageURL)w300\(backdropPath)"
     }
-}
 
-extension Movie {
-    convenience init(movie: MovieResponse) {
-        self.init(
-            id: movie.id,
-            adult: movie.adult,
-            backdropPath: movie.backdropPath,
-            budget: movie.budget,
-            collection: movie.collection,
-            genres: movie.genres,
-            homepage: movie.homepage,
-            imdbID: movie.imdbID,
-            mediaType: movie.mediaType,
-            originalTitle: movie.originalTitle,
-            overview: movie.overview,
-            popularity: movie.popularity,
-            releaseDate: movie.releaseDate,
-            revenue: movie.revenue,
-            runtime: movie.runtime,
-            status: movie.status,
-            tagline: movie.tagline,
-            title: movie.title,
-            video: movie.video,
-            voteAverage: movie.voteAverage?.roundedInt,
-            voteCount: movie.voteCount,
-            languages: movie.spokenLanguages,
-            productionCompanies: movie.productionCompanies
-        )
-    }
-
-    func updatingPropertiesExceptID(movie: MovieResponse) {
-        self.title = movie.title
+    init(movie: MovieResponse) {
+        self.id = movie.id
         self.adult = movie.adult
         self.backdropPath = movie.backdropPath
         self.budget = movie.budget
-        self.collection = movie.collection
-        self.genres = movie.genres
         self.homepage = movie.homepage
-        self.imdbID = movie.imdbID
         self.mediaType = movie.mediaType
         self.originalTitle = movie.originalTitle
         self.overview = movie.overview
@@ -136,6 +98,53 @@ extension Movie {
         self.voteAverage = movie.voteAverage?.roundedInt
         self.voteCount = movie.voteCount
         self.languages = movie.spokenLanguages
+        self.collection = movie.collection
         self.productionCompanies = movie.productionCompanies
+        self.genres = movie.genres
+    }
+
+    init(favorite: FavoriteMovie) {
+        self.id = favorite.id
+        self.adult = favorite.adult
+        self.backdropPath = favorite.backdropPath
+        self.budget = favorite.budget
+        self.homepage = favorite.homepage
+        self.mediaType = favorite.mediaType
+        self.originalTitle = favorite.originalTitle
+        self.overview = favorite.overview
+        self.popularity = favorite.popularity
+        self.releaseDate = favorite.releaseDate
+        self.revenue = favorite.revenue
+        self.runtime = favorite.runtime
+        self.status = favorite.status
+        self.tagline = favorite.tagline
+        self.title = favorite.title
+        self.video = favorite.video
+        self.voteAverage = favorite.voteAverage
+        self.voteCount = favorite.voteCount
+        if let collection = favorite.collection {
+            self.collection = .init(
+                id: collection.id,
+                name: collection.name,
+                backdropPath: collection.backdropPath,
+                posterPath: collection.posterPath
+            )
+        }
+
+        if let genres = favorite.genres {
+            self.genres = genres.map { .init(id: $0.apiID, name: $0.name) }
+        }
+
+        if let companies = favorite.productionCompanies {
+            self.productionCompanies = companies.map { .init(id: $0.apiID, logoPath: $0.logoPath, name: $0.name, originCountry: $0.originCountry) }
+        }
+        
+        if let languages = favorite.languages {
+            self.languages = languages.map { .init(englishName: $0.englishName, name: $0.name, iso639_1: $0.iso639_1) }
+        }
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

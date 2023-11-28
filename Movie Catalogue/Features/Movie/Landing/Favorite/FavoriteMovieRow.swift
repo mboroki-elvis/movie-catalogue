@@ -1,9 +1,9 @@
 import SwiftUI
 
 struct FavoriteMovieRow: View {
-    let movies: [Movie]
+    let movies: [FavoriteMovie]
     var isLoading: Bool
-    var onTap: (Movie) -> Void
+    var onTap: (FavoriteMovie) -> Void
     var body: some View {
         VStack(alignment: .leading) {
             Text(with: .favorites)
@@ -28,7 +28,7 @@ struct FavoriteMovieRow: View {
 
 #Preview {
     VStack {
-        FavoriteMovieRow(movies: [defaultMovie], isLoading: true, onTap: { _ in })
-        FavoriteMovieRow(movies: [defaultMovie], isLoading: false, onTap: { _ in })
+        FavoriteMovieRow(movies: [defaultFavoriteMovie], isLoading: true, onTap: { _ in })
+        FavoriteMovieRow(movies: [defaultFavoriteMovie], isLoading: false, onTap: { _ in })
     }
 }
