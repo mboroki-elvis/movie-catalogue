@@ -5,6 +5,8 @@ struct ParallaxView<Header, Content>: View where Content: View, Header: View {
     private let axes: Axis.Set
     private let header: () -> Header
     private let content: () -> Content
+    private let minimumHeaderHeight: CGFloat = 44
+    private let snappingThresholdMultiplier: CGFloat = 1.8
     @State private var offset: CGPoint
     @State private var height: CGFloat
     @State private var headerHeight: CGFloat
@@ -22,8 +24,6 @@ struct ParallaxView<Header, Content>: View where Content: View, Header: View {
         self.headerHeight = headerHeight
     }
 
-    private let snappingThresholdMultiplier: CGFloat = 1.8
-    private let minimumHeaderHeight: CGFloat = 44
     private var dynamicHeaderHeight: CGFloat {
         let proposedHeight = height + offset.y
         let snappingThreshold = headerHeight * snappingThresholdMultiplier
