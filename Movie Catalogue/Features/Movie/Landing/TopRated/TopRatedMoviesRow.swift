@@ -23,25 +23,27 @@ struct TopRatedMoviesRow: View {
                 })
             }
             .padding(.trailing, SizeTokens.small)
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: SizeTokens.extraSmall) {
-                    if isLoading || movies.isEmpty {
-                        ForEach(0 ..< 4, id: \.self) { _ in
-                            CarouselLoadingState(
-                                height: width / 2
-                            ).frame(width: width)
-                        }
-                    } else {
-                        ForEach(movies) { movie in
-                            TopRatedMoviesView(movie: movie)
-                                .onTapGesture {
-                                    onTap(movie)
-                                }
-                        }.frame(width: width, height: width / 2)
+            let actualWidth = width - SizeTokens.extraSmall
+            TabView {
+                if isLoading || movies.isEmpty {
+                    ForEach(0 ..< 4, id: \.self) { _ in
+                        CarouselLoadingState(
+                            height: width / 2
+                        )
+                    }
+                } else {
+                    ForEach(movies) { movie in
+                        TopRatedMoviesView(movie: movie)
+                            .onTapGesture {
+                                onTap(movie)
+                            }
                     }
                 }
             }
-            .scrollTargetBehavior(.paging)
+            .frame(width: actualWidth, height: actualWidth / 2)
+            .tabViewStyle(PageTabViewStyle())
+            .transition(.opacity)
+            .animation(.easeInOut, value: isLoading)
         }
     }
 

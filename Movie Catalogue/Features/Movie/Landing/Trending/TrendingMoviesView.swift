@@ -22,6 +22,7 @@ struct TrendingMoviesView: View {
             VStack(alignment: .leading) {
                 // Title
                 Text(movie.title ?? "")
+                    .lineLimit(1)
                     .font(.headline)
 
                 // Subtitle

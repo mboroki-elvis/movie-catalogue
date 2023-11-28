@@ -26,11 +26,12 @@ struct TrendingMoviesRow: View {
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: SizeTokens.extraSmall) {
+                    let actualWidth = width - SizeTokens.extraSmall
                     if isLoading || movies.isEmpty {
                         ForEach(0 ..< 4, id: \.self) { _ in
                             CarouselLoadingState(
-                                height: width / 2
-                            ).frame(width: width)
+                                height: actualWidth / 2
+                            ).frame(width: actualWidth)
                         }
                     } else {
                         ForEach(movies) { movie in
@@ -38,7 +39,7 @@ struct TrendingMoviesRow: View {
                                 .onTapGesture {
                                     onTap(movie)
                                 }
-                        }.frame(width: width, height: width / 2)
+                        }.frame(width: actualWidth, height: actualWidth / 2)
                     }
                 }
             }
