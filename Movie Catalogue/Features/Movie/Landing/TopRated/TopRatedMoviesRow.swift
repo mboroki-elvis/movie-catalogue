@@ -6,7 +6,7 @@ struct TopRatedMoviesRow: View {
     var onTap: (Movie) -> Void
     var viewAll: () -> Void
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: .zero) {
             HStack {
                 Text(with: .topRated)
                     .font(.headline)
@@ -22,7 +22,7 @@ struct TopRatedMoviesRow: View {
                         )
                 })
             }
-            .padding(.trailing, SizeTokens.small)
+            .padding(.init(top: SizeTokens.small, leading: .zero, bottom: SizeTokens.small, trailing: SizeTokens.small))
             let actualWidth = width - SizeTokens.extraSmall
             TabView {
                 if isLoading || movies.isEmpty {
