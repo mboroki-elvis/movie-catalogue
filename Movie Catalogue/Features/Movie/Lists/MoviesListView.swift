@@ -41,10 +41,12 @@ struct MoviesListView: View {
                             .foregroundStyle(.accent)
                     }
                 }
+                .listStyle(PlainListStyle())
             }
 
             Spacer()
         }
+        .background(Color.container)
         .task {
             viewModel.fetchData()
         }
