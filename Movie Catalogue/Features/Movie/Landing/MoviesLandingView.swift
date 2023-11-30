@@ -50,15 +50,17 @@ struct MoviesLandingView: View {
                         )
                         .padding(.horizontal, SizeTokens.regular)
 
-                        FavoriteMovieRow(
-                            movies: favorites,
-                            isLoading: viewModel.isLoading,
-                            onTap: { favorite in
-                                viewModel.movie = .init(favorite: favorite)
-                                viewModel.presentDialog = true
-                            }
-                        )
-                        .padding(.horizontal, SizeTokens.regular)
+                        if !favorites.isEmpty {
+                            FavoriteMovieRow(
+                                movies: favorites,
+                                isLoading: viewModel.isLoading,
+                                onTap: { favorite in
+                                    viewModel.movie = .init(favorite: favorite)
+                                    viewModel.presentDialog = true
+                                }
+                            )
+                            .padding(.horizontal, SizeTokens.regular)
+                        }
                     }
                     Spacer()
                 }

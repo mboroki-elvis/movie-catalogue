@@ -86,7 +86,19 @@ final class MovieDetailsViewModel {
             if let favorite = try favoritesUseCase.findMovieBy(id: movie.id, context: context) {
                 try favoritesUseCase.deleteSelectedMovieFromContext(movie: favorite, context: context)
             } else {
-                try favoritesUseCase.addSelectedMovieToContext(movie: .init(movie: movie), context: context)
+                // Create the favorite movie instance
+                let favorite: FavoriteMovie = .init(movie: movie)
+                // Add it first to favorites
+                try favoritesUseCase.addSelectedMovieToContext(movie: favorite, context: context)
+                // then save the relationships
+                favoritesUseCase.addRelatedModels(
+                    genres: movie.genres,
+                    collection: movie.collection,
+                    companies: movie.productionCompanies,
+                    languages: movie.languages,
+                    to: favorite,
+                    in: context
+                )
             }
         } catch {
             self.error = error.toLocalizeError

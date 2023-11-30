@@ -115,28 +115,6 @@ extension FavoriteMovie {
         self.adult = movie.adult
         self.backdropPath = movie.backdropPath
         self.budget = movie.budget
-        if let collection = self.collection,
-           let newCollection = movie.collection,
-           collection.id == newCollection.id
-        {
-            collection.updatingPropertiesExceptID(collection: newCollection)
-        } else if let collection = movie.collection {
-            self.collection = .init(collection: collection, movie: self)
-        }
-
-        if self.genres == nil {
-            self.genres = movie.genres?.compactMap { .init(genre: $0) }
-        } else {
-            movie.genres?.forEach { response in
-                if let first = self.genres?.first(where: { $0.apiID == response.id }) {
-                    first.updatingPropertiesExceptID(genre: response)
-                } else {
-                    let genre: Genre = .init(genre: response)
-                    genre.movie = self
-                    self.genres?.append(genre)
-                }
-            }
-        }
         self.homepage = movie.homepage
         self.mediaType = movie.mediaType
         self.originalTitle = movie.originalTitle
@@ -151,27 +129,5 @@ extension FavoriteMovie {
         self.video = movie.video
         self.voteAverage = movie.voteAverage
         self.voteCount = movie.voteCount
-        if self.languages == nil {
-            self.languages = movie.languages?.compactMap { .init(language: $0, movie: self) }
-        } else {
-            movie.languages?.forEach { response in
-                if let first = self.languages?.first(where: { $0.name == response.name }) {
-                    first.updatingPropertiesExceptID(language: response)
-                } else {
-                    self.languages?.append(.init(language: response, movie: self))
-                }
-            }
-        }
-        if self.productionCompanies == nil {
-            self.productionCompanies = movie.productionCompanies?.compactMap { .init(company: $0, movie: self) }
-        } else {
-            movie.productionCompanies?.forEach { response in
-                if let first = self.productionCompanies?.first(where: { $0.apiID == response.id }) {
-                    first.updatingPropertiesExceptID(company: response)
-                } else {
-                    self.productionCompanies?.append(.init(company: response, movie: self))
-                }
-            }
-        }
     }
 }

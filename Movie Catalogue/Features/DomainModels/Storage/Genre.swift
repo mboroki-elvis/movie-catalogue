@@ -16,10 +16,11 @@ class Genre: Identifiable {
 
 extension Genre {
     @discardableResult
-    convenience init(genre: GenreResponse) {
+    convenience init(genre: GenreResponse, movie: FavoriteMovie? = nil) {
         self.init(
             apiID: genre.id,
-            name: genre.name
+            name: genre.name,
+            movie: movie
         )
     }
 

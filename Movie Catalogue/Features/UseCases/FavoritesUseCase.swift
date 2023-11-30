@@ -7,6 +7,14 @@ protocol FavoritesUseCase: AnyObject {
     func contextHasMovie(movie: FavoriteMovie, context: ModelContext) throws -> Bool
     func findMovieBy(id: Int, context: ModelContext) throws -> FavoriteMovie?
     func fetchAllFavorites(context: ModelContext) throws -> [FavoriteMovie]
+    func addRelatedModels(
+        genres: [GenreResponse]?,
+        collection: CollectionResponse?,
+        companies: [CompanyResponse]?,
+        languages: [LanguageResponse]?,
+        to favourite: FavoriteMovie,
+        in context: ModelContext
+    )
 }
 
 final class FavoritesUseCaseImplementation: FavoritesUseCase {
@@ -37,6 +45,29 @@ final class FavoritesUseCaseImplementation: FavoritesUseCase {
 
     func fetchAllFavorites(context: ModelContext) throws -> [FavoriteMovie] {
         try context.fetch(FetchDescriptor<FavoriteMovie>(sortBy: [SortDescriptor(\.id)]))
+    }
+    
+    func addRelatedModels(
+        genres: [GenreResponse]?,
+        collection: CollectionResponse?,
+        companies: [CompanyResponse]?,
+        languages: [LanguageResponse]?,
+        to favourite: FavoriteMovie,
+        in context: ModelContext
+    ) {
+        if let collection {
+           let collection = MovieCollection(collection: collection, movie: favourite)
+            context.insert(collection)
+        }
+        genres?.forEach {
+            context.insert(Genre(genre: $0, movie: favourite))
+        }
+        companies?.forEach {
+            context.insert(Company(company: $0, movie: favourite))
+        }
+        languages?.forEach {
+            context.insert(MovieLanguage(language: $0, movie: favourite))
+        }
     }
 }
 
