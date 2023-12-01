@@ -4,7 +4,7 @@ import SwiftUI
 @main
 struct MovieCatalogueApp: App {
     @State private var router = AppRouter(.landing)
-    private var sharedModelContainer: ModelContainer = {
+    static var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             FavoriteMovie.self,
             Genre.self,
@@ -27,6 +27,6 @@ struct MovieCatalogueApp: App {
                 .environment(router)
                 .background(Color(UIColor.systemGroupedBackground))
         }
-        .modelContainer(sharedModelContainer)
+        .modelContainer(Self.sharedModelContainer)
     }
 }

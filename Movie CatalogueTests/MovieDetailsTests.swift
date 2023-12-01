@@ -1,8 +1,10 @@
 @testable import Movie_Catalogue
 import SwiftData
 import XCTest
+import Combine
 
 final class MovieDetailsTests: XCTestCase {
+    var cancellables = Set<AnyCancellable>()
     var viewModel: MovieDetailsViewModel!
     override func setUp() {
         super.setUp()
@@ -10,7 +12,7 @@ final class MovieDetailsTests: XCTestCase {
             datasource: MovieDatasourceImplementation(
                 environment: EnvironmentMock()
             ),
-            favoritesUseCase: MockFavoritesUseCase(), 
+            favoritesUseCase: MockFavoritesUseCase(isFailing: false),
             movie: defaultMovie
         )
     }
@@ -22,19 +24,19 @@ final class MovieDetailsTests: XCTestCase {
 
     // MARK: - Test onAppear method
 
-    func testOnAppearSuccess() async {
+    @MainActor
+    func testOnAppearSuccess() {
         // Call the onAppear method
 
         let expectCompleted = expectation(description: "completed")
         Task {
-            await viewModel.onAppear()
+            viewModel.onAppear(_:)
         }
-        await Task.yield()
-        
+
         DispatchQueue.main.async {
             expectCompleted.fulfill()
         }
-        await fulfillment(of: [expectCompleted])
+       wait(for: [expectCompleted])
         // Assert that the view model's properties are updated as expected
 
         XCTAssertNil(viewModel.error)
@@ -42,28 +44,35 @@ final class MovieDetailsTests: XCTestCase {
         XCTAssertFalse(viewModel.isLoading)
     }
 
-    func testOnAppearFailure() async {
+    @MainActor
+    func testOnAppearFailure() {
         viewModel = MovieDetailsViewModel(
             datasource: MovieDatasourceImplementation(
                 environment: EnvironmentFailing()
             ),
-            favoritesUseCase: MockFavoritesUseCase(), 
-            movie: defaultMovie
+            favoritesUseCase: MockFavoritesUseCase(isFailing: true),
+            movie: .init(id: -1)
         )
         let expectCompleted = expectation(description: "completed failure")
         Task {
-            await viewModel.onAppear()
+            viewModel.onAppear(ModelContext(MovieCatalogueApp.sharedModelContainer))
         }
-       
-        await Task.yield()
-
-        DispatchQueue.main.async {
+        
+        viewModel.error.publisher.sink { error in
             expectCompleted.fulfill()
         }
-        await fulfillment(of: [expectCompleted])
-        // Assert that the view model's properties are updated as expected
+        .store(in: &cancellables)
+        wait(for: [expectCompleted])
 
-        XCTAssertNotNil(viewModel.error)
         XCTAssertFalse(viewModel.isLoading)
     }
+}
+
+
+protocol SystemContext {
+    
+}
+
+extension ModelContext: SystemContext {
+    
 }

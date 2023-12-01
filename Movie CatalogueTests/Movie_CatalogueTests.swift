@@ -17,7 +17,7 @@ final class MovieLandingViewModelTests: XCTestCase {
             datasource: MovieDatasourceImplementation(
                 environment: EnvironmentMock()
             ),
-            favoritesUseCase: MockFavoritesUseCase()
+            favoritesUseCase: MockFavoritesUseCase(isFailing: false)
         )
     }
 
@@ -54,7 +54,7 @@ final class MovieLandingViewModelTests: XCTestCase {
             datasource: MovieDatasourceImplementation(
                 environment: EnvironmentFailing()
             ),
-            favoritesUseCase: MockFavoritesUseCase()
+            favoritesUseCase: MockFavoritesUseCase(isFailing: false)
         )
         let expectCompleted = expectation(description: "completed failure")
         Task {

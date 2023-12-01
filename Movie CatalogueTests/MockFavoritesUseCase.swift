@@ -11,16 +11,33 @@ import SwiftData
 @testable import Movie_Catalogue
 
 class MockFavoritesUseCase: FavoritesUseCase {
+    var isFailing: Bool
+    init(isFailing: Bool) {
+        self.isFailing = isFailing
+    }
+    func addRelatedModels(
+        genres: [GenreResponse]?,
+        collection: CollectionResponse?,
+        companies: [CompanyResponse]?,
+        languages: [LanguageResponse]?,
+        to favourite: Movie_Catalogue.FavoriteMovie,
+        in context: ModelContext
+    ) {
+        
+    }
+    
     func fetchAllFavorites(context: ModelContext) throws -> [FavoriteMovie] {
-        [defaultFavoriteMovie]
+        isFailing ? [] : [defaultFavoriteMovie]
     }
     
     
-    func findMovieBy(id: Int, context: ModelContext) throws -> Movie_Catalogue.FavoriteMovie? {
-        nil
+    func findMovieBy(id: Int, context: ModelContext) throws -> FavoriteMovie? {
+        if isFailing {
+           return nil
+        }
+        return defaultFavoriteMovie
     }
     
-    var isFailing: Bool = false
     func addSelectedMovieToContext(movie: FavoriteMovie, context: ModelContext) throws {
         if isFailing {
             throw NSError(domain: "", code: 1)
