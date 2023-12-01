@@ -41,7 +41,7 @@ struct ParallaxView<Header, Content>: View where Content: View, Header: View {
         VStack(spacing: .zero) {
             header()
                 .frame(height: height)
-                .offset(y: max(0, offset.y))
+//                .offset(y: max(0, offset.y))
             OffsetObservingScrollView(
                 axes: axes,
                 offset: $offset,

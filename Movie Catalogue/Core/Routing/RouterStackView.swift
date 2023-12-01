@@ -16,6 +16,7 @@ import SwiftUI
  pathInfo: The information about the current path.
  viewForRoute: A closure providing a view representation for a given route.
  Note: This view uses the NavigationStack for managing the navigation stack and supports presenting routes as either a full-screen cover or a sheet.
+ ```
  */
 struct RouterStackView<V: View, T: Hashable>: View {
     /// The bindable path information for the current route.
