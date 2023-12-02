@@ -41,7 +41,7 @@ struct ParallaxView<Header, Content>: View where Content: View, Header: View {
         VStack(spacing: .zero) {
             header()
                 .frame(height: height)
-                .scaleEffect(y: height >= snappingThreshold ? scale : 1.0, anchor: .zero)
+                .scaleEffect(y: scale, anchor: .zero)
             OffsetObservingScrollView(
                 axes: axes,
                 offset: $offset,
@@ -49,7 +49,11 @@ struct ParallaxView<Header, Content>: View where Content: View, Header: View {
             )
             .onChange(of: offset) { oldValue, newValue in
                 height = dynamicHeaderHeight
-                scale += (newValue.y - oldValue.y) / height
+                if height < snappingThreshold {
+                    scale = 1.0
+                } else {
+                    scale += (newValue.y - oldValue.y) / height
+                }
             }
         }
     }
