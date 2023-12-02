@@ -8,6 +8,7 @@ struct FavoriteMovieRow: View {
         VStack(alignment: .leading, spacing: SizeTokens.small) {
             Text(with: .favorites)
                 .font(.headline)
+                .padding(.top, SizeTokens.small)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(alignment: .top, spacing: SizeTokens.small) {
@@ -18,7 +19,6 @@ struct FavoriteMovieRow: View {
                             }
                     }
                     .frame(idealWidth: 150, idealHeight: 150)
-                    .shimmer(active: isLoading)
                 }
             }
         }

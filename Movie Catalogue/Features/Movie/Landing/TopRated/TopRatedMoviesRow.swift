@@ -26,11 +26,9 @@ struct TopRatedMoviesRow: View {
             let actualWidth = width - SizeTokens.extraSmall
             TabView {
                 if isLoading || movies.isEmpty {
-                    ForEach(0 ..< 4, id: \.self) { _ in
-                        CarouselLoadingState(
-                            height: width / 2
-                        )
-                    }
+                    CarouselLoadingState(
+                        height: width / 2
+                    )
                 } else {
                     ForEach(movies) { movie in
                         TopRatedMoviesView(movie: movie)

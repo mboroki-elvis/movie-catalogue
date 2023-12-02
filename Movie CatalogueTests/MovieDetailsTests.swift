@@ -1,7 +1,7 @@
+import Combine
 @testable import Movie_Catalogue
 import SwiftData
 import XCTest
-import Combine
 
 final class MovieDetailsTests: XCTestCase {
     var cancellables = Set<AnyCancellable>()
@@ -19,6 +19,7 @@ final class MovieDetailsTests: XCTestCase {
 
     override func tearDown() {
         viewModel = nil
+        cancellables.removeAll()
         super.tearDown()
     }
 
@@ -36,7 +37,7 @@ final class MovieDetailsTests: XCTestCase {
         DispatchQueue.main.async {
             expectCompleted.fulfill()
         }
-       wait(for: [expectCompleted])
+        wait(for: [expectCompleted])
         // Assert that the view model's properties are updated as expected
 
         XCTAssertNil(viewModel.error)
@@ -57,22 +58,19 @@ final class MovieDetailsTests: XCTestCase {
         Task {
             viewModel.onAppear(ModelContext(MovieCatalogueApp.sharedModelContainer))
         }
-        
-        viewModel.error.publisher.sink { error in
-            expectCompleted.fulfill()
-        }
-        .store(in: &cancellables)
-        wait(for: [expectCompleted])
+        @Sendable func observe() {
+             withObservationTracking {
+                 if viewModel.error != nil {
+                     expectCompleted.fulfill()
+                 }
+             } onChange: {
+                 DispatchQueue.main.async(execute: observe)
+             }
+         }
+         observe()
 
+        wait(for: [expectCompleted])
+        XCTAssertNotNil(viewModel.error)
         XCTAssertFalse(viewModel.isLoading)
     }
-}
-
-
-protocol SystemContext {
-    
-}
-
-extension ModelContext: SystemContext {
-    
 }

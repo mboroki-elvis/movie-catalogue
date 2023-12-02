@@ -22,7 +22,6 @@
 		C4BF8C3A2B121AF9005D7A22 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C392B121AF9005D7A22 /* ErrorView.swift */; };
 		C4BF8C402B1236CB005D7A22 /* CarouselLoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C3F2B1236CB005D7A22 /* CarouselLoadingState.swift */; };
 		C4BF8C422B12372E005D7A22 /* Shimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C412B12372E005D7A22 /* Shimmer.swift */; };
-		C4BF8C442B123765005D7A22 /* ShimmerMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C432B123765005D7A22 /* ShimmerMask.swift */; };
 		C4BF8C462B12394D005D7A22 /* SkeletonAnimationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C452B12394D005D7A22 /* SkeletonAnimationItem.swift */; };
 		C4BF8C4A2B1262CE005D7A22 /* MovieDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C492B1262CE005D7A22 /* MovieDetailsView.swift */; };
 		C4BF8C4C2B1272D9005D7A22 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF8C4B2B1272D9005D7A22 /* AppCoordinator.swift */; };
@@ -116,7 +115,6 @@
 		C4BF8C392B121AF9005D7A22 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		C4BF8C3F2B1236CB005D7A22 /* CarouselLoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselLoadingState.swift; sourceTree = "<group>"; };
 		C4BF8C412B12372E005D7A22 /* Shimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shimmer.swift; sourceTree = "<group>"; };
-		C4BF8C432B123765005D7A22 /* ShimmerMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerMask.swift; sourceTree = "<group>"; };
 		C4BF8C452B12394D005D7A22 /* SkeletonAnimationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonAnimationItem.swift; sourceTree = "<group>"; };
 		C4BF8C492B1262CE005D7A22 /* MovieDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsView.swift; sourceTree = "<group>"; };
 		C4BF8C4B2B1272D9005D7A22 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
@@ -277,7 +275,6 @@
 			isa = PBXGroup;
 			children = (
 				C4BF8C412B12372E005D7A22 /* Shimmer.swift */,
-				C4BF8C432B123765005D7A22 /* ShimmerMask.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -747,7 +744,6 @@
 				C4D1E1852B1127F1007AF0BA /* CollectionResponse.swift in Sources */,
 				C4D1E1602B111973007AF0BA /* PathInfo.swift in Sources */,
 				C47C44322B1159F500763142 /* TrendingMoviesView.swift in Sources */,
-				C4BF8C442B123765005D7A22 /* ShimmerMask.swift in Sources */,
 				C4BAAC482B132CF900D42614 /* ParallaxView.swift in Sources */,
 				C4D1E1702B111C18007AF0BA /* URLRequest+curl.swift in Sources */,
 				C4D1E1302B1116D9007AF0BA /* MovieCatalogueApp.swift in Sources */,

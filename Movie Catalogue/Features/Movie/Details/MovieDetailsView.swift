@@ -33,7 +33,7 @@ struct MovieDetailsView: View {
             KFImage(URL(string: viewModel.movie.backdropURLString ?? "https://placehold.co/600x400")!)
                 .resizable()
                 .frame(width: UIScreen.main.bounds.width)
-                .shimmer(active: viewModel.isLoading)
+                .shimmering(active: viewModel.isLoading)
 
             HStack {
                 Button(action: {
@@ -76,13 +76,13 @@ struct MovieDetailsView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundColor(.onContainer)
-                .shimmer(active: viewModel.isLoading)
+                .shimmering(active: viewModel.isLoading)
 
             // Movie Description
             Text(viewModel.movie.overview ?? "")
                 .foregroundColor(.onContainer)
                 .frame(width: UIScreen.main.bounds.width - SizeTokens.large)
-                .shimmer(active: viewModel.isLoading)
+                .shimmering(active: viewModel.isLoading)
 
             // Genres View
             if let genres = viewModel.movie.genres?.compactMap(\.name) {
@@ -91,7 +91,7 @@ struct MovieDetailsView: View {
 
             // Star Rating View
             StarRatingView(rating: Double(viewModel.movie.voteAverage ?? .zero))
-                .shimmer(active: viewModel.isLoading)
+                .shimmering(active: viewModel.isLoading)
 
             // Language and Producers View
             let languages = viewModel.movie.languages
@@ -101,7 +101,7 @@ struct MovieDetailsView: View {
                 producers: producers?.map(\.name) ?? [],
                 year: viewModel.movie.releaseDate?.toMovieYearString ?? ""
             )
-            .shimmer(active: viewModel.isLoading)
+            .shimmering(active: viewModel.isLoading)
 
             // Add more details as needed
 

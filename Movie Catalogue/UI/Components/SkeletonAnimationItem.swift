@@ -6,7 +6,7 @@ struct SkeletonLoadingItem: View {
 
     // MARK: - Init
 
-     init(colors: [Color] = [.containerAlternate, .white], cornerRadius: CGFloat = 4) {
+    init(colors: [Color] = [.containerAlternate.opacity(0.6), .white], cornerRadius: CGFloat = 4) {
         self.colors = colors
         self.cornerRadius = cornerRadius
     }
@@ -17,7 +17,7 @@ struct SkeletonLoadingItem: View {
         Rectangle()
             .fill(gradientFill(colors))
             .cornerRadius(cornerRadius)
-            .shimmer()
+            .shimmering(active: true)
     }
     
     func gradientFill(_ gradientColors: [Color]) -> LinearGradient {
