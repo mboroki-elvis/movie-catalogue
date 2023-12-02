@@ -10,6 +10,7 @@ struct ParallaxView<Header, Content>: View where Content: View, Header: View {
     @State private var offset: CGPoint
     @State private var height: CGFloat
     @State private var headerHeight: CGFloat
+    @State private var scale: CGFloat = 1
     init(
         _ axes: Axis.Set = .vertical,
         headerHeight: CGFloat = 160,
@@ -24,10 +25,9 @@ struct ParallaxView<Header, Content>: View where Content: View, Header: View {
         self.headerHeight = headerHeight
     }
 
+    private var snappingThreshold: CGFloat { headerHeight * snappingThresholdMultiplier }
     private var dynamicHeaderHeight: CGFloat {
         let proposedHeight = height + offset.y
-        let snappingThreshold = headerHeight * snappingThresholdMultiplier
-
         if proposedHeight >= snappingThreshold {
             return snappingThreshold
         } else if proposedHeight <= minimumHeaderHeight {
@@ -41,15 +41,15 @@ struct ParallaxView<Header, Content>: View where Content: View, Header: View {
         VStack(spacing: .zero) {
             header()
                 .frame(height: height)
-                .offset(y: max(0, offset.y))
+                .scaleEffect(y: height >= snappingThreshold ? scale : 1.0, anchor: .zero)
             OffsetObservingScrollView(
                 axes: axes,
                 offset: $offset,
                 content: content
             )
-            .onChange(of: offset) { _, _ in
-                // TODO: Fix the strange flash due to animation of resizable images
+            .onChange(of: offset) { oldValue, newValue in
                 height = dynamicHeaderHeight
+                scale += (newValue.y - oldValue.y) / height
             }
         }
     }
