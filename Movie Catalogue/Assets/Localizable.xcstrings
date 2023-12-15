@@ -129,7 +129,7 @@
       }
     },
     "Something went wrong!" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
