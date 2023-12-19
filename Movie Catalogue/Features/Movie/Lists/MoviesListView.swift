@@ -36,12 +36,13 @@ struct MoviesListView: View {
                                 router.push(.details(movie))
                             }
                     }
-                    if viewModel.currentPage < viewModel.totalPages {
-                        ProgressView()
-                            .foregroundStyle(.accent)
-                    }
                 }
                 .listStyle(PlainListStyle())
+                if viewModel.currentPage < viewModel.totalPages {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .foregroundStyle(.accent)
+                }
             }
 
             Spacer()
